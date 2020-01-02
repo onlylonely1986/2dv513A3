@@ -18,19 +18,21 @@
 // require_once("controller/ScribbleController.php");
 // require_once("view/ExceptionHTMLMessages.php");
 require_once("view/LayoutView.php");
-// require_once("view/LoginView.php");
+require_once("view/ClientView.php");
 // require_once("view/RegisterView.php");
 // require_once("view/DateTimeView.php");
 // require_once("view/ScribbleView.php");
 
 class Application {
     private $layoutView;
+    private $clientView;
 
     public function __construct($settings) {
         $this->layoutView  = new \view\LayoutView();
+        $this->clientView  = new \view\ClientView();
     }
 
     public function run() {
-        $this->layoutView->render();
+        $this->layoutView->render($this->clientView);
     }
 }

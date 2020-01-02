@@ -29,7 +29,7 @@ class LayoutView {
         $this->message = $message;
     }
     
-    public function render() {
+    public function render(ClientView $clientView) {
 
         echo '<!DOCTYPE html>
             <html>
@@ -42,7 +42,7 @@ class LayoutView {
                 
                 ' . $this->title() . '
                 <div class="container">
-                    ' . $this->body() . '
+                    ' . $this->body($clientView) . '
                 </div>
                     ' . $this->ifLoggedIn() . '
                 </body>
@@ -79,8 +79,8 @@ class LayoutView {
         // }
     }
 
-    private function body() {
-       
+    private function body(ClientView $clientView) {
+       echo $clientView->echoHTML();
     //     if ($this->sessionRegister && isset($_GET['register'])){
     //       return $v->echoHTML($this->sessionLoggedin);
     //     } else if (isset($_GET['register'])) {
