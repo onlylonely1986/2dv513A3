@@ -38,7 +38,8 @@ class ClientStorage {
     }
 
     public function getClientsFromDB() {
-        $randomArray = [];
+        $arr = array();
+        $randomArray = array();
         array_push($randomArray, "ingenAnv");
         $this->connect();
         $query = "SELECT * FROM " . self::$dbTable;
@@ -48,13 +49,19 @@ class ClientStorage {
                 throw new ConnectionException();
                 return false;
             }
-            echo $result;
-            // while ($row = $result->fetch_row()) {
+            // var_dump($result);
+            $row = $result->fetch_row();
+
+            // var_dump($row[0]);
+            echo $row[0];
+
+            array_push($arr, $row[0]);
             //     if ($row[0] == $newUser->getName() && $row[1] == password_verify($newUser->getPass(), $row[1])) {
             //         return true;
             //     }
             // }
             $result->close();
+            return $arr;
         }
         return $randomArray;
         // return false;
