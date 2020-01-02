@@ -28,6 +28,7 @@ class ClientStorage {
             self::$dbName
         );
         if (!self::$conn->connect_errno) {
+            echo "connect med db funkade bra";
             return true;
         } else {
             throw new ConnectionException();
@@ -36,7 +37,9 @@ class ClientStorage {
         }
     }
 
-    public function getClientFromDB(Client $client) {
+    public function getClientsFromDB(Client $client) {
+        $randomArray = [];
+        array_push($randomArray, "ingenAnv");
         $this->connect();
         $query = "SELECT * FROM " . self::$dbTable;
         
@@ -45,14 +48,16 @@ class ClientStorage {
                 throw new ConnectionException();
                 return false;
             }
-            while ($row = $result->fetch_row()) {
-                if ($row[0] == $newUser->getName() && $row[1] == password_verify($newUser->getPass(), $row[1])) {
-                    return true;
-                }
-            }
+            echo $result;
+            // while ($row = $result->fetch_row()) {
+            //     if ($row[0] == $newUser->getName() && $row[1] == password_verify($newUser->getPass(), $row[1])) {
+            //         return true;
+            //     }
+            // }
             $result->close();
         }
-        return false;
+        return $randomArray;
+        // return false;
     }
 
 

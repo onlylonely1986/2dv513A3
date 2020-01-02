@@ -2,22 +2,43 @@
 
 namespace view;
 
-class SearchView {
+class SearchView 
+{
     // private $message = '';
     // private static $clientSearch = 'ExerciseView::clientExercise';
     // private static $clientTrainingWeight = 'ExerciseView::clientTrainingWeight';
     // private static $clientTrainingReps = 'ExerciseView::clientTrainingReps';
     // private static $clientTrainingResttime = 'ExerciseView::clientTrainingResttime';
     // private static $send = 'ExerciseView::send';
+    private $clientsList;
     
-    public function echoHTML() {
-        return 
-            '<h2>Search:</h2>
-               
-                ';
-           
-      }
+    public function echoHTML() 
+        {
+            return 
+                '<h2>Search:</h2>
+                
+                    ';
+            
+        }
+
+    public function setList($data) 
+        {
+            $this->clients = $data;
+        }
+
+    private function iterateOverClients() 
+        {
+            $ret = "";
+            foreach ($this->clientsList as $client) 
+            {
+                $client = $item->name;
+                $ret .= "<p>Client: <a>$user</a></p>";
+            }
+            return $ret;
+        }
 }
+
+
 
 /**  
  *<form href="?" method="POST">
