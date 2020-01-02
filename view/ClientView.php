@@ -58,11 +58,11 @@ class ClientView {
             <h3>Exercise info:</h3>
             <label for="">Exercise:</label>
                 <input type="text" id="' . self::$clientExercise . '" name="' . self::$clientExercise . '" />
-                <label for="">Goal:</label>
+                <label for="">Weight:</label>
                 <input type="text" id="' . self::$clientTrainingWeight . '" name="' . self::$clientTrainingWeight . '" />
-                <label for="">Goal:</label>
+                <label for="">Reps:</label>
                 <input type="text" id="' . self::$clientTrainingReps . '" name="' . self::$clientTrainingReps . '" />
-                <label for="">Goal:</label>
+                <label for="">RestTime:</label>
                 <input type="text" id="' . self::$clientTrainingResttime . '" name="' . self::$clientTrainingResttime . '" />
             <input type="submit" id="' . self::$send2 . '" name="' . self::$send2 . '" value="Save"/>
 

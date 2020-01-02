@@ -59,7 +59,7 @@ class LayoutView {
 
 
     private function title() {
-        return "<h1>New client:</h1>";
+        return "<h1>PT 2 Client</h1>";
         // if ($this->sessionRegister && isset($_GET['register'])) {
         //   if($this->sessionLoggedin) {
         //     return '<h2>Logged in</h2>';
@@ -80,7 +80,7 @@ class LayoutView {
     }
 
     private function body(ClientView $clientView) {
-       echo $clientView->echoHTML();
+       return $clientView->echoHTML();
     //     if ($this->sessionRegister && isset($_GET['register'])){
     //       return $v->echoHTML($this->sessionLoggedin);
     //     } else if (isset($_GET['register'])) {
