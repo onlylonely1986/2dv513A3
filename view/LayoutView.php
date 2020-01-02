@@ -41,6 +41,12 @@ class LayoutView {
                 ' . $this->message . '
                 
                 ' . $this->title() . '
+
+                <div class="topnav">
+                    <a class="active" href="#home">Home</a>
+                    <a href="?exercises">Exercises</a>
+                </div>
+
                 <div class="container">
                     ' . $this->body($clientView) . '
                 </div>
