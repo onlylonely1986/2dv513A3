@@ -31,19 +31,30 @@ class Application {
     public function __construct($settings) {
         $this->session = new \model\SessionModel();
         $this->clientStorage = new \model\ClientStorage($settings);
-
         $this->clientView  = new \view\ClientView();
         $this->exerciseView  = new \view\ExerciseView();
         $this->foodView  = new \view\FoodView();
         $this->searchView  = new \view\SearchView();
         $this->layoutView  = new \view\LayoutView($this->clientView, $this->exerciseView, $this->foodView, $this->searchView);
 
-        $this->ClientController = new \controller\ClientController($this->clientView, 
+        $this->ClientController = new \controller\ClientController($this->searchView, 
             $this->clientStorage, 
             $this->session);
     }
 
     public function run() {
+        $data = [];
+        try {
+            if ($this->clientStorage->connect()) {
+                $data = $this->clientStorage->getClientsFromDB();
+            }
+        } catch (\model\ConnectionException $e) {
+            echo "errrrrooor";
+            // $this->layoutView->setMessage($this->userMsg::$messageToUserConn);
+        }
+        
+        $this->searchView-setList($data); 
+
         $this->layoutView->render($this->clientView);
 
         // if($this->exerciseView->isSetExercise()) {
