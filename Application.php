@@ -38,7 +38,7 @@ class Application {
         $this->searchView  = new \view\SearchView();
         $this->layoutView  = new \view\LayoutView($this->clientView, $this->exerciseView, $this->foodView, $this->searchView);
 
-        $this->ClientController = new \controller\ClientController($this->clientView, 
+        $this->ClientController = new \controller\ClientController($this->searchView, 
             $this->clientStorage, 
             $this->session);
     }
