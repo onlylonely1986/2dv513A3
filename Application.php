@@ -53,7 +53,7 @@ class Application {
             // $this->layoutView->setMessage($this->userMsg::$messageToUserConn);
         }
         
-        $this->searchView-setList($data); 
+        $this->searchView->setList($data); 
 
         $this->layoutView->render($this->clientView);
 

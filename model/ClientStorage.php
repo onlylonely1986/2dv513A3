@@ -37,7 +37,7 @@ class ClientStorage {
         }
     }
 
-    public function getClientsFromDB(Client $client) {
+    public function getClientsFromDB() {
         $randomArray = [];
         array_push($randomArray, "ingenAnv");
         $this->connect();
