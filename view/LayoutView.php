@@ -80,20 +80,7 @@ class LayoutView {
     }
 
     private function body() {
-        return 
-        '<form href="?" method="POST">
-            <p>' . $this->message . '</p>
-            <label for="">Name:</label>
-            <input type="text" id="' . self::$clientName . '" name="' . self::$clientName . '" value="" />
-            <label for="">Personal nr:</label>
-            <input type="text" id="' . self::$clientPersNr . '" name="' . self::$clientPersNr. '" />
-            <label for="">Weight (kg):</label>
-            <input type="text" id="' . self::$clientWeight . '" name="' . self::$clientWeight . '" />
-            <label for="">Goal:</label>
-            <input type="text" id="' . self::$clientGoal. '" name="' . self::$clientGoal. '" />
-            <input type="submit" id="' . self::$send . '" name="' . self::$send . '" value="Save"/>
-        </form>
-        ';
+       
     //     if ($this->sessionRegister && isset($_GET['register'])){
     //       return $v->echoHTML($this->sessionLoggedin);
     //     } else if (isset($_GET['register'])) {

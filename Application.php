@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Application.php
+ * 
+ * The entry point of the application
+ * 
+ * @author Lone Nilsson, Sanna Gustavsson
+ * @version 1.0
+ * @link https://github.com/onlylonely1986/2dv513A3
+ */
+
 // require_once("model/UserStorage.php");
 // require_once("model/ScribbleStorage.php");
 // require_once("model/SessionModel.php");

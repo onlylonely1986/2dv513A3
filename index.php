@@ -18,4 +18,3 @@ session_start();
 $settings = new settings();
 $start= new Application($settings);
 $start->run();
-
