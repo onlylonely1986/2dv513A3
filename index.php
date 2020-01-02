@@ -15,6 +15,8 @@ require_once('Application.php');
 
 session_start();
 
+echo 'hello';
+
 $settings = new settings();
 $start= new Application($settings);
 $start->run();
