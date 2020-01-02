@@ -11,10 +11,15 @@ class FoodView {
     private static $clientFoodAmountOfFat = 'FoodView::clientFoodAmountOfFat';
     private static $send = 'FoodView::send';
 
-    private function clientFormHTML() {
+    public function echoHTML() {
+        return 
+            '<h2>Add new food guidlines to database:</h2>
+            ' . $this->foodFormHTML() . '
+            ';
+    }
+    private function foodFormHTML() {
         return 
             '<form href="?" method="POST">
-                <p>' . $this->message . '</p>
 
                 <h3>Food info:</h3>
                 <label for="">Protein:</label>

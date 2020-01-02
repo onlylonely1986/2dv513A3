@@ -20,9 +20,8 @@
 require_once("view/LayoutView.php");
 require_once("view/ClientView.php");
 require_once("view/ExerciseView.php");
-// require_once("view/RegisterView.php");
-// require_once("view/DateTimeView.php");
-// require_once("view/ScribbleView.php");
+require_once("view/FoodView.php");
+require_once("view/SearchView.php");
 
 class Application {
     private $layoutView;
@@ -30,16 +29,18 @@ class Application {
     private $exerciseView;
 
     public function __construct($settings) {
-        $this->layoutView  = new \view\LayoutView();
         $this->clientView  = new \view\ClientView();
         $this->exerciseView  = new \view\ExerciseView();
+        $this->foodView  = new \view\FoodView();
+        $this->searchView  = new \view\SearchView();
+        $this->layoutView  = new \view\LayoutView($this->clientView, $this->exerciseView, $this->foodView, $this->searchView);
     }
 
     public function run() {
         $this->layoutView->render($this->clientView);
 
-        if($this->exerciseView->isSetExercise()) {
-            $this->layoutView->render($this->exerciseView);
-        }
+        // if($this->exerciseView->isSetExercise()) {
+        //    $this->layoutView->render($this->exerciseView);
+        // }
     }
 }
