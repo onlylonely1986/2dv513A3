@@ -49,6 +49,7 @@ class ClientStorage {
                 throw new ConnectionException();
                 return false;
             }
+<<<<<<< HEAD
             // var_dump($result);
             $row = $result->fetch_row();
 
@@ -56,12 +57,23 @@ class ClientStorage {
             echo $row[0];
 
             array_push($arr, $row[0]);
+=======
+            var_dump($result);
+            $row = $result->fetch_row();
+
+            var_dump($row);
+            // while ($row = $result->fetch_row()) {
+>>>>>>> 5433864ba3f6cdb128cb630a3d5114060c904612
             //     if ($row[0] == $newUser->getName() && $row[1] == password_verify($newUser->getPass(), $row[1])) {
             //         return true;
             //     }
             // }
             $result->close();
+<<<<<<< HEAD
             return $arr;
+=======
+            
+>>>>>>> 5433864ba3f6cdb128cb630a3d5114060c904612
         }
         return $randomArray;
         // return false;
