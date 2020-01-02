@@ -8,7 +8,7 @@ namespace view;
 class ClientView {
   private static $clientName = 'ClientView::clientName';
   private static $clientWeight = 'ClientView::clientWeight';
-  private static $clientPersNr = 'ClientView::clientPersNr';
+  private static $clientDateOfBirth = 'ClientView::clientDateOfBirth';
   private static $clientGoal = 'ClientView::clientGoal';
   private static $send = 'ClientView::send';
 
@@ -35,8 +35,8 @@ class ClientView {
             <h3>Client info:</h3>
             <label for="">Name:</label>
                 <input type="text" id="' . self::$clientName . '" name="' . self::$clientName . '" value="" />
-                <label for="">Personal nr:</label>
-                <input type="text" id="' . self::$clientPersNr . '" name="' . self::$clientPersNr. '" />
+                <label for="">Date of birth:</label>
+                <input type="text" id="' . self::$clientDateOfBirth . '" name="' . self::$clientDateOfBirth. '" />
                 <label for="">Weight (kg):</label>
                 <input type="text" id="' . self::$clientWeight . '" name="' . self::$clientWeight . '" />
                 <label for="">Goal:</label>

@@ -17,6 +17,7 @@ class FoodView {
             ' . $this->foodFormHTML() . '
             ';
     }
+
     private function foodFormHTML() {
         return 
             '<form href="?" method="POST">
@@ -32,7 +33,7 @@ class FoodView {
                     <input type="text" id="' . self::$clientFoodAmountOfCarbs . '" name="' . self::$clientFoodAmountOfCarbs . '" />
                     <label for="">Fat:</label>
                     <input type="text" id="' . self::$clientFoodFat . '" name="' . self::$clientFoodFat . '" />
-                    <label for="">Amount of carbs (g):</label>
+                    <label for="">Amount of fat (g):</label>
                     <input type="text" id="' . self::$clientFoodAmountOfFat . '" name="' . self::$clientFoodAmountOfFat . '" />
                 <input type="submit" id="' . self::$send . '" name="' . self::$send . '" value="Save"/>
     

@@ -10,9 +10,8 @@
  * @link https://github.com/onlylonely1986/2dv513A3
  */
 
-// require_once("model/UserStorage.php");
-// require_once("model/ScribbleStorage.php");
-// require_once("model/SessionModel.php");
+require_once("model/ClientStorage.php");
+require_once("model/SessionModel.php");
 // require_once("controller/LoginController.php");
 // require_once("controller/RegisterController.php");
 // require_once("controller/ScribbleController.php");
@@ -22,6 +21,7 @@ require_once("view/ClientView.php");
 require_once("view/ExerciseView.php");
 require_once("view/FoodView.php");
 require_once("view/SearchView.php");
+require_once("controller/ClientController.php");
 
 class Application {
     private $layoutView;
@@ -29,11 +29,18 @@ class Application {
     private $exerciseView;
 
     public function __construct($settings) {
+        $this->session = new \model\SessionModel();
+        $this->clientStorage = new \model\ClientStorage($settings);
+
         $this->clientView  = new \view\ClientView();
         $this->exerciseView  = new \view\ExerciseView();
         $this->foodView  = new \view\FoodView();
         $this->searchView  = new \view\SearchView();
         $this->layoutView  = new \view\LayoutView($this->clientView, $this->exerciseView, $this->foodView, $this->searchView);
+
+        $this->ClientController = new \controller\ClientController($this->clientView, 
+            $this->clientStorage, 
+            $this->session);
     }
 
     public function run() {
