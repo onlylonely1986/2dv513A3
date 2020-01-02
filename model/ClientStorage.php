@@ -48,13 +48,17 @@ class ClientStorage {
                 throw new ConnectionException();
                 return false;
             }
-            echo $result;
+            var_dump($result);
+            $row = $result->fetch_row();
+
+            var_dump($row);
             // while ($row = $result->fetch_row()) {
             //     if ($row[0] == $newUser->getName() && $row[1] == password_verify($newUser->getPass(), $row[1])) {
             //         return true;
             //     }
             // }
             $result->close();
+            
         }
         return $randomArray;
         // return false;
