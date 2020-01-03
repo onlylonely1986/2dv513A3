@@ -19,11 +19,21 @@ class ClientView {
     $this->message = "";
   }
 
-  public function echoHTML() {
+  public function echoHTML() 
+  {
     return '<h2>Add new client to database:</h2>
                  ' . $this->clientFormHTML(). '
               ';
   }
+
+  public function wantsToSaveNewClient() : bool 
+    {
+      if (isset($_GET['Save'])) {
+        echo "ok you want to save something";
+        return true;
+      }
+      return false;
+    }
 
     // Exercise - exercises, weights, repetitions, restTime, client id
     // Food - protein, fat, carbs, amount, client id

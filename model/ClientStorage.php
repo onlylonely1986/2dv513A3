@@ -42,7 +42,6 @@ class ClientStorage {
     }
     public function getClientsFromDB() 
     {
-        //  
         $data = array();
         $query = "SELECT * FROM " . self::$dbTable;
         
@@ -60,29 +59,11 @@ class ClientStorage {
             
             
             $result->close();
-            // var_dump($data);
             return $data;
             
         }
-        // return $data;
     }
-    // min kod för att hämta scribbles i L3
-    // public function getSavedScribbles() : array {
-    //     $sqli = "SELECT * FROM " . self::$dbTable;
-    //     $result = mysqli_query(self::$conn, $sqli);
-    //     if(!$result) {
-    //         throw new ConnectionException();
-    //     }
-    //     $data = array();
-    //     if(mysqli_num_rows($result) > 0) {
-    //         while($obj = $result->fetch_object()) {
-    //             $this->collectionOfItems[] = new ScribbleItem($obj->user, $obj->title, $obj->text);
-    //         }
-    //     }
-    //     mysqli_close(self::$conn);
-    //     return $this->collectionOfItems;
-        
-    // }
+
     public function saveNewClientToDB(Client $client) {
         $this->connect();
         $inputPwd = $user->getPass();
