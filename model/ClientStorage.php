@@ -37,28 +37,53 @@ class ClientStorage {
         }
     }
 
-    public function getClientsFromDB() {
-        $arr = array();
-        $randomArray = array();
-        array_push($randomArray, "ingenAnv");
-        // $this->connect();
+    public function getClientsFromDB() 
+    {
+        //  
+        $data = array();
         $query = "SELECT * FROM " . self::$dbTable;
         
-        if ($result = self::$conn->query($query)) {
-            if(!$result) {
+        if ($result = self::$conn->query($query)) 
+        {
+            if(!$result) 
+            {
                 throw new ConnectionException();
                 return false;
             }
-            $row = $result->fetch_row();
-            echo $row[0];
 
-            array_push($arr, $row[0]);
+            while($obj = $result->fetch_object()) {
+                $item = new Client($obj->name, $obj->dateOfBirth, $obj->weight, $obj->goal);
+                array_push($data, $item);
+            }
+            
+            
             $result->close();
+            // var_dump($data);
+            return $data;
             
         }
-        return $randomArray;
-        // return false;
+        // return $data;
     }
+
+    // min kod för att hämta scribbles i L3
+
+    // public function getSavedScribbles() : array {
+    //     $sqli = "SELECT * FROM " . self::$dbTable;
+    //     $result = mysqli_query(self::$conn, $sqli);
+    //     if(!$result) {
+    //         throw new ConnectionException();
+    //     }
+    //     $data = array();
+    //     if(mysqli_num_rows($result) > 0) {
+    //         while($obj = $result->fetch_object()) {
+    //             $this->collectionOfItems[] = new ScribbleItem($obj->user, $obj->title, $obj->text);
+    //         }
+    //     }
+
+    //     mysqli_close(self::$conn);
+    //     return $this->collectionOfItems;
+        
+    // }
 
 
     public function saveNewClientToDB(Client $client) {

@@ -10,13 +10,13 @@ class SearchView
     // private static $clientTrainingReps = 'ExerciseView::clientTrainingReps';
     // private static $clientTrainingResttime = 'ExerciseView::clientTrainingResttime';
     // private static $send = 'ExerciseView::send';
-    private $clientsList;
+    private $clients;
     
     public function echoHTML() 
         {
             return 
                 '<h2>Search:</h2>
-                
+                ' . $this->iterateOverClients() . '
                     ';
             
         }
@@ -29,10 +29,13 @@ class SearchView
     private function iterateOverClients() 
         {
             $ret = "";
-            foreach ($this->clientsList as $client) 
+            // var_dump($this->clients);
+            
+            foreach ($this->clients as $client) 
             {
-                $client = $item->name;
-                $ret .= "<p>Client: <a>$user</a></p>";
+                $clientName = $client->name;
+                var_dump($client);
+                $ret .= "<p>Client: <a href='#'>$clientName</a></p>";
             }
             return $ret;
         }

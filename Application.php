@@ -43,7 +43,7 @@ class Application {
     }
 
     public function run() {
-        $data = [];
+        $data;
         try {
             if ($this->clientStorage->connect()) {
                 $data = $this->clientStorage->getClientsFromDB();
