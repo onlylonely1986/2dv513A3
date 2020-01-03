@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Application.php
  * 
@@ -9,7 +8,6 @@
  * @version 1.0
  * @link https://github.com/onlylonely1986/2dv513A3
  */
-
 require_once("model/ClientStorage.php");
 require_once("model/SessionModel.php");
 // require_once("controller/LoginController.php");
@@ -22,12 +20,10 @@ require_once("view/ExerciseView.php");
 require_once("view/FoodView.php");
 require_once("view/SearchView.php");
 require_once("controller/ClientController.php");
-
 class Application {
     private $layoutView;
     private $clientView;
     private $exerciseView;
-
     public function __construct($settings) {
         $this->session = new \model\SessionModel();
         $this->clientStorage = new \model\ClientStorage($settings);
@@ -36,14 +32,12 @@ class Application {
         $this->foodView  = new \view\FoodView();
         $this->searchView  = new \view\SearchView();
         $this->layoutView  = new \view\LayoutView($this->clientView, $this->exerciseView, $this->foodView, $this->searchView);
-
         $this->ClientController = new \controller\ClientController($this->searchView, 
             $this->clientStorage, 
             $this->session);
     }
-
     public function run() {
-        $data = [];
+        $data;
         try {
             if ($this->clientStorage->connect()) {
                 $data = $this->clientStorage->getClientsFromDB();
@@ -54,9 +48,7 @@ class Application {
         }
         
         $this->searchView->setList($data); 
-
         $this->layoutView->render($this->clientView);
-
         // if($this->exerciseView->isSetExercise()) {
         //    $this->layoutView->render($this->exerciseView);
         // }

@@ -3,6 +3,7 @@
 namespace model;
 
 class ClientStorage {
+
     private static $serverName;
     private static $userName;
     private static $passWord;
@@ -11,8 +12,8 @@ class ClientStorage {
     private static $conn;
     private static $user;
     
-
-    public function __construct($settings) {
+    public function __construct($settings) 
+    {
         self::$serverName = $settings->dbserverName;
         self::$userName = $settings->dbuserName;
         self::$passWord = $settings->dbpassWord;
@@ -20,14 +21,17 @@ class ClientStorage {
         self::$dbTable = $settings->dbTableClients;
     }
 
-    public function connect() {
+    public function connect() 
+    {
         self::$conn = new \mysqli(
             self::$serverName,
             self::$userName, 
             self::$passWord, 
             self::$dbName
         );
-        if (!self::$conn->connect_errno) {
+
+        if (!self::$conn->connect_errno) 
+        {
             echo "connect med db funkade bra";
             return true;
         } else {
@@ -36,41 +40,53 @@ class ClientStorage {
             return false;
         }
     }
-
-    public function getClientsFromDB() {
-        $arr = array();
-        $randomArray = array();
-        array_push($randomArray, "ingenAnv");
-        // $this->connect();
+    public function getClientsFromDB() 
+    {
+        //  
+        $data = array();
         $query = "SELECT * FROM " . self::$dbTable;
         
-        if ($result = self::$conn->query($query)) {
-            if(!$result) {
+        if ($result = self::$conn->query($query)) 
+        {
+            if(!$result) 
+            {
                 throw new ConnectionException();
                 return false;
             }
+            while($obj = $result->fetch_object()) {
+                $item = new Client($obj->name, $obj->dateOfBirth, $obj->weight, $obj->goal);
+                array_push($data, $item);
+            }
             
-            $row = $result->fetch_row();
-            echo $row[0];
-
-            array_push($arr, $row[0]);
-            //     if ($row[0] == $newUser->getName() && $row[1] == password_verify($newUser->getPass(), $row[1])) {
-            //         return true;
-            //     }
-            // }
+            
             $result->close();
-            return $arr;
+            // var_dump($data);
+            return $data;
+            
         }
-        return $randomArray;
-        // return false;
+        // return $data;
     }
-
-
+    // min kod för att hämta scribbles i L3
+    // public function getSavedScribbles() : array {
+    //     $sqli = "SELECT * FROM " . self::$dbTable;
+    //     $result = mysqli_query(self::$conn, $sqli);
+    //     if(!$result) {
+    //         throw new ConnectionException();
+    //     }
+    //     $data = array();
+    //     if(mysqli_num_rows($result) > 0) {
+    //         while($obj = $result->fetch_object()) {
+    //             $this->collectionOfItems[] = new ScribbleItem($obj->user, $obj->title, $obj->text);
+    //         }
+    //     }
+    //     mysqli_close(self::$conn);
+    //     return $this->collectionOfItems;
+        
+    // }
     public function saveNewClientToDB(Client $client) {
         $this->connect();
         $inputPwd = $user->getPass();
         $hashPwd = password_hash($inputPwd, PASSWORD_DEFAULT);
-
         $sql = "INSERT INTO " . self::$dbTable;
         $sql .= "(";
         $sql .= "`username`, `password`";
@@ -80,7 +96,6 @@ class ClientStorage {
         $sql .= "'". $user->getName() ."', ";
         $sql .= "'". $hashPwd ."'";
         $sql .= ");";
-
         $results = self::$conn->query($sql);       
         if(!$results) {
             throw new ConnectionException();
