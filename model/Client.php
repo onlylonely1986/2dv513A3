@@ -18,4 +18,16 @@ class Client {
     public function getName() {
         return $this->name;
     }
+
+    public function getBirth() {
+        return $this->dateOfBirth;
+    }
+
+    public function getWeight() {
+        return $this->weight;
+    }
+
+    public function getGoal() {
+        return $this->goal;
+    }
 }

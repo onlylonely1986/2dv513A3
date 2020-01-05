@@ -2,7 +2,7 @@
 
 namespace view;
 
-// require_once("Messages.php");
+require_once("Messages.php");
 // require_once("model/ScribbleItem.php");
 
 class ClientView {
@@ -28,12 +28,39 @@ class ClientView {
 
   public function wantsToSaveNewClient() : bool 
     {
-      if (isset($_GET['Save'])) {
+      if (isset($_POST[self::$send])) {
         echo "ok you want to save something";
         return true;
       }
       return false;
     }
+
+  public function isAllFieldsFilled() : bool {
+      if (isset($_POST[self::$send])) {
+          if ((empty($_POST[self::$clientDateOfBirth]) || empty($_POST[self::$clientWeight])) || empty($_POST[self::$clientName]) || empty($_POST[self::$clientGoal])) {
+              $this->message .= Messages::$fillAll;
+              return false;
+          }
+          return true;
+  }
+  else return false;
+  }
+
+  public function returnNewClientName() {
+
+  }
+
+  public function returnNewClientDateOfBirth() {
+    
+  }
+
+  public function returnNewClientWeight() {
+    
+  }
+
+  public function returnNewClientGoal() {
+    
+  }
 
     // Exercise - exercises, weights, repetitions, restTime, client id
     // Food - protein, fat, carbs, amount, client id
@@ -41,7 +68,7 @@ class ClientView {
   private function clientFormHTML() {
     return 
         '<form href="?" method="POST">
-            <p>' . $this->message . '</p>
+            <p style="color: red">' . $this->message . '</p>
             <h3>Client info:</h3>
             <label for="">Name:</label>
                 <input type="text" id="' . self::$clientName . '" name="' . self::$clientName . '" value="" />

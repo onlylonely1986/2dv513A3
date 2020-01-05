@@ -23,16 +23,29 @@ class ClientController {
     }
 
     public function addNewClient() {
-        $this->clientView->wantsToSaveNewClient();
-        echo "japp";
+        if($this->clientView->wantsToSaveNewClient()) {
+            if ($this->clientView->isAllFieldsFilled()) {
+                // $user = $this->view->returnNewUserName();
+                // $password = $this->view->returnNewPassword();
+                // $this->setNewUser($user, $password);
+                // $this->storage->saveNewUserToDB($this->newUser);
+                // $this->session->setRegisterSession();
+
+                $user = $this->clientView->returnNewClientName();
+                $dateOfBirth = $this->clientView->returnNewClientDateOfBirth();
+                $weight = $this->clientView->returnNewClientWeight();
+                $goal = $this->clientView->returnNewClientGoal();
+
+                // $id = $this->generateId();
+                $this->storage->saveNewClientToDB($this->setNewClient('Emma Person', '19690101', 75, 'get stronger'));
+                    
+            }
+            
+        }
+        
         
 
-        // $user = $this->clientView->returnNewClientName();
-        // $dateOfBirth = $this->clientView->returnNewClientDateOfBirth();
-        // $weight = $this->clientView->returnNewClientWeight();
-        // $goal = $this->clientView->returnNewClientGoal();
-
-        // $this->storage->saveNewClientToDB($this->setNewUser($name, $dateOfBirth, $weight, $goal));
+        
 
         // $this->session->setRegisterSession();
         
@@ -56,6 +69,7 @@ class ClientController {
         // }
         // return false;
     }
+
 
     private function setNewClient($name, $dateOfBirth, $weight, $goal) {
         return new \model\Client($name, $dateOfBirth, $weight, $goal);

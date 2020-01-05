@@ -40,6 +40,7 @@ class ClientStorage {
             return false;
         }
     }
+
     public function getClientsFromDB() 
     {
         $data = array();
@@ -66,16 +67,16 @@ class ClientStorage {
 
     public function saveNewClientToDB(Client $client) {
         $this->connect();
-        $inputPwd = $user->getPass();
-        $hashPwd = password_hash($inputPwd, PASSWORD_DEFAULT);
         $sql = "INSERT INTO " . self::$dbTable;
         $sql .= "(";
-        $sql .= "`username`, `password`";
+        $sql .= "`name`, `dateOfBirth`, `weight`, `goal`";
         $sql .= ")";
         $sql .= "VALUES ";
         $sql .= "(";
-        $sql .= "'". $user->getName() ."', ";
-        $sql .= "'". $hashPwd ."'";
+        $sql .= "'". $client->getName() ."', ";
+        $sql .= "'". $client->getBirth() ."', "; 
+        $sql .= "'". $client->getWeight() ."', "; 
+        $sql .= "'". $client->getGoal()   ."'";; 
         $sql .= ");";
         $results = self::$conn->query($sql);       
         if(!$results) {

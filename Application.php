@@ -49,16 +49,19 @@ class Application
 
     private function changeState() 
         {
-            $state = "red";
+            $state = "";
 
             switch ($state) {
-                case "red":
+                case "red": // search
                     echo "Your favorite color is red!";
                     break;
-                case "blue":
+                case "blue": // save new client
                     echo "Your favorite color is blue!";
                     break;
-                case "green":
+                case "green": // save new exercise to client
+                    echo "Your favorite color is green!";
+                    break;
+                case "green": // save new food-advice to client
                     echo "Your favorite color is green!";
                     break;
                 default:
