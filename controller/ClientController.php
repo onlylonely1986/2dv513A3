@@ -25,49 +25,15 @@ class ClientController {
     public function addNewClient() {
         if($this->clientView->wantsToSaveNewClient()) {
             if ($this->clientView->isAllFieldsFilled()) {
-                // $user = $this->view->returnNewUserName();
-                // $password = $this->view->returnNewPassword();
-                // $this->setNewUser($user, $password);
-                // $this->storage->saveNewUserToDB($this->newUser);
-                // $this->session->setRegisterSession();
-
                 $user = $this->clientView->returnNewClientName();
                 $dateOfBirth = $this->clientView->returnNewClientDateOfBirth();
                 $weight = $this->clientView->returnNewClientWeight();
                 $goal = $this->clientView->returnNewClientGoal();
-
-                // $id = $this->generateId();
-                $this->storage->saveNewClientToDB($this->setNewClient('Emma Person', '19690101', 75, 'get stronger'));
-                    
+                $this->storage->saveNewClientToDB($this->setNewClient($user, $dateOfBirth, $weight, $goal));
+                $this->clientView->message();                    
             }
             
         }
-        
-        
-
-        
-
-        // $this->session->setRegisterSession();
-        
-        //     if($this->view->hitButton()) {
-        //         if($this->view->isAllFieldsFilled()) {
-        //             if($this->view->validateInputs()) {
-        //                 $user = $this->view->returnNewUserName();
-        //                 if($this->storage->checkForPossibleName($user)) {
-        //                     $password = $this->view->returnNewPassword();
-        //                     $this->setNewUser($user, $password);
-        //                     $this->storage->saveNewUserToDB($this->newUser);
-        //                     $this->session->setRegisterSession();
-        //                     return true;
-        //                 } else {
-        //                     $this->view->wasNotPossibleToCreate();
-        //                     return false;
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
-        // return false;
     }
 
 

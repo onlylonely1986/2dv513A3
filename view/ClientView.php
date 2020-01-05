@@ -47,19 +47,35 @@ class ClientView {
   }
 
   public function returnNewClientName() {
-
+    if (isset($_POST[self::$clientName])) {
+      self::$clientName = $_POST[self::$clientName];
+      return self::$clientName;
+    }
   }
 
   public function returnNewClientDateOfBirth() {
-    
+    if (isset($_POST[self::$clientDateOfBirth])) {
+      self::$clientDateOfBirth = $_POST[self::$clientDateOfBirth];
+      return self::$clientDateOfBirth;
+    }
   }
 
   public function returnNewClientWeight() {
-    
+    if (isset($_POST[self::$clientWeight])) {
+      self::$clientWeight = $_POST[self::$clientWeight];
+      return self::$clientWeight;
+    }
   }
 
   public function returnNewClientGoal() {
-    
+    if (isset($_POST[self::$clientGoal])) {
+      self::$clientGoal = $_POST[self::$clientGoal];
+      return self::$clientGoal;
+    }
+  }
+
+  public function message() {
+    $this->message = Messages::$wentGood;
   }
 
     // Exercise - exercises, weights, repetitions, restTime, client id
@@ -73,11 +89,11 @@ class ClientView {
             <label for="">Name:</label>
                 <input type="text" id="' . self::$clientName . '" name="' . self::$clientName . '" value="" />
                 <label for="">Date of birth:</label>
-                <input type="text" id="' . self::$clientDateOfBirth . '" name="' . self::$clientDateOfBirth. '" />
+                <input type="text" id="' . self::$clientDateOfBirth . '" name="' . self::$clientDateOfBirth . '" value="" />
                 <label for="">Weight (kg):</label>
-                <input type="text" id="' . self::$clientWeight . '" name="' . self::$clientWeight . '" />
+                <input type="text" id="' . self::$clientWeight . '" name="' . self::$clientWeight . '" value=""/>
                 <label for="">Goal:</label>
-                <input type="text" id="' . self::$clientGoal . '" name="' . self::$clientGoal. '" /></br>
+                <input type="text" id="' . self::$clientGoal . '" name="' . self::$clientGoal . '" value="" /></br>
             <input type="submit" id="' . self::$send . '" name="' . self::$send . '" value="Save"/>
 
         </form>
