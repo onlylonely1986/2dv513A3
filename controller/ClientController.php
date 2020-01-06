@@ -6,14 +6,14 @@ require_once("model/Client.php");
 
 class ClientController {
     private $searchView;
-    private $clientView;
+    private $AddNewClientView;
     private $storage;
     private $session;
     private $newClient;
 
-    public function __construct(\view\SearchView $searchView, \view\ClientView $clientView, \model\ClientStorage $storage, \model\SessionModel $session) {
+    public function __construct(\view\SearchView $searchView, \view\AddNewClientView $AddNewClientView, \model\ClientStorage $storage, \model\SessionModel $session) {
         $this->searchView = $searchView;
-        $this->clientView = $clientView;
+        $this->AddNewClientView = $AddNewClientView;
         $this->storage = $storage;
         $this->session = $session;
     }
@@ -23,14 +23,14 @@ class ClientController {
     }
 
     public function addNewClient() {
-        if($this->clientView->wantsToSaveNewClient()) {
-            if ($this->clientView->isAllFieldsFilled()) {
-                $user = $this->clientView->returnNewClientName();
-                $dateOfBirth = $this->clientView->returnNewClientDateOfBirth();
-                $weight = $this->clientView->returnNewClientWeight();
-                $goal = $this->clientView->returnNewClientGoal();
+        if($this->AddNewClientView->wantsToSaveNewClient()) {
+            if ($this->AddNewClientView->isAllFieldsFilled()) {
+                $user = $this->AddNewClientView->returnNewClientName();
+                $dateOfBirth = $this->AddNewClientView->returnNewClientDateOfBirth();
+                $weight = $this->AddNewClientView->returnNewClientWeight();
+                $goal = $this->AddNewClientView->returnNewClientGoal();
                 $this->storage->saveNewClientToDB($this->setNewClient($user, $dateOfBirth, $weight, $goal));
-                $this->clientView->message();                    
+                $this->AddNewClientView->message();                    
             }
             
         }

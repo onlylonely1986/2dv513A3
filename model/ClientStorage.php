@@ -54,8 +54,9 @@ class ClientStorage {
                 return false;
             }
             while($obj = $result->fetch_object()) {
-                $item = new Client($obj->name, $obj->dateOfBirth, $obj->weight, $obj->goal);
-                array_push($data, $item);
+                $client = new Client($obj->name, $obj->dateOfBirth, $obj->weight, $obj->goal);
+                $client->setId($obj->id);
+                array_push($data, $client);
             }
             
             
@@ -82,5 +83,9 @@ class ClientStorage {
         if(!$results) {
             throw new ConnectionException();
         }
+    }
+
+    public function saveNewExerciseToDB() {
+
     }
 }

@@ -7,7 +7,7 @@ class LayoutView {
     private $sessionLoggedin;
     private $sessionRegister;
     private $message = "";
-    private $clientView;
+    private $addNewClientView;
     private $exerciseView;
     private $foodView;
     private $searchView;
@@ -21,9 +21,10 @@ class LayoutView {
     private static $clientGoal = 'LayoutView::clientGoal';
     private static $removeBtn = 'LayoutView::remove';
 
-    public function __construct(ClientView $clientView, ExerciseView $exerciseView, FoodView $foodView, SearchView $searchView) 
+    public function __construct(AddNewClientView $addNewClientView, ClientView $clientView, ExerciseView $exerciseView, FoodView $foodView, SearchView $searchView) 
     {
         $this->message = "";
+        $this->addNewClientView = $addNewClientView;
         $this->clientView = $clientView;
         $this->exerciseView = $exerciseView;
         $this->foodView = $foodView;
@@ -57,13 +58,8 @@ class LayoutView {
                 ' . $this->message . '
                 
                 ' . $this->title() . '
-
-                <div class="topnav">
-                    <a class="active" href="?">Start</a>
-                    <a href="?clients">Clients</a>
-                    <a href="?exercises">Exercises</a>
-                    <a href="?food">Food</a>
-                </div>
+                ' . $this->nav() . '
+                
 
                 <div class="container">
                     ' . $this->body() . '
@@ -86,31 +82,39 @@ class LayoutView {
     private function title() 
         {
             return "<h1>PT 2 Client</h1>";
-            // if ($this->sessionRegister && isset($_GET['register'])) {
-            //   if($this->sessionLoggedin) {
-            //     return '<h2>Logged in</h2>';
-            //   } else {
-            //     return '<a href="?register">Register a new user</a>
-            //           <h2>Not logged in</h2>';
-            //   }
-            // } else if (isset($_GET['register'])) {
-            //   return '<a href="?">Back to login</a>
-            //             <h2>Register new member</h2>';
-            // } else if($this->sessionLoggedin) {
-            //   return '<h2>Logged in</h2>';
-            // }
-            // else {
-            //   return '<a href="?register">Register a new user</a>
-            //           <h2>Not logged in</h2>';
-            // }
+        }
+
+    private function nav()
+        {
+            if(isset($_GET['clientInfo']) || isset($_GET['exercises']) || isset($_GET['food'])) 
+                {
+                    return 
+                    '<div class="topnav">
+                        <a class="active" href="?">Start</a>
+                        <a href="?clientInfo">ClientInfo</a>
+                        <a href="?exercises">New Exercises</a>
+                        <a href="?food">New Food</a>
+                    </div>';
+                } else 
+                {
+                    return 
+                    '<div class="topnav">
+                        <a class="active" href="?">Start</a>
+                        <a href="?clients">New Client</a>
+                    </div>';
+                }
+           
         }
 
     private function body() 
         {
-            if (isset($_GET['exercises'])) {
+            if (isset($_GET['clientInfo'])) {
+                return $this->clientView->echoHTML();
+            }
+              else if (isset($_GET['exercises'])) {
                 return $this->exerciseView->echoHTML();
             } else if (isset($_GET['clients'])) {
-                return $this->clientView->echoHTML();
+                return $this->addNewClientView->echoHTML();
             } else if (isset($_GET['food'])) {
                 return $this->foodView->echoHTML();
             } else {

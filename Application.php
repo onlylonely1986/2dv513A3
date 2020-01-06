@@ -13,6 +13,7 @@ require_once("model/ClientStorage.php");
 require_once("model/SessionModel.php");
 // require_once("view/ExceptionHTMLMessages.php");
 require_once("view/LayoutView.php");
+require_once("view/AddNewClientView.php");
 require_once("view/ClientView.php");
 require_once("view/ExerciseView.php");
 require_once("view/FoodView.php");
@@ -22,6 +23,7 @@ require_once("controller/ClientController.php");
 class Application 
 {
     private $layoutView;
+    private $addNewClientView;
     private $clientView;
     private $exerciseView;
     private $clientController;
@@ -30,13 +32,14 @@ class Application
         {
             $this->session = new \model\SessionModel();
             $this->clientStorage = new \model\ClientStorage($settings);
+            $this->addNewClientView  = new \view\AddNewClientView();
             $this->clientView  = new \view\ClientView();
             $this->exerciseView  = new \view\ExerciseView();
             $this->foodView  = new \view\FoodView();
             $this->searchView  = new \view\SearchView();
-            $this->layoutView  = new \view\LayoutView($this->clientView, $this->exerciseView, $this->foodView, $this->searchView);
+            $this->layoutView  = new \view\LayoutView($this->addNewClientView, $this->clientView, $this->exerciseView, $this->foodView, $this->searchView);
             $this->clientController = new \controller\ClientController($this->searchView, 
-                $this->clientView, 
+                $this->addNewClientView, 
                 $this->clientStorage, 
                 $this->session);
         }
@@ -65,7 +68,7 @@ class Application
                     echo "Your favorite color is green!";
                     break;
                 default:
-                    echo "Your favorite color is neither red, blue, nor green!";
+                    echo "";
             }
 
            if ($this->clientController->addNewClient())
@@ -91,6 +94,6 @@ class Application
             }
             
             $this->searchView->setList($data); 
-            $this->layoutView->render($this->clientView);
+            $this->layoutView->render($this->addNewClientView);
         }
 }

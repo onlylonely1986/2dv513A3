@@ -1,5 +1,6 @@
 <?php 
 namespace view;
+
 class SearchView 
 {
     private $message = '';
@@ -32,7 +33,7 @@ class SearchView
             foreach ($this->clients as $client) 
             {
                 $clientName = $client->name;
-                $ret .= "<p>* <a href='#'>$clientName</a></p>";
+                $ret .= "<p>* <a href='?clientInfo" . $client->getId() . "'>" . $client->getId() . ": $clientName</a></p>";
             }
             return $ret;
         }
