@@ -7,6 +7,12 @@ class SearchView
     private static $clientSearch = 'SearchView::clientSearch';
     private static $send = 'SearchView::send';
     private $clients;
+
+    public function __conctruct ()
+        {
+            unset($_SESSION['pickedClientId']);
+            unset($_SESSION['pickedClientName']);
+        }
     
     public function echoHTML() 
         {
@@ -33,7 +39,7 @@ class SearchView
             foreach ($this->clients as $client) 
             {
                 $clientName = $client->name;
-                $ret .= "<p>* <a href='?clientInfo" . $client->getId() . "'>" . $client->getId() . ": $clientName</a></p>";
+                $ret .= "<p>* <a href='?clientInfo'>" . $client->getId() . ": $clientName</a></p>";
             }
             return $ret;
         }

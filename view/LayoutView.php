@@ -109,6 +109,8 @@ class LayoutView {
     private function body() 
         {
             if (isset($_GET['clientInfo'])) {
+                $_SESSION['pickedClientId'] = 1;
+                $_SESSION['pickedClientName'] = 'Lone';
                 return $this->clientView->echoHTML();
             }
               else if (isset($_GET['exercises'])) {
