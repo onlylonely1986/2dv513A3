@@ -39,7 +39,9 @@ class SearchView
             foreach ($this->clients as $client) 
             {
                 $clientName = $client->name;
-                $ret .= "<p>* <a href='?clientInfo'>" . $client->getId() . ": $clientName</a></p>";
+                // ?id=" . $client->getId() . "
+                $ret .= "<p>* <a href='?clientInfo?id" . $client->getId() . "
+                '>" . $client->getId() . ": $clientName</a></p>";
             }
             return $ret;
         }

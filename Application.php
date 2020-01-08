@@ -52,28 +52,9 @@ class Application
 
     private function changeState() 
         {
-            $state = "";
-
-            switch ($state) {
-                case "red": // search
-                    echo "Your favorite color is red!";
-                    break;
-                case "blue": // save new client
-                    echo "Your favorite color is blue!";
-                    break;
-                case "green": // save new exercise to client
-                    echo "Your favorite color is green!";
-                    break;
-                case "green": // save new food-advice to client
-                    echo "Your favorite color is green!";
-                    break;
-                default:
-                    echo "";
-            }
-
-           if ($this->clientController->addNewClient())
+           if ($this->clientController->pickedClient())
             {
-               echo "nåt nåt"; 
+               
             }
             // if($this->exerciseView->isSetExercise()) {
             //    $this->layoutView->render($this->exerciseView);
@@ -94,6 +75,6 @@ class Application
             }
             
             $this->searchView->setList($data); 
-            $this->layoutView->render($this->addNewClientView);
+            $this->layoutView->render();
         }
 }

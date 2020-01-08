@@ -20,6 +20,7 @@ class LayoutView {
     private static $clientWeight = 'LayoutView::clientWeight';
     private static $clientGoal = 'LayoutView::clientGoal';
     private static $removeBtn = 'LayoutView::remove';
+    private $client;
 
     public function __construct(AddNewClientView $addNewClientView, ClientView $clientView, ExerciseView $exerciseView, FoodView $foodView, SearchView $searchView) 
     {
@@ -108,12 +109,21 @@ class LayoutView {
 
     private function body() 
         {
-            if (isset($_GET['clientInfo'])) {
-                $_SESSION['pickedClientId'] = 1;
-                $_SESSION['pickedClientName'] = 'Lone';
-                return $this->clientView->echoHTML();
-            }
-              else if (isset($_GET['exercises'])) {
+            echo "<br/>";
+            echo $_SERVER['REQUEST_URI'];
+            $id = substr($_SERVER['REQUEST_URI'], -1); // returns "s"$_SERVER['REQUEST_URI'];
+            echo "<br/>";
+            echo "?clientInfo?id". $id ."";
+            print_r($_GET);
+            if (isset($_GET["clientInfo?id". $id .""])) {
+                /// echo "yepp";
+                echo $_SERVER['REQUEST_URI'];
+                // $_SESSION['pickedClientId'] = 1;
+                // $_SESSION['pickedClientName'] = 'Lone';
+
+                // TODO gör från controllern
+                return $this->clientView->echoHTML($name, $id);
+            } else if (isset($_GET['exercises'])) {
                 return $this->exerciseView->echoHTML();
             } else if (isset($_GET['clients'])) {
                 return $this->addNewClientView->echoHTML();
@@ -122,21 +132,11 @@ class LayoutView {
             } else {
                 return $this->searchView->echoHTML();
             }
-            
-            //     if ($this->sessionRegister && isset($_GET['register'])){
-            //       return $v->echoHTML($this->sessionLoggedin);
-            //     } else if (isset($_GET['register'])) {
-            //       return $rv->echoHTML();
-            //     } else {
-            //       return $v->echoHTML($this->sessionLoggedin);
-            //     }
         }
 
-    private function exerciseLinkPressed()
+
+    public function setPickedClient(\model\Client $client) 
         {
-            if (isset($_GET['exercises'])) {
-                echo "länken funkar";
-            }
-          // return isset($_GET[$this->sessionIndex]);
+            $this->client = $client;
         }
 }

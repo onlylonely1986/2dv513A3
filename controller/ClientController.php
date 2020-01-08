@@ -10,6 +10,7 @@ class ClientController {
     private $storage;
     private $session;
     private $newClient;
+    private $client;
 
     public function __construct(\view\SearchView $searchView, \view\AddNewClientView $AddNewClientView, \model\ClientStorage $storage, \model\SessionModel $session) {
         $this->searchView = $searchView;
@@ -36,8 +37,19 @@ class ClientController {
         }
     }
 
+    public function pickedClient() : bool 
+    {
+        if ($this->client) 
+        {
+            echo "japp valt!";
+            return true;
+        }
+        echo "ejjj valt!";
+        return false;
+    }
+
 
     private function setNewClient($name, $dateOfBirth, $weight, $goal) {
-        return new \model\Client($name, $dateOfBirth, $weight, $goal);
+       $this->client = new \model\Client($name, $dateOfBirth, $weight, $goal);
     }
 }
