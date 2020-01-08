@@ -31,7 +31,15 @@ class SearchView
         {
             $this->clients = $data;
         }
-
+    
+    public function getRequest() : bool {
+        $id = substr($_SERVER['REQUEST_URI'], -1);
+        if (isset($_GET["clientInfo?id". $id .""])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     
     private function iterateOverClients() 
         {

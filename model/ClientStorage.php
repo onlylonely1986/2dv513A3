@@ -88,4 +88,20 @@ class ClientStorage {
     public function saveNewExerciseToDB() {
 
     }
+
+    public function saveNewFoodToDB() {
+
+    }
+
+    public function getClientInfo($id) {
+
+    }
+
+    public function getClientExercises($id) {
+        
+    }
+
+    public function getClientFood($id) {
+        
+    }
 }

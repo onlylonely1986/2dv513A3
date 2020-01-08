@@ -19,6 +19,7 @@ require_once("view/ExerciseView.php");
 require_once("view/FoodView.php");
 require_once("view/SearchView.php");
 require_once("controller/ClientController.php");
+require_once("controller/States.php");
 
 class Application 
 {
@@ -39,7 +40,8 @@ class Application
             $this->searchView  = new \view\SearchView();
             $this->layoutView  = new \view\LayoutView($this->addNewClientView, $this->clientView, $this->exerciseView, $this->foodView, $this->searchView);
             $this->clientController = new \controller\ClientController($this->searchView, 
-                $this->addNewClientView, 
+                $this->addNewClientView,
+                $this->clientView,
                 $this->clientStorage, 
                 $this->session);
         }
@@ -52,14 +54,27 @@ class Application
 
     private function changeState() 
         {
-           if ($this->clientController->pickedClient())
-            {
-               
+            $whatState = $this->clientController->getState();
+            switch ($whatState) {
+                case \controller\States::$pickClient:
+                    // code to be executed if n=label1;
+                    break;
+                case \controller\States::$newExercise:
+                    // code to be executed if n=label2;
+                    break;
+                case \controller\States::$newFood:
+                    // code to be executed if n=label3;
+                    break;
+                case \controller\States::$newClient:
+                    // code to be executed if n=label3;
+                    break;
+                case \controller\States::$newSearch:
+                    // code to be executed if n=label3;
+                    break;
+                default:
+                    return;
+                    // code to be executed if n is different from all labels;
             }
-            // if($this->exerciseView->isSetExercise()) {
-            //    $this->layoutView->render($this->exerciseView);
-            // }
-            
         }
 
     private function generateOutput()

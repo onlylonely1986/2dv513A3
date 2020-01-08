@@ -109,21 +109,22 @@ class LayoutView {
 
     private function body() 
         {
-            echo "<br/>";
-            echo $_SERVER['REQUEST_URI'];
-            $id = substr($_SERVER['REQUEST_URI'], -1); // returns "s"$_SERVER['REQUEST_URI'];
-            echo "<br/>";
-            echo "?clientInfo?id". $id ."";
-            print_r($_GET);
-            if (isset($_GET["clientInfo?id". $id .""])) {
-                /// echo "yepp";
-                echo $_SERVER['REQUEST_URI'];
-                // $_SESSION['pickedClientId'] = 1;
-                // $_SESSION['pickedClientName'] = 'Lone';
+            // echo "<br/>";
+            // echo $_SERVER['REQUEST_URI'];
+            // $id = substr($_SERVER['REQUEST_URI'], -1); // returns "s"$_SERVER['REQUEST_URI'];
+            // echo "<br/>";
+            // echo "?clientInfo?id". $id ."";
+            // print_r($_GET);
+            // if (isset($_GET["clientInfo?id". $id .""])) {
+            //     /// echo "yepp";
+            //     echo $_SERVER['REQUEST_URI'];
+            //     // $_SESSION['pickedClientId'] = 1;
+            //     // $_SESSION['pickedClientName'] = 'Lone';
 
-                // TODO gör från controllern
-                return $this->clientView->echoHTML($name, $id);
-            } else if (isset($_GET['exercises'])) {
+            //     // TODO gör från controllern
+            //     return $this->clientView->echoHTML($name, $id);
+            // }
+            if (isset($_GET['exercises'])) {
                 return $this->exerciseView->echoHTML();
             } else if (isset($_GET['clients'])) {
                 return $this->addNewClientView->echoHTML();
