@@ -13,7 +13,7 @@ require_once("model/ClientStorage.php");
 require_once("model/SessionModel.php");
 // require_once("view/ExceptionHTMLMessages.php");
 require_once("view/LayoutView.php");
-require_once("view/AddNewClientView.php");
+require_once("view/addClientView.php");
 require_once("view/ClientView.php");
 require_once("view/ExerciseView.php");
 require_once("view/FoodView.php");
@@ -24,26 +24,31 @@ require_once("controller/States.php");
 class Application 
 {
     private $layoutView;
-    private $addNewClientView;
-    private $clientView;
+    private $addClientView;
+    private $ClientView;
     private $exerciseView;
-    private $clientController;
+    private $ClientController;
 
     public function __construct($settings) 
         {
             $this->session = new \model\SessionModel();
-            $this->clientStorage = new \model\ClientStorage($settings);
-            $this->addNewClientView  = new \view\AddNewClientView();
-            $this->clientView  = new \view\ClientView();
+            $this->ClientStorage = new \model\ClientStorage($settings);
+            $this->addClientView  = new \view\addClientView();
+            $this->ClientView  = new \view\ClientView();
             $this->exerciseView  = new \view\ExerciseView();
             $this->foodView  = new \view\FoodView();
             $this->searchView  = new \view\SearchView();
-            $this->layoutView  = new \view\LayoutView($this->addNewClientView, $this->clientView, $this->exerciseView, $this->foodView, $this->searchView);
-            $this->clientController = new \controller\ClientController($this->searchView, 
-                $this->addNewClientView,
-                $this->clientView,
-                $this->clientStorage, 
-                $this->session);
+            $this->layoutView  = new \view\LayoutView($this->ClientView, $this->searchView);
+            /* $this->addClientView, 
+                $this->exerciseView,
+                $this->foodView,
+                $this->searchView */
+            $this->ClientController = new \controller\ClientController($this->searchView, 
+                $this->addClientView,
+                $this->ClientView,
+                $this->ClientStorage, 
+                $this->session
+            );
         }
 
     public function run() 
@@ -54,8 +59,8 @@ class Application
 
     private function changeState() 
         {
-            $whatState = $this->clientController->getState();
-            switch ($whatState) {
+            $whatState = $this->ClientController->handleClient();
+            /*switch ($whatState) {
                 case \controller\States::$pickClient:
                     // code to be executed if n=label1;
                     break;
@@ -74,15 +79,16 @@ class Application
                 default:
                     return;
                     // code to be executed if n is different from all labels;
-            }
+            } */
+
         }
 
     private function generateOutput()
         {
             $data;
             try {
-                if ($this->clientStorage->connect()) {
-                    $data = $this->clientStorage->getClientsFromDB();
+                if ($this->ClientStorage->connect()) {
+                    $data = $this->ClientStorage->getClientsFromDB();
                 }
             } catch (\model\ConnectionException $e) {
                 echo "errrrrooor";

@@ -37,12 +37,12 @@ class ClientView
 
         }
 
-        public function echoHTML($name, $id)
+        public function echoHTML()
         {
             return "
-            <p>This is the page of a specific client <b>" . $name. "</b> with the id: " . $id . " </p>
-            " . $this->createTableOverClient() . "
-            ";
+                <p>This is the page of a specific client <b>" . $name. "</b> with the id: " . $id . " </p>
+                " . $this->createTableOverClient() . "
+                ";
         }
 
     }

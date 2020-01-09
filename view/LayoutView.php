@@ -4,42 +4,12 @@ namespace view;
 
 class LayoutView {
 
-    private $sessionLoggedin;
-    private $sessionRegister;
     private $message = "";
-    private $addNewClientView;
-    private $exerciseView;
-    private $foodView;
-    private $searchView;
-    private $sessionIndex = 'exercises';
-    private $sessionIndex2 = 'clients';
-    private $sessionIndex3 = 'food';
-    private static $send = 'LayoutView::send';
-    private static $clientName = 'LayoutView::clientName';
-    private static $clientPersNr = 'LayoutView::clientPersNr';
-    private static $clientWeight = 'LayoutView::clientWeight';
-    private static $clientGoal = 'LayoutView::clientGoal';
-    private static $removeBtn = 'LayoutView::remove';
-    private $client;
+    private $view;
 
-    public function __construct(AddNewClientView $addNewClientView, ClientView $clientView, ExerciseView $exerciseView, FoodView $foodView, SearchView $searchView) 
-    {
-        $this->message = "";
-        $this->addNewClientView = $addNewClientView;
-        $this->clientView = $clientView;
-        $this->exerciseView = $exerciseView;
-        $this->foodView = $foodView;
-        $this->searchView = $searchView;
-    }
-    
-    public function setLoggedinState($sessionLoggedin) 
-    {
-        $this->sessionLoggedin = $sessionLoggedin;
-    }
-    
-    public function setRegisterState($sessionRegister) 
-    {
-        $this->sessionRegister = $sessionRegister;
+    public function __construct(IView $view) 
+    { 
+        $this->view = $view; 
     }
     
     public function setMessage($message) 
@@ -60,25 +30,14 @@ class LayoutView {
                 
                 ' . $this->title() . '
                 ' . $this->nav() . '
-                
-
                 <div class="container">
                     ' . $this->body() . '
                 </div>
-                    ' . $this->ifLoggedIn() . '
                 </body>
             </html>
         ';
     }
     
-
-    private function ifLoggedIn() 
-    {
-        if ($this->sessionLoggedin){
-            return '<div> ' . $sv->echoHTML($this->sessionLoggedin) . ' </div';
-        }
-    }
-
 
     private function title() 
         {
@@ -107,37 +66,22 @@ class LayoutView {
            
         }
 
-    private function body() 
+    private function body()
         {
-            // echo "<br/>";
-            // echo $_SERVER['REQUEST_URI'];
-            // $id = substr($_SERVER['REQUEST_URI'], -1); // returns "s"$_SERVER['REQUEST_URI'];
-            // echo "<br/>";
-            // echo "?clientInfo?id". $id ."";
-            // print_r($_GET);
-            // if (isset($_GET["clientInfo?id". $id .""])) {
-            //     /// echo "yepp";
-            //     echo $_SERVER['REQUEST_URI'];
-            //     // $_SESSION['pickedClientId'] = 1;
-            //     // $_SESSION['pickedClientName'] = 'Lone';
-
-            //     // TODO gör från controllern
-            //     return $this->clientView->echoHTML($name, $id);
-            // }
+            $this->view->echoHTML();
+            /*if (isset($_GET['id'])) { //Det är lite rörigt. :'D typ
+                return $this->clientView->echoHTML();
+            }
+            return $this->searchView->echoHTML();
+            /*
             if (isset($_GET['exercises'])) {
                 return $this->exerciseView->echoHTML();
             } else if (isset($_GET['clients'])) {
-                return $this->addNewClientView->echoHTML();
+                return $this->addClientView->echoHTML();
             } else if (isset($_GET['food'])) {
                 return $this->foodView->echoHTML();
             } else {
-                return $this->searchView->echoHTML();
-            }
-        }
-
-
-    public function setPickedClient(\model\Client $client) 
-        {
-            $this->client = $client;
+            
+            } */
         }
 }

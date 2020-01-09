@@ -7,7 +7,7 @@ require_once("controller/States.php");
 
 class ClientController {
     private $searchView;
-    private $addNewClientView;
+    private $addClientView;
     private $clientView;
     private $storage;
     private $session;
@@ -16,29 +16,27 @@ class ClientController {
     private $exercises;
     private $food;
 
-    public function __construct(\view\SearchView $searchView, \view\AddNewClientView $addNewClientView, \view\ClientView $clientView, \model\ClientStorage $storage, \model\SessionModel $session) {
+    public function __construct(\view\SearchView $searchView, \view\addClientView $addClientView, \view\ClientView $clientView, \model\ClientStorage $storage, \model\SessionModel $session) {
         $this->searchView = $searchView;
-        $this->addNewClientView = $addNewClientView;
+        $this->addClientView = $addClientView;
         $this->clientView = $clientView;
         $this->storage = $storage;
         $this->session = $session;
     }
 
-    public function getState() {
+    public function handleClient() {
         if ($this->pickedClient()) {
-            // vald client spara i session
+            // vald client spara i session?
             // hämta all info från storage
             // skicka med till clientview
             $id = substr($_SERVER['REQUEST_URI'], -1);
-            // Set session variables
-            $_SESSION["pickedClientId"] = $id;
             $this->client = $this->storage->getClientInfo($id);
             $this->exercises = $this->storage->getClientExercises($id);
             $this->food = $this->storage->getClientFood($id);
             $this->clientView->setClient($this->client);
             $this->clientView->setExercise($this->exercises);
             $this->clientView->setFood($this->food);
-            return States::$pickClient;
+            return;
         } else if($this->registerNewExercise()) {
             // hämta info från exerciseview
             // kontrollera info
@@ -46,15 +44,15 @@ class ClientController {
             // skicka med message till clientInfoView
             // hämta uppdaterad info från storage
             // uppdatera clientInfoview
-            return States::$newExercise;
+            return;
         } else if($this->registerNewFood()) {
             // hämta info från foodview
             // kontrollera info
             // spara i storage
-            // skicka med message till clientInfoView
+            // skicka med message till clientInfoView   
             // hämta uppdaterad info från storage
             // uppdatera clientInfoview
-            return States::$newFood;
+            return;
         } else if ($this->registerNewClient()) {
             // hämta info från clientview
             // kontrollera info
@@ -62,14 +60,14 @@ class ClientController {
             // skicka med message till clientInfoView
             // hämta uppdaterad info från storage
             // uppdatera clientInfoview
-            return States::$newClient;
+            return;
         } else if ($this->newSearch()) {
             // hämta info från searchview
             // hämta info från storage
             // skicka message till searchview
             // hämta från storage
             // rendera lista med sökförslag
-            return States::$newSearch;
+            return;
         } else {
             return;
         }
@@ -79,8 +77,6 @@ class ClientController {
     {
         if ($this->searchView->getRequest()) 
         {
-            $id = substr($_SERVER['REQUEST_URI'], -1);
-            echo "id is: " . $id . "  .. ";
             return true;
         }
         
@@ -104,16 +100,15 @@ class ClientController {
     }
 
     public function addNewClient() {
-        if($this->AddNewClientView->wantsToSaveNewClient()) {
-            if ($this->AddNewClientView->isAllFieldsFilled()) {
-                $user = $this->AddNewClientView->returnNewClientName();
-                $dateOfBirth = $this->AddNewClientView->returnNewClientDateOfBirth();
-                $weight = $this->AddNewClientView->returnNewClientWeight();
-                $goal = $this->AddNewClientView->returnNewClientGoal();
+        if($this->addClientView->wantsToSaveNewClient()) {
+            if ($this->addClientView->isAllFieldsFilled()) {
+                $user = $this->addClientView->returnNewClientName();
+                $dateOfBirth = $this->addClientView->returnNewClientDateOfBirth();
+                $weight = $this->addClientView->returnNewClientWeight();
+                $goal = $this->addClientView->returnNewClientGoal();
                 $this->storage->saveNewClientToDB($this->setNewClient($user, $dateOfBirth, $weight, $goal));
-                $this->AddNewClientView->message();                    
+                $this->addClientView->message();                    
             }
-            
         }
     }
 

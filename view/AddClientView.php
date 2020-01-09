@@ -4,14 +4,14 @@ namespace view;
 
 require_once("Messages.php");
 
-class AddNewClientView {
-  private static $clientName = 'AddNewClientView::clientName';
-  private static $clientWeight = 'AddNewClientView::clientWeight';
-  private static $clientDateOfBirth = 'AddNewClientView::clientDateOfBirth';
-  private static $clientGoal = 'AddNewClientView::clientGoal';
-  private static $send = 'AddNewClientView::send';
+class addClientView {
+  private static $clientName = 'addClientView::clientName';
+  private static $clientWeight = 'addClientView::clientWeight';
+  private static $clientDateOfBirth = 'addClientView::clientDateOfBirth';
+  private static $clientGoal = 'addClientView::clientGoal';
+  private static $send = 'addClientView::send';
 
-  private static $removeBtn = 'AddNewClientView::remove';
+  private static $removeBtn = 'addClientView::remove';
   private $message;
 
   public function __construct() {
