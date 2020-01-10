@@ -59,7 +59,7 @@ class ClientController {
             // hämta uppdaterad info från storage
             // uppdatera clientInfoview
             $this->foodView  = new \view\FoodView();
-            $this->layoutView->setView($this->FoodView->echoHTML());
+            $this->layoutView->setView($this->foodView->echoHTML());
             return;
         } else if ($this->registerNewClient()) {
             // hämta info från clientview
@@ -108,10 +108,18 @@ class ClientController {
     }
 
     public function registerNewExercise() : bool {
+        if (isset($_GET['exercises'])) {
+
+            return true;
+        }
         return false;
     }
 
     public function registerNewFood() : bool {
+        if (isset($_GET['food'])) {
+
+            return true;
+        }
         return false;
     }
 

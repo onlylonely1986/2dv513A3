@@ -52,9 +52,12 @@ class LayoutView
             return "<h1>PT 2 Client</h1>";
         }
 
+
+
     private function nav()
         {
-            if(isset($_GET['clientInfo']) || isset($_GET['exercises']) || isset($_GET['food'])) 
+            // if(isset($_GET['clientInfo']) || isset($_GET['exercises']) || isset($_GET['food']))
+            if(isset($_GET['client'])) 
                 {
                     return 
                     '<div class="topnav">
@@ -77,19 +80,5 @@ class LayoutView
     private function body()
         {
             return $this->view;
-            /*if (isset($_GET['id'])) { //Det är lite rörigt. :'D typ
-                return $this->clientView->echoHTML();
-            }
-            return $this->searchView->echoHTML();
-            /*
-            if (isset($_GET['exercises'])) {
-                return $this->exerciseView->echoHTML();
-            } else if (isset($_GET['clients'])) {
-                return $this->addClientView->echoHTML();
-            } else if (isset($_GET['food'])) {
-                return $this->foodView->echoHTML();
-            } else {
-            
-            } */
         }
 }

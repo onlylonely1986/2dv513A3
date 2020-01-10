@@ -17,7 +17,7 @@ class FoodView implements IView
     public function echoHTML() {
         return 
             '<h2>Add new food guidlines to database:</h2>
-            ' . $this->foodFormHTML() . '
+                ' . $this->foodFormHTML() . '
             ';
     }
 
