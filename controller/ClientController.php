@@ -31,7 +31,7 @@ class ClientController {
             // vald client spara i session?
             // hämta all info från storage
             // skicka med till clientview
-            $id = substr($_SERVER['REQUEST_URI'], -1);
+            $id = $this->searchView->getId();
             $this->client = $this->storage->getClientInfo($id);
             $this->exercises = $this->storage->getClientExercises($id);
             $this->food = $this->storage->getClientFood($id);
@@ -104,7 +104,6 @@ class ClientController {
         {
             return true;
         }
-        
         return false;
     }
 
