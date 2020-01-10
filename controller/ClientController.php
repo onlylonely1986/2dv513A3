@@ -78,6 +78,9 @@ class ClientController
                 $this->layoutView->setView($this->addClientView->echoHTML());
                 return;
             } else if ($this->startPageReq()) {
+                if ($this->searchReq()) {
+
+                }
                 // hämta info från searchview
                 // hämta info från storage
                 // skicka message till searchview
@@ -128,6 +131,14 @@ class ClientController
 
     private function startPageReq() : bool {
         if (isset($_GET[''])) {
+
+            return true;
+        }
+        return false;
+    }
+
+    private function searchReq() : bool {
+        if (isset($_GET['search'])) {
 
             return true;
         }
