@@ -40,6 +40,22 @@ class ClientView implements IView
             </br><b>Birthdate:</b> " . $this->client->getBirth() . "
             </br><b>Goal:</b> " . $this->client->getGoal() . "
             </br><b>Weight:</b> " . $this->client->getWeight() . "
+            </br>
+            </br>
+            <table style='background-color:yellow; color:black'>
+            <tr>
+                <th><b>Name:</b></th>
+                <th><b>Birthdate:</b></th>
+                <th><b>Goal:</b></th>
+                <th><b>Weight:</b></th>
+            </tr>
+            <tr>
+                <td>" . $this->client->getName() . "</td>
+                <td>" . $this->client->getBirth() . "</td>
+                <td>" . $this->client->getGoal() . "</td>
+                <td>" . $this->client->getWeight() . "</td>
+            </tr>
+            </table>
             ";
         }
 
