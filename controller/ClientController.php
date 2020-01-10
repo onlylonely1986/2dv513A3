@@ -69,6 +69,19 @@ class ClientController {
             // hämta uppdaterad info från storage
             // uppdatera clientInfoview
             $this->addClientView  = new \view\addClientView();
+            if ($this->addClientView->wantsToSaveNewClient()) {
+                if ($this->addClientView->isAllFieldsFilled()) {
+                    $name = $this->addClientView->returnNewClientName();
+                    $dateOfBirth = $this->addClientView->returnNewClientDateOfBirth();
+                    $weight = $this->addClientView->returnNewClientWeight();
+                    $goal = $this->addClientView->returnNewClientGoal();
+                    if ($this->storage->saveNewClientToDB(new \model\Client($name, $dateOfBirth, $weight, $goal))) {
+                        $this->addClientView->message();
+                    } else {
+                        $this->addClientView->messageFail();
+                    }
+                } 
+            } 
             $this->layoutView->setView($this->addClientView->echoHTML());
             return;
         } else if ($this->newSearch()) {
@@ -106,6 +119,7 @@ class ClientController {
     public function registerNewClient() : bool {
        
         if (isset($_GET['clients'])) {
+
             return true;
         }
         return false;

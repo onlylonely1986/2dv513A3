@@ -79,6 +79,10 @@ class AddClientView implements IView
     $this->message = Messages::$wentGood;
   }
 
+  public function messageFail() {
+    $this->message = Messages::$wentBad;
+  }
+
     // Exercise - exercises, weights, repetitions, restTime, client id
     // Food - protein, fat, carbs, amount, client id
 

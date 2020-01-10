@@ -66,7 +66,7 @@ class ClientStorage {
         }
     }
 
-    public function saveNewClientToDB(Client $client) {
+    public function saveNewClientToDB(Client $client) : bool {
         $this->connect();
         $sql = "INSERT INTO " . self::$dbTable;
         $sql .= "(";
@@ -79,10 +79,12 @@ class ClientStorage {
         $sql .= "'". $client->getWeight() ."', "; 
         $sql .= "'". $client->getGoal()   ."'";; 
         $sql .= ");";
-        $results = self::$conn->query($sql);       
+        
+        $results = self::$conn->query($sql);
         if(!$results) {
             throw new ConnectionException();
         }
+        return true;
     }
 
     public function saveNewExerciseToDB() {
