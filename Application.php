@@ -9,37 +9,33 @@
  * @link https://github.com/onlylonely1986/2dv513A3
  */
 
-require_once("model/ClientStorage.php");
 require_once("model/SessionModel.php");
-// require_once("view/ExceptionHTMLMessages.php");
+require_once("model/ClientStorage.php");
 require_once("view/LayoutView.php");
-require_once("view/addClientView.php");
-require_once("view/ClientView.php");
-require_once("view/ExerciseView.php");
-require_once("view/FoodView.php");
 require_once("view/SearchView.php");
+require_once("view/Messages.php");
 require_once("controller/ClientController.php");
-require_once("controller/States.php");
 
 class Application 
 {
+    private $session;
+    private $clientStorage;
     private $layoutView;
-    /*private $addClientView;
-    private $ClientView;
-    private $exerciseView; */
-    private $clientController; 
-    // private $view;
+    private $searchView;
+    private $userMsg;
+    private $clientController;
+    
 
     public function __construct($settings) 
         {
             $this->session = new \model\SessionModel();
-            $this->ClientStorage = new \model\ClientStorage($settings);
+            $this->clientStorage = new \model\ClientStorage($settings);
             $this->layoutView  = new \view\LayoutView();
             $this->searchView  = new \view\SearchView();
             $this->clientController = new \controller\ClientController(
                 $this->layoutView,
                 $this->searchView,
-                $this->ClientStorage,
+                $this->clientStorage,
                 $this->session
             );
         }
@@ -54,12 +50,13 @@ class Application
         {
             $data;
             try {
-                if ($this->ClientStorage->connect()) {
-                    $data = $this->ClientStorage->getClientsFromDB();
+                if ($this->clientStorage->connect()) {
+                    $data = $this->clientStorage->getClientsFromDB();
                 }
             } catch (\model\ConnectionException $e) {
-                echo "errrrrooor";
-                // $this->layoutView->setMessage($this->userMsg::$messageToUserConn);
+                // echo "errrrrooor";
+                $this->userMsg = new \view\Messages();
+                $this->layoutView->setMessage($this->userMsg::$messageToUserConn);
             }
             
             $this->searchView->setList($data);

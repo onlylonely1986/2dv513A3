@@ -2,8 +2,6 @@
 
 namespace view;
 
-// require_once("IView.php");
-
 class LayoutView
 {
 

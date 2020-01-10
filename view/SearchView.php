@@ -17,7 +17,7 @@ class SearchView implements IView
     
     public function echoHTML() 
         {
-            return 
+            return
                 '<h2>Search:</h2>
                     <form href="?" method="POST">
                         <input type="text" id="' . self::$clientSearch . '" name="' . self::$clientSearch . '" />
@@ -33,18 +33,23 @@ class SearchView implements IView
             $this->clients = $data;
         }
 
-    public function getRequest() : bool {
-        if (isset($_GET['id'])) {
-            $this->id = $_GET['id'];
-            return true;
-        } else {
-            return false; 
+    public function getRequest() : bool
+        {
+            if (isset($_GET['id'])) 
+            {
+                $this->id = $_GET['id'];
+                return true;
+            } 
+            else 
+            {
+                return false; 
+            }
         }
-    }
 
-    public function getID() : int {
-        return $this->id;
-    }
+    public function getID() : int 
+        {
+            return $this->id;
+        }
 
     private function iterateOverClients() 
         {

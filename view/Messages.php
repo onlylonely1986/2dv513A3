@@ -2,7 +2,9 @@
 
 namespace view;
 
-class Messages {
+class Messages 
+{
+    public static $messageToUserConn = 'Something went wrong when trying to connect to database.';
     public static $saveNewClient = 'Saved a new client to DB.';
     public static $fillAll = 'Please fill all fields with data.';
     public static $wentGood = 'Saved new client successfully.';
