@@ -36,6 +36,7 @@ class SearchView implements IView
         // $id = substr($_SERVER['REQUEST_URI'], -1);
         
         if (isset($_GET['id'])) { //
+            var_dump($_GET);
             return true;
         } else {
             return false; 
