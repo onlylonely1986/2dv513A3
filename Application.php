@@ -24,25 +24,22 @@ require_once("controller/States.php");
 class Application 
 {
     private $layoutView;
-    private $addClientView;
+    /*private $addClientView;
     private $ClientView;
-    private $exerciseView;
+    private $exerciseView; */
     private $clientController; 
-    private $view;
+    // private $view;
 
     public function __construct($settings) 
         {
             $this->session = new \model\SessionModel();
             $this->ClientStorage = new \model\ClientStorage($settings);
-            $this->addClientView  = new \view\addClientView();
-            $this->ClientView  = new \view\ClientView();
-            $this->exerciseView  = new \view\ExerciseView();
-            $this->foodView  = new \view\FoodView();
+            $this->layoutView  = new \view\LayoutView();
             $this->searchView  = new \view\SearchView();
-            $this->clientController = new \controller\ClientController($this->searchView, 
-                $this->addClientView,
-                $this->ClientView,
-                $this->ClientStorage, 
+            $this->clientController = new \controller\ClientController(
+                $this->layoutView,
+                $this->searchView,
+                $this->ClientStorage,
                 $this->session
             );
         }
@@ -55,33 +52,6 @@ class Application
 
     private function changeState() 
         {
-            $this->view = $this->clientController->handleClient();
-            
-            /*switch ($whatState) {
-                case \controller\States::$pickClient:
-                    // code to be executed if n=label1;
-                    break;
-                case \controller\States::$newExercise:
-                    // code to be executed if n=label2;
-                    break;
-                case \controller\States::$newFood:
-                    // code to be executed if n=label3;
-                    break;
-                case \controller\States::$newClient:
-                    // code to be executed if n=label3;
-                    break;
-                case \controller\States::$newSearch:
-                    // code to be executed if n=label3;
-                    break;
-                default:
-                    return;
-                    // code to be executed if n is different from all labels;
-            } */
-
-        }
-
-    private function generateOutput()
-        {
             $data;
             try {
                 if ($this->ClientStorage->connect()) {
@@ -91,8 +61,13 @@ class Application
                 echo "errrrrooor";
                 // $this->layoutView->setMessage($this->userMsg::$messageToUserConn);
             }
-            $this->layoutView  = new \view\LayoutView($this->view);
-            $this->searchView->setList($data); 
+            
+            $this->searchView->setList($data);
+            $this->view = $this->clientController->handleClient();
+        }
+
+    private function generateOutput()
+        {
             $this->layoutView->render();
         }
 }
