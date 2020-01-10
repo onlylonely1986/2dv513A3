@@ -95,8 +95,32 @@ class ClientStorage {
 
     }
 
-    public function getClientInfo($id) {
-
+    public function getClientInfo($id) : Client {
+        $query = "SELECT * FROM  " . self::$dbTable . " WHERE id = '" . $id . "'";
+        
+        if ($result = self::$conn->query($query)) 
+        {
+            $obj = $result->fetch_object();
+            $client = new Client($obj->name, $obj->dateOfBirth, $obj->weight, $obj->goal);
+            $client->setId($obj->id);
+            return $client;
+            /*if(!$result) 
+            {
+                throw new ConnectionException();
+                return false;
+            }
+            while($obj = $result->fetch_object()) {
+                $client = new Client($obj->name, $obj->dateOfBirth, $obj->weight, $obj->goal);
+                $client->setId($obj->id);
+                array_push($data, $client);
+            }
+            
+            
+            $result->close();
+            return $data; */
+            
+        }
+        
     }
 
     public function getClientExercises($id) {

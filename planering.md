@@ -40,7 +40,7 @@
 
 ### KOMMENTAR
 Ska varje food vara kopplat till Klient eller fristående? kopplat
-Så fort klienten försvinner så försvinner även maten? japp
+Så fort klienten försvinner så försvinner även maten? japp tänkte jag först, men smartare att inte ha det kopplat till specifik person?
 1. Check inputs?
   1. Vilka inputs ska finnas? CRUD? Create, Update, Delete? Vilken sida? 
   * searchview ska visa en lista med Clients (länkarna)

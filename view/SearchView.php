@@ -6,6 +6,7 @@ require_once("IView.php");
 class SearchView implements IView
 {
     private $message = '';
+    private $id;
     private static $clientSearch = 'SearchView::clientSearch';
     private static $send = 'SearchView::send';
     private $clients;
@@ -33,13 +34,16 @@ class SearchView implements IView
         }
 
     public function getRequest() : bool {
-        // $id = substr($_SERVER['REQUEST_URI'], -1);
-        
-        if (isset($_GET['id'])) { //
+        if (isset($_GET['id'])) {
+            $this->id = $_GET['id'];
             return true;
         } else {
             return false; 
         }
+    }
+
+    public function getID() : int {
+        return $this->id;
     }
 
     private function iterateOverClients() 
