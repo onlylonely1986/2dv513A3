@@ -3,6 +3,8 @@
 namespace controller;
 
 require_once("model/Client.php");
+require_once("model/Exercise.php");
+
 require_once("controller/States.php");
 require_once("view/ClientView.php");
 require_once("view/AddClientView.php");
@@ -170,7 +172,7 @@ class ClientController
 
                     if ($this->storage->saveNewExerciseToDB(new \model\Exercise($exercise, $weight, $repetitions, $sets, $rest)))
                         {
-                            // $this->exerciseView->message();
+                            $this->exerciseView->message();
                         }
                 }
         }

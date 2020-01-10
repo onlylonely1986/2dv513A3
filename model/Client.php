@@ -39,6 +39,4 @@ class Client {
     public function getId() {
         return $this->id;
     }
-
-
 }

@@ -20,6 +20,7 @@ class ClientStorage {
         self::$passWord = $settings->dbpassWord;
         self::$dbName = $settings->dbName;
         self::$dbTableClients = $settings->dbTableClients;
+        self::$dbTableExercises = $settings->dbTableExercises;
     }
 
     public function connect() 
@@ -99,12 +100,13 @@ class ClientStorage {
         $sql .= "'". $exercise->getExercise() ."', ";
         $sql .= "'". $exercise->getWeight() ."', "; 
         $sql .= "'". $exercise->getRepetitions() ."', "; 
-        $sql .= "'". $exercise->getSets()   ."', ";; 
-        $sql .= "'". $exercise->getRest()   ."'";; 
+        $sql .= "'". $exercise->getSets() ."', ";; 
+        $sql .= "'". $exercise->getRest() ."'";; 
 
         $sql .= ");";
         
         $results = self::$conn->query($sql);
+
         if(!$results) {
             throw new ConnectionException();
         }

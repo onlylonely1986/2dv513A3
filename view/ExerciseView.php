@@ -2,6 +2,7 @@
 
 namespace view;
 
+require_once("Messages.php");
 require_once("IView.php");
 
 class ExerciseView implements IView 
@@ -13,11 +14,10 @@ class ExerciseView implements IView
     private static $clientTrainingSets = 'ExerciseView::clientTrainingSets';
     private static $clientTrainingResttime = 'ExerciseView::clientTrainingResttime';
     private static $send = 'ExerciseView::send';
-    // private $message;
 
-    // public function __construct() {
-        // $this->message = "";
-    // }
+    public function __construct() {
+        $this->message = "";
+    }
 
     public function echoHTML() {
         return 
@@ -29,7 +29,6 @@ class ExerciseView implements IView
     public function wantsToAddExercises() : bool 
     {
       if (isset($_POST[self::$send])) {
-        echo "ok you want to add exercises";
         return true;
       }
       return false;
@@ -38,7 +37,7 @@ class ExerciseView implements IView
   public function isAllFieldsFilled() : bool {
       if (isset($_POST[self::$send])) {
           if ((empty($_POST[self::$clientExercise]) || empty($_POST[self::$clientTrainingWeight])) || empty($_POST[self::$clientTrainingReps]) || empty($_POST[self::$clientTrainingSets]) || empty($_POST[self::$clientTrainingResttime])) {
-            //   $this->message .= Messages::$fillAll;
+              $this->message .= Messages::$fillAll;
               return false;
           }
           return true;
@@ -81,13 +80,13 @@ class ExerciseView implements IView
     }
   }
 
-//   public function message() {
-//     $this->message = Messages::$wentGood;
-//   }
+  public function message() {
+    $this->message = Messages::$wentGood;
+  }
 
-//   public function messageFail() {
-//     $this->message = Messages::$wentBad;
-//   }
+  public function messageFail() {
+    $this->message = Messages::$wentBad;
+  }
 
       private function exerciseFormHTML() {
         return  
@@ -100,6 +99,8 @@ class ExerciseView implements IView
                     <input type="text" id="' . self::$clientTrainingWeight . '" name="' . self::$clientTrainingWeight . '" />
                     <label for="">Reps:</label>
                     <input type="text" id="' . self::$clientTrainingReps . '" name="' . self::$clientTrainingReps . '" />
+                    <label for="">Sets:</label>
+                    <input type="text" id="' . self::$clientTrainingSets . '" name="' . self::$clientTrainingSets . '" />
                     <label for="">RestTime:</label>
                     <input type="text" id="' . self::$clientTrainingResttime . '" name="' . self::$clientTrainingResttime . '" />
                 <input type="submit" id="' . self::$send . '" name="' . self::$send . '" value="Save"/>
