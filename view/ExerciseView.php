@@ -10,9 +10,14 @@ class ExerciseView implements IView
     private static $clientExercise = 'ExerciseView::clientExercise';
     private static $clientTrainingWeight = 'ExerciseView::clientTrainingWeight';
     private static $clientTrainingReps = 'ExerciseView::clientTrainingReps';
+    private static $clientTrainingSets = 'ExerciseView::clientTrainingSets';
     private static $clientTrainingResttime = 'ExerciseView::clientTrainingResttime';
     private static $send = 'ExerciseView::send';
+    // private $message;
 
+    // public function __construct() {
+        // $this->message = "";
+    // }
 
     public function echoHTML() {
         return 
@@ -20,6 +25,69 @@ class ExerciseView implements IView
                 ' . $this->exerciseFormHTML(). '
             ';
     }
+
+    public function wantsToAddExercises() : bool 
+    {
+      if (isset($_POST[self::$send])) {
+        echo "ok you want to add exercises";
+        return true;
+      }
+      return false;
+    }
+
+  public function isAllFieldsFilled() : bool {
+      if (isset($_POST[self::$send])) {
+          if ((empty($_POST[self::$clientExercise]) || empty($_POST[self::$clientTrainingWeight])) || empty($_POST[self::$clientTrainingReps]) || empty($_POST[self::$clientTrainingSets]) || empty($_POST[self::$clientTrainingResttime])) {
+            //   $this->message .= Messages::$fillAll;
+              return false;
+          }
+          return true;
+  }
+  else return false;
+  }
+
+  public function returnExercise() {
+    if (isset($_POST[self::$clientExercise])) {
+      self::$clientExercise = $_POST[self::$clientExercise];
+      return self::$clientExercise;
+    }
+  }
+
+  public function returnWeight() {
+    if (isset($_POST[self::$clientTrainingWeight])) {
+      self::$clientTrainingWeight = $_POST[self::$clientTrainingWeight];
+      return self::$clientTrainingWeight;
+    }
+  }
+
+  public function returnReps() {
+    if (isset($_POST[self::$clientTrainingReps])) {
+      self::$clientTrainingReps = $_POST[self::$clientTrainingReps];
+      return self::$clientTrainingReps;
+    }
+  }
+
+  public function returnSets() {
+    if (isset($_POST[self::$clientTrainingSets])) {
+      self::$clientTrainingSets = $_POST[self::$clientTrainingSets];
+      return self::$clientTrainingSets;
+    }
+  }
+
+  public function returnRest() {
+    if (isset($_POST[self::$clientTrainingResttime])) {
+      self::$clientTrainingResttime = $_POST[self::$clientTrainingResttime];
+      return self::$clientTrainingResttime;
+    }
+  }
+
+//   public function message() {
+//     $this->message = Messages::$wentGood;
+//   }
+
+//   public function messageFail() {
+//     $this->message = Messages::$wentBad;
+//   }
 
       private function exerciseFormHTML() {
         return  

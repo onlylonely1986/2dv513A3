@@ -8,7 +8,8 @@ class ClientStorage {
     private static $userName;
     private static $passWord;
     private static $dbName;
-    private static $dbTable;
+    private static $dbTableClients;
+    private static $dbTableExercises;
     private static $conn;
     private static $user;
     
@@ -18,7 +19,7 @@ class ClientStorage {
         self::$userName = $settings->dbuserName;
         self::$passWord = $settings->dbpassWord;
         self::$dbName = $settings->dbName;
-        self::$dbTable = $settings->dbTableClients;
+        self::$dbTableClients = $settings->dbTableClients;
     }
 
     public function connect() 
@@ -44,7 +45,7 @@ class ClientStorage {
     public function getClientsFromDB() 
     {
         $data = array();
-        $query = "SELECT * FROM " . self::$dbTable;
+        $query = "SELECT * FROM " . self::$dbTableClients;
         
         if ($result = self::$conn->query($query)) 
         {
@@ -68,7 +69,7 @@ class ClientStorage {
 
     public function saveNewClientToDB(Client $client) : bool {
         $this->connect();
-        $sql = "INSERT INTO " . self::$dbTable;
+        $sql = "INSERT INTO " . self::$dbTableClients;
         $sql .= "(";
         $sql .= "`name`, `dateOfBirth`, `weight`, `goal`";
         $sql .= ")";
@@ -87,7 +88,27 @@ class ClientStorage {
         return true;
     }
 
-    public function saveNewExerciseToDB() {
+    public function saveNewExerciseToDB(Exercise $exercise) : bool {
+        $this->connect();
+        $sql = "INSERT INTO " . self::$dbTableExercises;
+        $sql .= "(";
+        $sql .= "`exercise`, `weight`, `repetitions`, `sets`, `rest`";
+        $sql .= ")";
+        $sql .= "VALUES ";
+        $sql .= "(";
+        $sql .= "'". $exercise->getExercise() ."', ";
+        $sql .= "'". $exercise->getWeight() ."', "; 
+        $sql .= "'". $exercise->getRepetitions() ."', "; 
+        $sql .= "'". $exercise->getSets()   ."', ";; 
+        $sql .= "'". $exercise->getRest()   ."'";; 
+
+        $sql .= ");";
+        
+        $results = self::$conn->query($sql);
+        if(!$results) {
+            throw new ConnectionException();
+        }
+        return true;
 
     }
 
@@ -96,7 +117,7 @@ class ClientStorage {
     }
 
     public function getClientInfo($id) : Client {
-        $query = "SELECT * FROM  " . self::$dbTable . " WHERE id = '" . $id . "'";
+        $query = "SELECT * FROM  " . self::$dbTableClients . " WHERE id = '" . $id . "'";
         
         if ($result = self::$conn->query($query)) 
         {
@@ -104,6 +125,7 @@ class ClientStorage {
             $client = new Client($obj->name, $obj->dateOfBirth, $obj->weight, $obj->goal);
             $client->setId($obj->id);
             return $client;
+        }
             /*if(!$result) 
             {
                 throw new ConnectionException();
@@ -118,9 +140,6 @@ class ClientStorage {
             
             $result->close();
             return $data; */
-            
-        }
-        
     }
 
     public function getClientExercises($id) {
