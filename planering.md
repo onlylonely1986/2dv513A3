@@ -44,7 +44,7 @@ Så fort klienten försvinner så försvinner även maten? japp
 1. Check inputs?
   1. Vilka inputs ska finnas? CRUD? Create, Update, Delete? Vilken sida? 
   * searchview ska visa en lista med Clients (länkarna)
-      searchview = Översikt?, Innehåller sökfunktion också/ filtrering? japp
+      searchview = Översikt?, Innehåller sökfunktion också/ filtrering?
   * Clientview ska visa en specifik Client och presentera den info som finns om den från DB 
       (man ska även kunna lägga till exercise och food)
       - Specifik Client
@@ -58,5 +58,5 @@ Så fort klienten försvinner så försvinner även maten? japp
   1. Connect to DB?
   2. Generate models to views needed for layoutview?
 3. create view ?
-  1. LAyoutview builds from other views?
+  1. LayoutView builds from other views?
   

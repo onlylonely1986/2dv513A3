@@ -2,6 +2,9 @@
 
 namespace view;
 
-class ScheduleView {
+require_once("IView.php");
+
+class ScheduleView implements IView
+{
     
 }

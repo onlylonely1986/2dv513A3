@@ -1,6 +1,8 @@
 <?php 
 namespace view;
 
+require_once("IView.php");
+
 class SearchView implements IView
 {
     private $message = '';

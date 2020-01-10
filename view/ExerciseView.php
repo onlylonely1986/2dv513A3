@@ -2,7 +2,10 @@
 
 namespace view;
 
-class ExerciseView {
+require_once("IView.php");
+
+class ExerciseView implements IView 
+{
     private $message = '';
     private static $clientExercise = 'ExerciseView::clientExercise';
     private static $clientTrainingWeight = 'ExerciseView::clientTrainingWeight';

@@ -3,7 +3,7 @@
 namespace model;
 
 class Client {
-    public $name;
+    private $name;
     private $dateOfBirth;
     private $weight;
     private $goal;

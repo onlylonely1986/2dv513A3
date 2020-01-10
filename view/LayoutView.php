@@ -2,19 +2,27 @@
 
 namespace view;
 
-class LayoutView {
+// require_once("IView.php");
+
+class LayoutView
+{
 
     private $message = "";
     private $view;
 
-    public function __construct(IView $view) 
+    public function __construct()
     { 
-        $this->view = $view; 
+
     }
     
     public function setMessage($message) 
     {
         $this->message = $message;
+    }
+
+    public function setView($view) 
+    {
+        $this->view = $view;
     }
     
     public function render() 
@@ -68,7 +76,7 @@ class LayoutView {
 
     private function body()
         {
-            $this->view->echoHTML();
+            return $this->view;
             /*if (isset($_GET['id'])) { //Det är lite rörigt. :'D typ
                 return $this->clientView->echoHTML();
             }

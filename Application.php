@@ -27,7 +27,8 @@ class Application
     private $addClientView;
     private $ClientView;
     private $exerciseView;
-    private $ClientController;
+    private $clientController; 
+    private $view;
 
     public function __construct($settings) 
         {
@@ -38,12 +39,7 @@ class Application
             $this->exerciseView  = new \view\ExerciseView();
             $this->foodView  = new \view\FoodView();
             $this->searchView  = new \view\SearchView();
-            $this->layoutView  = new \view\LayoutView($this->ClientView, $this->searchView);
-            /* $this->addClientView, 
-                $this->exerciseView,
-                $this->foodView,
-                $this->searchView */
-            $this->ClientController = new \controller\ClientController($this->searchView, 
+            $this->clientController = new \controller\ClientController($this->searchView, 
                 $this->addClientView,
                 $this->ClientView,
                 $this->ClientStorage, 
@@ -59,7 +55,8 @@ class Application
 
     private function changeState() 
         {
-            $whatState = $this->ClientController->handleClient();
+            $this->view = $this->clientController->handleClient();
+            
             /*switch ($whatState) {
                 case \controller\States::$pickClient:
                     // code to be executed if n=label1;
@@ -94,7 +91,7 @@ class Application
                 echo "errrrrooor";
                 // $this->layoutView->setMessage($this->userMsg::$messageToUserConn);
             }
-            
+            $this->layoutView  = new \view\LayoutView($this->view);
             $this->searchView->setList($data); 
             $this->layoutView->render();
         }

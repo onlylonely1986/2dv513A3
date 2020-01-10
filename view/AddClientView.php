@@ -3,15 +3,17 @@
 namespace view;
 
 require_once("Messages.php");
+require_once("IView.php");
 
-class addClientView {
-  private static $clientName = 'addClientView::clientName';
-  private static $clientWeight = 'addClientView::clientWeight';
-  private static $clientDateOfBirth = 'addClientView::clientDateOfBirth';
-  private static $clientGoal = 'addClientView::clientGoal';
-  private static $send = 'addClientView::send';
+class AddClientView implements IView
+{
+  private static $clientName = 'AddClientView::clientName';
+  private static $clientWeight = 'AddClientView::clientWeight';
+  private static $clientDateOfBirth = 'AddClientView::clientDateOfBirth';
+  private static $clientGoal = 'AddClientView::clientGoal';
+  private static $send = 'AddClientView::send';
 
-  private static $removeBtn = 'addClientView::remove';
+  private static $removeBtn = 'AddClientView::remove';
   private $message;
 
   public function __construct() {

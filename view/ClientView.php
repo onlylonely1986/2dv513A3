@@ -4,11 +4,12 @@
 namespace view;
 
 require_once("Messages.php");
+require_once("IView.php");
 require_once("model/Client.php");
 // require_once("model/Exercise.php");
 // require_once("model/Food.php");
 
-class ClientView
+class ClientView implements IView
     {
         private $clientId;
         private $clientName;

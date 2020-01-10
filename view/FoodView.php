@@ -2,7 +2,10 @@
 
 namespace view;
 
-class FoodView {
+require_once("IView.php");
+
+class FoodView implements IView
+{
     private static $clientFoodProtein = 'FoodView::clientFoodProtein';
     private static $clientFoodAmountOfProt = 'FoodView::clientFoodAmountOfProt';
     private static $clientFoodCarbs = 'FoodView::clientFoodCarbs';
