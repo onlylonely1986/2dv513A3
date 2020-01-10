@@ -35,13 +35,18 @@ class ClientView implements IView
         }
 
         private function createTableOverClient() {
-            return "Name: " . $this->client->getName() . "" ;
+            return 
+            "<b>Name:</b> " . $this->client->getName() . "
+            </br><b>Birthdate:</b> " . $this->client->getBirth() . "
+            </br><b>Goal:</b> " . $this->client->getGoal() . "
+            </br><b>Weight:</b> " . $this->client->getWeight() . "
+            ";
         }
 
         public function echoHTML()
         {
             return "
-                <p>This is the page of a specific client <b>" . $this->client->getName() . "</b> with the id: " . $this->client->getId() . " </p>
+                <h3>Client Info:</h3>
                 " . $this->createTableOverClient() . "
                 ";
         }
