@@ -20,6 +20,7 @@ class ClientController
     private $newClient;
     private $client;
     private $exercises;
+    private $exerciseView;
     private $food;
 
     public function __construct(\view\LayoutView $layoutView, \view\SearchView $searchView, \model\ClientStorage $storage, \model\SessionModel $session)
@@ -56,7 +57,8 @@ class ClientController
                 // skicka med message till clientInfoView
                 // hämta uppdaterad info från storage
                 // uppdatera clientInfoview
-                $this->exerciseView  = new \view\ExerciseView();
+                $this->addExerciseToClient();
+                // $this->exerciseView  = new \view\ExerciseView();
                 $this->layoutView->setView($this->exerciseView->echoHTML());
                 return;
             }
@@ -152,4 +154,25 @@ class ClientController
                         }
                 }
         }
+
+    private function addExerciseToClient() 
+    {
+        $this->exerciseView = new \view\ExerciseView();
+        if ($this->exerciseView->wantsToAddExercises()) 
+        {
+            if ($this->exerciseView->isAllFieldsFilled()) 
+                {
+                    $exercise = $this->exerciseView->returnExercise();
+                    $weight = $this->exerciseView->returnWeight();
+                    $repetitions = $this->exerciseView->returnReps();
+                    $sets = $this->exerciseView->returnSets();
+                    $rest = $this->exerciseView->returnRest();
+
+                    if ($this->storage->saveNewExerciseToDB(new \model\Exercise($exercise, $weight, $repetitions, $sets, $rest)))
+                        {
+                            // $this->exerciseView->message();
+                        }
+                }
+        }
+    }
 }
