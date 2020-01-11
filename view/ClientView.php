@@ -15,6 +15,7 @@ class ClientView implements IView
         private $clientName;
         private $client;
         private $exercise;
+        private $exercises;
         private $food;
 
         public function __conctruct ()
@@ -36,7 +37,6 @@ class ClientView implements IView
 
         public function getID() : int 
         {
-            
             return  (int)$_SESSION['id'];
         }
 
@@ -64,20 +64,16 @@ class ClientView implements IView
             </table>
             ";
         }
-        // private function iterateOverClients() 
-        // {
-        //     $ret = "";            
-        //     foreach ($this->clients as $client) 
-        //     {
-        //         $ret .= "<p>* <a href='?client&id=" . $client->getId() . "
-        //         '>" . $client->getId() . ": " . $client->getName() . "</a></p>";
-        //     }
-        //     return $ret;
-        // }
 
-        private function createTableOverClientExercises() {
+        public function setListExercises($dataExercises) 
+        {
+            $this->exercises = $dataExercises;
+        }
+
+        private function createTableOverClientExercises() 
+        {
             $allExercises = "";
-            foreach ($this->exercise as $exercises)
+            foreach ($this->exercises as $exercise)
             {
                 $allExercises .= "
                 </br>
@@ -90,18 +86,17 @@ class ClientView implements IView
                     <th><b>Rest:</b></th>
                 </tr>
                 <tr>
-                    <td>" . $exercises->getExercise() . "</td>
-                    <td>" . $exercises->getWeight() . "</td>
-                    <td>" . $exercises->getRepetitions() . "</td>
-                    <td>" . $exercises->getSets() . "</td>
-                    <td>" . $exercises->getRest() . "</td>
+                    <td>" . $exercise->getExercise() . "</td>
+                    <td>" . $exercise->getWeight() . "</td>
+                    <td>" . $exercise->getRepetitions() . "</td>
+                    <td>" . $exercise->getSets() . "</td>
+                    <td>" . $exercise->getRest() . "</td>
                 </tr>
                 </table>
                 ";
             }
             return $allExercises;
         }
-
 
         public function echoHTML()
         {

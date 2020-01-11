@@ -22,6 +22,7 @@ class Application
     private $clientStorage;
     private $layoutView;
     private $searchView;
+    private $clientView;
     private $userMsg;
     private $clientController;
     
@@ -32,11 +33,13 @@ class Application
             $this->clientStorage = new \model\ClientStorage($settings);
             $this->layoutView  = new \view\LayoutView();
             $this->searchView  = new \view\SearchView();
+            $this->clientView  = new \view\ClientView();
             $this->clientController = new \controller\ClientController(
                 $this->layoutView,
                 $this->searchView,
                 $this->clientStorage,
-                $this->session
+                $this->session,
+                $this->clientView
             );
         }
 
@@ -62,7 +65,7 @@ class Application
             }
             
             $this->searchView->setList($data);
-            $this->searchView->setListExercises($dataExercises);
+            $this->clientView->setListExercises($dataExercises);
             $this->view = $this->clientController->handleClient();
         }
 

@@ -34,10 +34,10 @@ class SearchView implements IView
             $this->clients = $data;
         }
 
-    public function setListExercises($dataExercises) 
-        {
-            $this->exercises = $dataExercises;
-        }
+    // public function setListExercises($dataExercises) 
+    //     {
+    //         $this->exercises = $dataExercises;
+    //     }
 
     public function getRequest() : bool
         {
@@ -68,4 +68,32 @@ class SearchView implements IView
             }
             return $ret;
         }
+
+    //     public function iterateOverExercises() 
+    //     {
+    //     $allExercises = "";
+    //     foreach ($this->exercise as $exercises)
+    //     {
+    //         $allExercises .= "
+    //         </br>
+    //         <table style='background-color:yellow; color:black'>
+    //         <tr>
+    //             <th><b>Exercise:</b></th>
+    //             <th><b>Weight:</b></th>
+    //             <th><b>Repetitions:</b></th>
+    //             <th><b>Sets:</b></th>
+    //             <th><b>Rest:</b></th>
+    //         </tr>
+    //         <tr>
+    //             <td>" . $exercises->getExercise() . "</td>
+    //             <td>" . $exercises->getWeight() . "</td>
+    //             <td>" . $exercises->getRepetitions() . "</td>
+    //             <td>" . $exercises->getSets() . "</td>
+    //             <td>" . $exercises->getRest() . "</td>
+    //         </tr>
+    //         </table>
+    //         ";
+    //     }
+    //     return $allExercises;
+    // }
 }
