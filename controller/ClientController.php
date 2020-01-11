@@ -216,7 +216,8 @@ class ClientController
                     $fat = $this->foodView->returnFat();
                     $amountfat = $this->foodView->returnAmountFat();
 
-                    if ($this->storage->saveFoodToDB(new \model\Food($protein, $amountprotein, $carbs, $amountcarbs, $fat, $amountfat), $this->id))
+                    $foodAdvice = new \model\Food($protein, $amountprotein, $carbs, $amountcarbs, $fat, $amountfat);
+                    if ($this->storage->saveFoodToDB($foodAdvice, $this->id))
                         {
                             $this->foodView->message();
                         }

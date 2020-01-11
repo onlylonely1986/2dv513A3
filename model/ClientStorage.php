@@ -185,16 +185,18 @@ class ClientStorage {
 
     }
 
-    // denna borde också ge tillbaka en array ?..  men den funkar va?
-    public function getClientExercises($id) : Exercise {
+    public function getClientExercises($id){
         $query = "SELECT * FROM  " . self::$dbTableExercises . " WHERE clientid = '" . $id . "'";
         
         if ($result = self::$conn->query($query)) 
         {
             $obj = $result->fetch_object();
-            $exercises = new Exercise($obj->exercise, $obj->weight, $obj->repetitions, $obj->sets, $obj->rest);
-            $exercises->setId($obj->clientid);
-            return $exercises;
+            if ($obj)
+            {
+                $exercises = new Exercise($obj->exercise, $obj->weight, $obj->repetitions, $obj->sets, $obj->rest);
+                $exercises->setId($obj->clientid);
+                return $exercises;
+            }
         }
     }
 
@@ -223,11 +225,7 @@ class ClientStorage {
     }
 
     public function saveFoodToDB(Food $food, $id) : bool {
-        $this->connect();
-        // kolla denna om det kommer med nåt objekt från viewn
-        var_dump($food);
-        var_dump($_SESSION);
-        
+        $this->connect();        
         $sql = "INSERT INTO " . self::$dbTableFood;
         $sql .= " (";
         $sql .= "`protein`, `amountprotein`, `carbs`, `amountcarbs`, `fat`, `amountfat`, `clientid`";
@@ -243,16 +241,6 @@ class ClientStorage {
         $sql .= "'". $id ."'";
         $sql .= ");";
 
-        /* { 
-            ["protein":"model\Food":private]=> string(4) "Meat" 
-            ["amountprotein":"model\Food":private]=> string(3) "120" 
-            ["carbs":"model\Food":private]=> string(7) "Potatoe" 
-            ["amountcarbs":"model\Food":private]=> NULL 
-            ["fat":"model\Food":private]=> string(4) "Nuts" 
-            ["amountfat":"model\Food":private]=> NULL 
-            ["id":"model\Food":private]=> NULL 
-            ["amountCarbs"]=> string(3) "100" 
-            ["amountFat"]=> string(2) "20" } */
         $results = self::$conn->query($sql);
 
         if(!$results) {
@@ -268,9 +256,12 @@ class ClientStorage {
         if ($result = self::$conn->query($query)) 
         {
             $obj = $result->fetch_object();
-            $food = new Food($obj->protein, $obj->amountprotein, $obj->carbs, $obj->amountcarbs, $obj->fat, $obj->amountfat);
-            $food->setID($obj->clientid);
-            return $food;
+            if ($obj)
+            {
+                $food = new Food($obj->protein, $obj->amountprotein, $obj->carbs, $obj->amountcarbs, $obj->fat, $obj->amountfat);
+                $food->setID($obj->clientid);
+                return $food;
+            }
         }
     }
 }

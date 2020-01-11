@@ -9,6 +9,7 @@ class Messages
     public static $fillAll = 'Please fill all fields with data.';
     public static $wentGood = 'Saved new client successfully.';
     public static $wentGoodEx = 'Saved new exercise to client successfully.';
+    public static $wentGoodFood = 'Saved new food advice to client successfully.';
     public static $wentBad = 'Something went wrong.';
 
     public static $toShortName = 'Username has too few characters, at least 3 characters.';

@@ -54,7 +54,7 @@ class ClientView implements IView
             </br><b>Weight:</b> " . $this->client->getWeight() . "
             </br>
             </br>
-            <table style='background-color:silver; color:black'>
+            <table style='background-color:Thistle; color:black'>
             <tr>
                 <th><b>Name:</b></th>
                 <th><b>Birthdate:</b></th>
@@ -92,20 +92,22 @@ class ClientView implements IView
                         <th><b>Sets:</b></th>
                         <th><b>Rest(sec):</b></th>
                     </tr>";
-                
-            foreach ($this->exercises as $exercise)
-                {
-                    if ($exercise->getID() == $id) {
-                        $allExercises .= 
-                        "<tr>
-                            <td>" . $exercise->getExercise() . "</td>
-                            <td>" . $exercise->getWeight() . "</td>
-                            <td>" . $exercise->getRepetitions() . "</td>
-                            <td>" . $exercise->getSets() . "</td>
-                            <td>" . $exercise->getRest() . "</td>
-                        </tr>";
+            if ($this->exercise != NULL) 
+            {
+                foreach ($this->exercises as $exercise)
+                    {
+                        if ($exercise->getID() == $id) {
+                            $allExercises .= 
+                            "<tr>
+                                <td>" . $exercise->getExercise() . "</td>
+                                <td>" . $exercise->getWeight() . "</td>
+                                <td>" . $exercise->getRepetitions() . "</td>
+                                <td>" . $exercise->getSets() . "</td>
+                                <td>" . $exercise->getRest() . "</td>
+                            </tr>";
+                        }
                     }
-                }
+            }
            
             $allExercises .= "</table>";
             return $allExercises;
@@ -124,16 +126,17 @@ class ClientView implements IView
             
             $allFood .= 
                 "</br>
-                <table style='background-color:aqua; color:black'>
+                <table style='background-color:LightGrey; color:black'>
                     <tr>
-                        <th><b>Exercise:</b></th>
-                        <th><b>Weight(kg):</b></th>
-                        <th><b>Repetitions:</b></th>
-                        <th><b>Sets:</b></th>
-                        <th><b>Rest(sec):</b></th>
+                        <th><b>Protein:</b></th>
+                        <th><b>Amount(g):</b></th>
+                        <th><b>Carbs:</b></th>
+                        <th><b>Amount(g):</b></th>
+                        <th><b>Fat:</b></th>
+                        <th><b>Amount(g):</b></th>
                     </tr>";
-                
-            foreach ($this->foods as $food)
+            if ($this->foods != NULL) {
+                foreach ($this->foods as $food)
                 {
                     if ($food->getID() == $id) {
                         $allFood .= 
@@ -147,7 +150,8 @@ class ClientView implements IView
                         </tr>";
                     }
                 }
-           
+            }
+
             $allFood .= "</table>";
             return $allFood;
         }
