@@ -55,7 +55,7 @@ class LayoutView
     private function nav()
         {
             // if(isset($_GET['clientInfo']) || isset($_GET['exercises']) || isset($_GET['food']))
-            if(isset($_GET['client'])) 
+            if(isset($_GET['client']) || isset($_GET['clientInfo']) || isset($_GET['exercises']) || isset($_GET['food'])) 
                 {
                     return 
                     "<div class='topnav'>

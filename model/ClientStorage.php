@@ -68,6 +68,40 @@ class ClientStorage {
         }
     }
 
+    public function saveNewClientToDB(Client $client) : bool {
+        $this->connect();
+        $sql = "INSERT INTO " . self::$dbTableClients;
+        $sql .= "(";
+        $sql .= "`name`, `dateOfBirth`, `weight`, `goal`";
+        $sql .= ")";
+        $sql .= "VALUES ";
+        $sql .= "(";
+        $sql .= "'". $client->getName() ."', ";
+        $sql .= "'". $client->getBirth() ."', "; 
+        $sql .= "'". $client->getWeight() ."', "; 
+        $sql .= "'". $client->getGoal()   ."'";; 
+        $sql .= ");";
+        
+        $results = self::$conn->query($sql);
+        if(!$results) {
+            throw new ConnectionException();
+        }
+        return true;
+    }
+
+    public function getClientInfo($id) : Client {
+        $query = "SELECT * FROM  " . self::$dbTableClients . " WHERE id = '" . $id . "'";
+        
+        if ($result = self::$conn->query($query)) 
+        {
+            $obj = $result->fetch_object();
+            $client = new Client($obj->name, $obj->dateOfBirth, $obj->weight, $obj->goal);
+            $client->setId($obj->id);
+            return $client;
+        }
+    }
+
+
     public function getExercisesFromDB() 
     {
         $data = array();
@@ -90,28 +124,6 @@ class ClientStorage {
             return $data;
             
         }
-    }
-
-
-    public function saveNewClientToDB(Client $client) : bool {
-        $this->connect();
-        $sql = "INSERT INTO " . self::$dbTableClients;
-        $sql .= "(";
-        $sql .= "`name`, `dateOfBirth`, `weight`, `goal`";
-        $sql .= ")";
-        $sql .= "VALUES ";
-        $sql .= "(";
-        $sql .= "'". $client->getName() ."', ";
-        $sql .= "'". $client->getBirth() ."', "; 
-        $sql .= "'". $client->getWeight() ."', "; 
-        $sql .= "'". $client->getGoal()   ."'";; 
-        $sql .= ");";
-        
-        $results = self::$conn->query($sql);
-        if(!$results) {
-            throw new ConnectionException();
-        }
-        return true;
     }
 
     public function saveNewExerciseToDB(Exercise $exercise, $id) : bool {
@@ -139,36 +151,6 @@ class ClientStorage {
 
     }
 
-    public function saveNewFoodToDB() {
-
-    }
-
-    public function getClientInfo($id) : Client {
-        $query = "SELECT * FROM  " . self::$dbTableClients . " WHERE id = '" . $id . "'";
-        
-        if ($result = self::$conn->query($query)) 
-        {
-            $obj = $result->fetch_object();
-            $client = new Client($obj->name, $obj->dateOfBirth, $obj->weight, $obj->goal);
-            $client->setId($obj->id);
-            return $client;
-        }
-            /*if(!$result) 
-            {
-                throw new ConnectionException();
-                return false;
-            }
-            while($obj = $result->fetch_object()) {
-                $client = new Client($obj->name, $obj->dateOfBirth, $obj->weight, $obj->goal);
-                $client->setId($obj->id);
-                array_push($data, $client);
-            }
-            
-            
-            $result->close();
-            return $data; */
-    }
-
     public function getClientExercises($id) : Exercise {
         $query = "SELECT * FROM  " . self::$dbTableExercises . " WHERE clientid = '" . $id . "'";
         
@@ -179,6 +161,10 @@ class ClientStorage {
             $exercises->setId($obj->id);
             return $exercises;
         }
+    }
+
+    public function saveNewFoodToDB() {
+
     }
 
     public function getClientFood($id) {
