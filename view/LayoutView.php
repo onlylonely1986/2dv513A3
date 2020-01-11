@@ -73,7 +73,6 @@ class LayoutView
                     </br>
                     <div class='topnav2'>
                         <a href='?showview'>Show View</a>
-                        <a href='?groupby'>Group By</a>
                         <a href='?join'>Join</a>
                         <a href='?innerjoin'>Inner Join</a>
                         <a href='?union'>Union</a>

@@ -75,14 +75,7 @@ class ClientStorage {
         $data = array();
         $query = "SELECT * FROM " . self::$dbTableClients;
         $query .= " WHERE name LIKE '%". $searchWord ."%'";
-        
-        /*$query = "SELECT * FROM " . self::$dbTableClients;
-        $query .= "WHERE '" . $searchWord . "' LIKE CONCAT('%', " . $searchWord . ", '%')";
-        
-        /*
-        $query = "SELECT * FROM " . self::$dbTableClients; 
-        $query .= "WHERE name LIKE '%" . $searchWord . "%'";
-        $query .= " OR LIKE '" . $searchWord . "'"; */
+        $query .= " GROUP BY name";
         
         if ($result = self::$conn->query($query)) 
         {

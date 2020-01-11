@@ -95,16 +95,14 @@ class ClientController
                 }
             else 
                 {
-                    if ($this->searchView->wantsToSearch()) 
-                        {
-                            if ($this->searchView->searchWordGiven()) {
-                                // echo "när körs denna?";
-                                $searchWord = $this->searchView->getSearchWord();
-                                $data = $this->storage->searchByName($searchWord);
-                                // var_dump($data);
-                                $this->searchView->setList($data);
-                            }
+                if ($this->searchView->wantsToSearch()) 
+                    {
+                        if ($this->searchView->searchWordGiven()) {
+                            $searchWord = $this->searchView->getSearchWord();
+                            $data = $this->storage->searchByName($searchWord);
+                            $this->searchView->setList($data);
                         }
+                    }
                     $this->layoutView->setView($this->searchView->echoHTML());
                     return;
     }
