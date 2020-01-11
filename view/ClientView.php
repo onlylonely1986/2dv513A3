@@ -64,29 +64,42 @@ class ClientView implements IView
             </table>
             ";
         }
+        // private function iterateOverClients() 
+        // {
+        //     $ret = "";            
+        //     foreach ($this->clients as $client) 
+        //     {
+        //         $ret .= "<p>* <a href='?client&id=" . $client->getId() . "
+        //         '>" . $client->getId() . ": " . $client->getName() . "</a></p>";
+        //     }
+        //     return $ret;
+        // }
 
         private function createTableOverClientExercises() {
-            return 
-            "
-            </br>
-            </br>
-            <table style='background-color:yellow; color:black'>
-            <tr>
-                <th><b>Exercise:</b></th>
-                <th><b>Weight:</b></th>
-                <th><b>Repetitions:</b></th>
-                <th><b>Sets:</b></th>
-                <th><b>Rest:</b></th>
-            </tr>
-            <tr>
-                <td>" . $this->exercise->getExercise() . "</td>
-                <td>" . $this->exercise->getWeight() . "</td>
-                <td>" . $this->exercise->getRepetitions() . "</td>
-                <td>" . $this->exercise->getSets() . "</td>
-                <td>" . $this->exercise->getRest() . "</td>
-            </tr>
-            </table>
-            ";
+            $allExercises = "";
+            foreach ($this->exercise as $exercises)
+            {
+                $allExercises .= "
+                </br>
+                <table style='background-color:yellow; color:black'>
+                <tr>
+                    <th><b>Exercise:</b></th>
+                    <th><b>Weight:</b></th>
+                    <th><b>Repetitions:</b></th>
+                    <th><b>Sets:</b></th>
+                    <th><b>Rest:</b></th>
+                </tr>
+                <tr>
+                    <td>" . $exercises->getExercise() . "</td>
+                    <td>" . $exercises->getWeight() . "</td>
+                    <td>" . $exercises->getRepetitions() . "</td>
+                    <td>" . $exercises->getSets() . "</td>
+                    <td>" . $exercises->getRest() . "</td>
+                </tr>
+                </table>
+                ";
+            }
+            return $allExercises;
         }
 
 

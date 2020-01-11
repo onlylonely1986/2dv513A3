@@ -54,25 +54,12 @@ class ClientController
             } 
             else if($this->registerNewExercise())
             {
-                // hämta info från exerciseview
-                // kontrollera info
-                // spara i storage
-                // skicka med message till clientInfoView
-                // hämta uppdaterad info från storage
-                // uppdatera clientInfoview
                 $this->addExerciseToClient();
-                // $this->exerciseView  = new \view\ExerciseView();
                 $this->layoutView->setView($this->exerciseView->echoHTML());
                 return;
             }
             else if($this->registerNewFood())
             {
-                // hämta info från foodview
-                // kontrollera info
-                // spara i storage
-                // skicka med message till clientInfoView   
-                // hämta uppdaterad info från storage
-                // uppdatera clientInfoview
                 $this->foodView  = new \view\FoodView();
                 $this->layoutView->setView($this->foodView->echoHTML());
                 return;

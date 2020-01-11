@@ -116,7 +116,7 @@ class ClientStorage {
             }
             while($obj = $result->fetch_object()) {
                 $exercises = new Exercise($obj->exercise, $obj->weight, $obj->repetitions, $obj->sets, $obj->rest);
-                $exercises->setId($obj->id);
+                $exercises->setId($obj->clientid);
                 array_push($data, $exercises);
             }
             
@@ -158,7 +158,7 @@ class ClientStorage {
         {
             $obj = $result->fetch_object();
             $exercises = new Exercise($obj->exercise, $obj->weight, $obj->repetitions, $obj->sets, $obj->rest);
-            $exercises->setId($obj->id);
+            $exercises->setId($obj->clientid);
             return $exercises;
         }
     }
