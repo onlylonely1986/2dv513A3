@@ -84,7 +84,7 @@ class ClientController
                 return;
             } else if ($this->startPageReq()) {
                 if ($this->searchReq()) {
-
+                    echo "vill du söka";
                 }
                 // hämta info från searchview
                 // hämta info från storage
