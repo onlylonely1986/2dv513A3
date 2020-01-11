@@ -68,6 +68,31 @@ class ClientStorage {
         }
     }
 
+    public function getExercisesFromDB() 
+    {
+        $data = array();
+        $query = "SELECT * FROM " . self::$dbTableExercises;
+        
+        if ($result = self::$conn->query($query)) 
+        {
+            if(!$result) 
+            {
+                throw new ConnectionException();
+                return false;
+            }
+            while($obj = $result->fetch_object()) {
+                $exercises = new Exercise($obj->exercise, $obj->weight, $obj->repetitions, $obj->sets, $obj->rest);
+                $exercises->setId($obj->id);
+                array_push($data, $exercises);
+            }
+            
+            $result->close();
+            return $data;
+            
+        }
+    }
+
+
     public function saveNewClientToDB(Client $client) : bool {
         $this->connect();
         $sql = "INSERT INTO " . self::$dbTableClients;
@@ -144,8 +169,16 @@ class ClientStorage {
             return $data; */
     }
 
-    public function getClientExercises($id) {
+    public function getClientExercises($id) : Exercise {
+        $query = "SELECT * FROM  " . self::$dbTableExercises . " WHERE clientid = '" . $id . "'";
         
+        if ($result = self::$conn->query($query)) 
+        {
+            $obj = $result->fetch_object();
+            $exercises = new Exercise($obj->exercise, $obj->weight, $obj->repetitions, $obj->sets, $obj->rest);
+            $exercises->setId($obj->id);
+            return $exercises;
+        }
     }
 
     public function getClientFood($id) {

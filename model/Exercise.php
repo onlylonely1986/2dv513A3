@@ -9,6 +9,7 @@ class Exercise
     private $repetitions;
     private $sets;
     private $rest;
+    private $id;
 
     public function __construct($exercise, $weight, $repetitions, $sets, $rest) {
         $this->exercise = $exercise;
@@ -18,9 +19,9 @@ class Exercise
         $this->rest = $rest;
     }
 
-    // public function setId($id) {
-    //     $this->id = $id;
-    // }
+    public function setId($id) {
+        $this->id = $id;
+    }
 
     public function getExercise() {
         return $this->exercise;
@@ -40,5 +41,9 @@ class Exercise
 
     public function getRest() {
         return $this->rest;
+    }
+
+    public function getId() {
+        return $this->id;
     }
 }

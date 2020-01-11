@@ -10,6 +10,7 @@ class SearchView implements IView
     private static $clientSearch = 'SearchView::clientSearch';
     private static $send = 'SearchView::send';
     private $clients;
+    private $dataExercises;
 
     public function __conctruct ()
         {
@@ -31,6 +32,11 @@ class SearchView implements IView
     public function setList($data) 
         {
             $this->clients = $data;
+        }
+
+    public function setListExercises($dataExercises) 
+        {
+            $this->exercises = $dataExercises;
         }
 
     public function getRequest() : bool

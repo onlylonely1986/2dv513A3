@@ -49,9 +49,11 @@ class Application
     private function changeState() 
         {
             $data;
+            $dataExercises;
             try {
                 if ($this->clientStorage->connect()) {
                     $data = $this->clientStorage->getClientsFromDB();
+                    $dataExercises = $this->clientStorage->getExercisesFromDB();
                 }
             } catch (\model\ConnectionException $e) {
                 // echo "errrrrooor";
@@ -60,6 +62,7 @@ class Application
             }
             
             $this->searchView->setList($data);
+            $this->searchView->setListExercises($dataExercises);
             $this->view = $this->clientController->handleClient();
         }
 

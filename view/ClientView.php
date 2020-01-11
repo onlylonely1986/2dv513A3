@@ -6,7 +6,7 @@ namespace view;
 require_once("Messages.php");
 require_once("IView.php");
 require_once("model/Client.php");
-// require_once("model/Exercise.php");
+require_once("model/Exercise.php");
 // require_once("model/Food.php");
 
 class ClientView implements IView
@@ -59,11 +59,37 @@ class ClientView implements IView
             ";
         }
 
+        private function createTableOverClientExercises() {
+            return 
+            "
+            </br>
+            </br>
+            <table style='background-color:yellow; color:black'>
+            <tr>
+                <th><b>Exercise:</b></th>
+                <th><b>Weight:</b></th>
+                <th><b>Repetitions:</b></th>
+                <th><b>Sets:</b></th>
+                <th><b>Rest:</b></th>
+            </tr>
+            <tr>
+                <td>" . $this->exercise->getExercise() . "</td>
+                <td>" . $this->exercise->getWeight() . "</td>
+                <td>" . $this->exercise->getRepetitions() . "</td>
+                <td>" . $this->exercise->getSets() . "</td>
+                <td>" . $this->exercise->getRest() . "</td>
+            </tr>
+            </table>
+            ";
+        }
+
+
         public function echoHTML()
         {
             return "
                 <h3>Client Info:</h3>
                 " . $this->createTableOverClient() . "
+                " . $this->createTableOverClientExercises() . "
                 ";
         }
 
