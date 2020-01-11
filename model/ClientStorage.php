@@ -22,6 +22,7 @@ class ClientStorage {
         self::$dbName = $settings->dbName;
         self::$dbTableClients = $settings->dbTableClients;
         self::$dbTableExercises = $settings->dbTableExercises;
+        self::$dbTableFood = $settings->dbTableFood;
     }
 
     public function connect() 
@@ -184,6 +185,7 @@ class ClientStorage {
 
     }
 
+    // denna borde också ge tillbaka en array ?..  men den funkar va?
     public function getClientExercises($id) : Exercise {
         $query = "SELECT * FROM  " . self::$dbTableExercises . " WHERE clientid = '" . $id . "'";
         
@@ -220,13 +222,17 @@ class ClientStorage {
         }
     }
 
-    public function saveFoodToDB(Food $food, $id) :bool {
+    public function saveFoodToDB(Food $food, $id) : bool {
         $this->connect();
+        // kolla denna om det kommer med nåt objekt från viewn
+        var_dump($food);
+        var_dump($_SESSION);
+        
         $sql = "INSERT INTO " . self::$dbTableFood;
-        $sql .= "(";
+        $sql .= " (";
         $sql .= "`protein`, `amountprotein`, `carbs`, `amountcarbs`, `fat`, `amountfat`, `clientid`";
         $sql .= ")";
-        $sql .= "VALUES ";
+        $sql .= " VALUES ";
         $sql .= "(";
         $sql .= "'". $food->getProtein() ."', ";
         $sql .= "'". $food->getAmountProtein() ."', "; 
@@ -236,7 +242,17 @@ class ClientStorage {
         $sql .= "'". $food->getAmountFat() ."', ";
         $sql .= "'". $id ."'";
         $sql .= ");";
-        
+
+        /* { 
+            ["protein":"model\Food":private]=> string(4) "Meat" 
+            ["amountprotein":"model\Food":private]=> string(3) "120" 
+            ["carbs":"model\Food":private]=> string(7) "Potatoe" 
+            ["amountcarbs":"model\Food":private]=> NULL 
+            ["fat":"model\Food":private]=> string(4) "Nuts" 
+            ["amountfat":"model\Food":private]=> NULL 
+            ["id":"model\Food":private]=> NULL 
+            ["amountCarbs"]=> string(3) "100" 
+            ["amountFat"]=> string(2) "20" } */
         $results = self::$conn->query($sql);
 
         if(!$results) {
@@ -245,7 +261,8 @@ class ClientStorage {
         return true;
     }
 
-    public function getClientFood($id) : Food {
+    public function getClientFood($id) 
+    {
         $query = "SELECT * FROM  " . self::$dbTableFood . " WHERE clientid = '" . $id . "'";
         
         if ($result = self::$conn->query($query)) 
