@@ -44,6 +44,7 @@ class SearchView implements IView
             if (isset($_GET['id'])) 
             {
                 $this->id = $_GET['id'];
+                $_SESSION['id'] = $this->id;
                 return true;
             } 
             else 
@@ -54,7 +55,7 @@ class SearchView implements IView
 
     public function getID() : int 
         {
-            return $this->id;
+            return (int)$this->id;
         }
 
     private function iterateOverClients() 

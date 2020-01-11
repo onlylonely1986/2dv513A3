@@ -34,6 +34,12 @@ class ClientView implements IView
             $this->food = $food;
         }
 
+        public function getID() : int 
+        {
+            
+            return  (int)$_SESSION['id'];
+        }
+
         private function createTableOverClient() {
             return 
             "<b>Name:</b> " . $this->client->getName() . "

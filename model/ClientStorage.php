@@ -114,20 +114,20 @@ class ClientStorage {
         return true;
     }
 
-    public function saveNewExerciseToDB(Exercise $exercise) : bool {
+    public function saveNewExerciseToDB(Exercise $exercise, $id) : bool {
         $this->connect();
         $sql = "INSERT INTO " . self::$dbTableExercises;
         $sql .= "(";
-        $sql .= "`exercise`, `weight`, `repetitions`, `sets`, `rest`";
+        $sql .= "`exercise`, `weight`, `repetitions`, `sets`, `rest`, `clientid`";
         $sql .= ")";
         $sql .= "VALUES ";
         $sql .= "(";
         $sql .= "'". $exercise->getExercise() ."', ";
         $sql .= "'". $exercise->getWeight() ."', "; 
         $sql .= "'". $exercise->getRepetitions() ."', "; 
-        $sql .= "'". $exercise->getSets() ."', ";; 
-        $sql .= "'". $exercise->getRest() ."'";; 
-
+        $sql .= "'". $exercise->getSets() ."', ";
+        $sql .= "'". $exercise->getRest() ."', ";
+        $sql .= "'". $id ."'";
         $sql .= ");";
         
         $results = self::$conn->query($sql);
