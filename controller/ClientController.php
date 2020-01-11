@@ -44,11 +44,13 @@ class ClientController
                     // hämta all info från storage
                     // skicka med till clientview
                     $this->id = $this->searchView->getId();
+                    $this->dataExercises = $this->storage->getExercisesFromDB();
                     $this->client = $this->storage->getClientInfo($this->id);
                     $this->exercises = $this->storage->getClientExercises($this->id);
                     $this->food = $this->storage->getClientFood($this->id);
                     $this->clientView  = new \view\ClientView();
                     $this->clientView->setClient($this->client);
+                    $this->clientView->setListExercises($this->dataExercises);
                     $this->clientView->setExercise($this->exercises);
                     $this->clientView->setFood($this->food);
                     $this->layoutView->setView($this->clientView->echoHTML());
@@ -134,7 +136,7 @@ class ClientController
 
     private function addClientPageReq() : bool
         {
-            if (isset($_GET['clients'])) { // stämmer detta??
+            if (isset($_GET['clients'])) {
 
                 return true;
             }
@@ -174,7 +176,6 @@ class ClientController
     {
         $this->exerciseView = new \view\ExerciseView();
         $this->id = (int)$_SESSION['id'];
-        // $this->id = $this->clientView->getId();
         
         if ($this->exerciseView->wantsToAddExercises()) 
         {
