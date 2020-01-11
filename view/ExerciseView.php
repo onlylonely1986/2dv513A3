@@ -81,7 +81,7 @@ class ExerciseView implements IView
   }
 
   public function message() {
-    $this->message = Messages::$wentGood;
+    $this->message = Messages::$wentGoodEx;
   }
 
   public function messageFail() {
