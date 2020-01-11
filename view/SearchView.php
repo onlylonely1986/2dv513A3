@@ -53,6 +53,33 @@ class SearchView implements IView
             }
         }
 
+    public function wantsToSearch() : bool 
+        {
+            if (isset($_POST[self::$send])) {
+            return true;
+            }
+            return false;
+        }
+
+    public function getSearchWord() : string
+        {
+            if (isset($_POST[self::$clientSearch])) {
+                return $_POST[self::$clientSearch];
+              }
+        }
+    
+    public function searchWordGiven() : bool 
+        {
+            if (isset($_POST[self::$send]))
+            {
+                if (empty($_POST[self::$clientSearch]))
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+
     public function getID() : int 
         {
             return (int)$this->id;
@@ -60,12 +87,17 @@ class SearchView implements IView
 
     private function iterateOverClients() 
         {
-            $ret = "";            
-            foreach ($this->clients as $client) 
+            $ret = "";
+            // var_dump($this->clients);
+            if ($this->clients != NULL)
             {
-                $ret .= "<p>* <a href='?client&id=" . $client->getId() . "
-                '>" . $client->getId() . ": " . $client->getName() . "</a></p>";
+                foreach ($this->clients as $client) 
+                {
+                    $ret .= "<p>* <a href='?client&id=" . $client->getId() . "
+                    '>" . $client->getId() . ": " . $client->getName() . "</a></p>";
+                }
             }
+            
             return $ret;
         }
 }

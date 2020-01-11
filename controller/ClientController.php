@@ -36,57 +36,72 @@ class ClientController
 
     public function handleClient()
         {
-            if ($this->pickedClientReq()) 
-            {
-                // vald client spara i session?
-                // hämta all info från storage
-                // skicka med till clientview
-                $this->id = $this->searchView->getId();
-                $this->client = $this->storage->getClientInfo($this->id);
-                $this->exercises = $this->storage->getClientExercises($this->id);
-                $this->food = $this->storage->getClientFood($this->id);
-                $this->clientView  = new \view\ClientView();
-                $this->clientView->setClient($this->client);
-                $this->clientView->setExercise($this->exercises);
-                $this->clientView->setFood($this->food);
-                $this->layoutView->setView($this->clientView->echoHTML());
-                return;
-            } 
-            else if($this->registerNewExercise())
-            {
-                $this->addExerciseToClient();
-                $this->layoutView->setView($this->exerciseView->echoHTML());
-                return;
-            }
-            else if($this->registerNewFood())
-            {
-                $this->foodView  = new \view\FoodView();
-                $this->layoutView->setView($this->foodView->echoHTML());
-                return;
-            } 
-            else if ($this->registerNewClientReq()) 
-            {
-                $this->addNewClient();
-                $this->layoutView->setView($this->addClientView->echoHTML());
-                return;
-            } else if ($this->startPageReq()) {
-                if ($this->searchReq()) {
-                    echo "vill du söka";
+            if ($this->clientPageReq()) 
+                {
+                    // vald client spara i session?
+                    // hämta all info från storage
+                    // skicka med till clientview
+                    $this->id = $this->searchView->getId();
+                    $this->client = $this->storage->getClientInfo($this->id);
+                    $this->exercises = $this->storage->getClientExercises($this->id);
+                    $this->food = $this->storage->getClientFood($this->id);
+                    $this->clientView  = new \view\ClientView();
+                    $this->clientView->setClient($this->client);
+                    $this->clientView->setExercise($this->exercises);
+                    $this->clientView->setFood($this->food);
+                    $this->layoutView->setView($this->clientView->echoHTML());
+                    return;
+                } 
+            else if($this->exercisePageReq())
+                {
+                    $this->addExerciseToClient();
+                    $this->layoutView->setView($this->exerciseView->echoHTML());
+                    return;
                 }
-                // hämta info från searchview
-                // hämta info från storage
-                // skicka message till searchview
-                // hämta från storage
-                // rendera lista med sökförslag
-                $this->layoutView->setView($this->searchView->echoHTML());
-                return;
-            } else {
-                $this->layoutView->setView($this->searchView->echoHTML());
-                return;
-            }
+            else if($this->foodPageReq())
+                {
+                    $this->foodView  = new \view\FoodView();
+                    $this->layoutView->setView($this->foodView->echoHTML());
+                    return;
+                } 
+            else if ($this->addClientPageReq()) 
+                {
+                    $this->addNewClient();
+                    $this->layoutView->setView($this->addClientView->echoHTML());
+                    return;
+                } 
+            else if ($this->startPageReq()) 
+                {
+                    // TODO lägg metod för sökning här också, samma som i else under, 
+                    // kan ske vid olika tillfällen
+                    
+                    
+                    // hämta info från searchview
+                    // hämta info från storage
+                    // skicka message till searchview
+                    // hämta från storage
+                    // rendera lista med sökförslag
+                    $this->layoutView->setView($this->searchView->echoHTML());
+                    return;
+                }
+            else 
+                {
+                    if ($this->searchView->wantsToSearch()) 
+                        {
+                            if ($this->searchView->searchWordGiven()) {
+                                echo "när körs denna?";
+                                $searchWord = $this->searchView->getSearchWord();
+                                $data = $this->storage->searchByName($searchWord);
+                                var_dump($data);
+                                $this->searchView->setList($data);
+                            }
+                        }
+                    $this->layoutView->setView($this->searchView->echoHTML());
+                    return;
+                }
     }
 
-    public function pickedClientReq() : bool 
+    public function clientPageReq() : bool 
     {
         if ($this->searchView->getRequest()) 
         {
@@ -95,7 +110,7 @@ class ClientController
         return false;
     }
 
-    public function registerNewExercise() : bool {
+    public function exercisePageReq() : bool {
         if (isset($_GET['exercises']))
         {
             return true;
@@ -104,38 +119,35 @@ class ClientController
     }
             
 
-    public function registerNewFood() : bool {
-        if (isset($_GET['food'])) {
+    public function foodPageReq() : bool
+        {
+            if (isset($_GET['food']))
+                {
 
-            return true;
+                    return true;
+                }
+            return false;
         }
-        return false;
-    }
 
 
-    private function registerNewClientReq() : bool {
-        if (isset($_GET['clients'])) { // stämmer detta??
+    private function addClientPageReq() : bool
+        {
+            if (isset($_GET['clients'])) { // stämmer detta??
 
-            return true;
+                return true;
+            }
+            return false;
         }
-        return false;
-    }
 
-    private function startPageReq() : bool {
-        if (isset($_GET[''])) {
+    private function startPageReq() : bool 
+        {
+            if (isset($_GET[''])) {
 
-            return true;
+                return true;
+            }
+            return false;
         }
-        return false;
-    }
 
-    private function searchReq() : bool {
-        if (isset($_GET['search'])) {
-
-            return true;
-        }
-        return false;
-    }
 
     private function addNewClient() 
         {
