@@ -22,7 +22,7 @@ class Application
     private $clientStorage;
     private $layoutView;
     private $searchView;
-    private $clientView;
+    // private $clientView;
     private $userMsg;
     private $clientController;
     
@@ -33,13 +33,13 @@ class Application
             $this->clientStorage = new \model\ClientStorage($settings);
             $this->layoutView  = new \view\LayoutView();
             $this->searchView  = new \view\SearchView();
-            $this->clientView  = new \view\ClientView();
+            // $this->clientView  = new \view\ClientView();
             $this->clientController = new \controller\ClientController(
                 $this->layoutView,
                 $this->searchView,
                 $this->clientStorage,
-                $this->session,
-                $this->clientView
+                $this->session
+                // $this->clientView
             );
         }
 
@@ -56,7 +56,7 @@ class Application
             try {
                 if ($this->clientStorage->connect()) {
                     $data = $this->clientStorage->getClientsFromDB();
-                    $dataExercises = $this->clientStorage->getExercisesFromDB();
+                    // $dataExercises = $this->clientStorage->getExercisesFromDB();
                 }
             } catch (\model\ConnectionException $e) {
                 // echo "errrrrooor";
@@ -65,7 +65,7 @@ class Application
             }
             
             $this->searchView->setList($data);
-            $this->clientView->setListExercises($dataExercises);
+            // $this->clientView->setListExercises($dataExercises);
             $this->view = $this->clientController->handleClient();
         }
 

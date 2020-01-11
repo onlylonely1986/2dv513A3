@@ -25,14 +25,15 @@ class ClientController
     private $exerciseView;
     private $food;
     private $id;
+    private $dataExercises;
 
-    public function __construct(\view\LayoutView $layoutView, \view\SearchView $searchView, \model\ClientStorage $storage, \model\SessionModel $session, \view\ClientView $clientView)
+    public function __construct(\view\LayoutView $layoutView, \view\SearchView $searchView, \model\ClientStorage $storage, \model\SessionModel $session)
         {
             $this->layoutView = $layoutView;
             $this->searchView = $searchView;
             $this->storage = $storage;
             $this->session = $session;
-            $this->clientView = $clientView; 
+            // $this->clientView = $clientView; 
         }
 
     public function handleClient()
@@ -44,11 +45,13 @@ class ClientController
                 // skicka med till clientview
                 $this->id = $this->searchView->getId();
                 $this->client = $this->storage->getClientInfo($this->id);
+                // $this->dataExercises = $this->storage->getExercisesFromDB();
                 $this->exercises = $this->storage->getClientExercises($this->id);
                 $this->food = $this->storage->getClientFood($this->id);
-                // $this->clientView  = new \view\ClientView();
+                $this->clientView  = new \view\ClientView();
                 $this->clientView->setClient($this->client);
                 $this->clientView->setExercise($this->exercises);
+                // $this->clientView->setListExercises($dataExercises);
                 $this->clientView->setFood($this->food);
                 $this->layoutView->setView($this->clientView->echoHTML());
                 return;
