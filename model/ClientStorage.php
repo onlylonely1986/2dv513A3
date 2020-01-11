@@ -71,9 +71,16 @@ class ClientStorage {
     public function searchByName($searchWord)
     {
         $data = array();
+        $query = "SELECT * FROM " . self::$dbTableClients;
+        $query .= " WHERE name LIKE '%". $searchWord ."%'";
+        
+        /*$query = "SELECT * FROM " . self::$dbTableClients;
+        $query .= "WHERE '" . $searchWord . "' LIKE CONCAT('%', " . $searchWord . ", '%')";
+        
+        /*
         $query = "SELECT * FROM " . self::$dbTableClients; 
         $query .= "WHERE name LIKE '%" . $searchWord . "%'";
-        $query .= " OR LIKE '" . $searchWord . "'";
+        $query .= " OR LIKE '" . $searchWord . "'"; */
         
         if ($result = self::$conn->query($query)) 
         {
