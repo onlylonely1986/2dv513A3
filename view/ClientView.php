@@ -53,7 +53,7 @@ class ClientView implements IView
             </br><b>Weight:</b> " . $this->client->getWeight() . "
             </br>
             </br>
-            <table style='background-color:yellow; color:black'>
+            <table style='background-color:silver; color:black'>
             <tr>
                 <th><b>Name:</b></th>
                 <th><b>Birthdate:</b></th>
@@ -83,7 +83,7 @@ class ClientView implements IView
             
             $allExercises .= 
                 "</br>
-                <table style='background-color:yellow; color:black'>
+                <table style='background-color:aqua; color:black'>
                     <tr>
                         <th><b>Exercise:</b></th>
                         <th><b>Weight:</b></th>
