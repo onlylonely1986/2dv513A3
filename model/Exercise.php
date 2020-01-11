@@ -43,7 +43,7 @@ class Exercise
         return $this->rest;
     }
 
-    public function getId() {
+    public function getID() {
         return $this->id;
     }
 }

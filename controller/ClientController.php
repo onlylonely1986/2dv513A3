@@ -43,7 +43,7 @@ class ClientController
                     // vald client spara i session?
                     // hämta all info från storage
                     // skicka med till clientview
-                    $this->id = $this->searchView->getId();
+                    $this->id = $this->searchView->getID();
                     $this->dataExercises = $this->storage->getExercisesFromDB();
                     $this->client = $this->storage->getClientInfo($this->id);
                     $this->exercises = $this->storage->getClientExercises($this->id);

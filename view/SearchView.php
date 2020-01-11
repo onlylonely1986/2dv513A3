@@ -93,8 +93,8 @@ class SearchView implements IView
             {
                 foreach ($this->clients as $client) 
                 {
-                    $ret .= "<p>* <a href='?client&id=" . $client->getId() . "
-                    '>" . $client->getId() . ": " . $client->getName() . "</a></p>";
+                    $ret .= "<p>* <a href='?client&id=" . $client->getID() . "
+                    '>" . $client->getID() . ": " . $client->getName() . "</a></p>";
                 }
             }
             
