@@ -17,6 +17,7 @@ class ClientView implements IView
         private $exercise;
         private $exercises;
         private $food;
+        private $foods;
         private $ex;
         private $weight;
         private $repetitions;
@@ -53,7 +54,7 @@ class ClientView implements IView
             </br><b>Weight:</b> " . $this->client->getWeight() . "
             </br>
             </br>
-            <table style='background-color:yellow; color:black'>
+            <table style='background-color:silver; color:black'>
             <tr>
                 <th><b>Name:</b></th>
                 <th><b>Birthdate:</b></th>
@@ -83,13 +84,13 @@ class ClientView implements IView
             
             $allExercises .= 
                 "</br>
-                <table style='background-color:yellow; color:black'>
+                <table style='background-color:aqua; color:black'>
                     <tr>
                         <th><b>Exercise:</b></th>
-                        <th><b>Weight:</b></th>
+                        <th><b>Weight(kg):</b></th>
                         <th><b>Repetitions:</b></th>
                         <th><b>Sets:</b></th>
-                        <th><b>Rest:</b></th>
+                        <th><b>Rest(sec):</b></th>
                     </tr>";
                 
             foreach ($this->exercises as $exercise)
@@ -110,12 +111,54 @@ class ClientView implements IView
             return $allExercises;
         }
 
+        public function setListFood($dataFood) 
+        {
+            $this->foods = $dataFood;
+        }
+
+        private function createTableOverClientFood() 
+        {
+            $id = $_SESSION['id'];
+            $allFood = "";
+
+            
+            $allFood .= 
+                "</br>
+                <table style='background-color:aqua; color:black'>
+                    <tr>
+                        <th><b>Exercise:</b></th>
+                        <th><b>Weight(kg):</b></th>
+                        <th><b>Repetitions:</b></th>
+                        <th><b>Sets:</b></th>
+                        <th><b>Rest(sec):</b></th>
+                    </tr>";
+                
+            foreach ($this->foods as $food)
+                {
+                    if ($food->getID() == $id) {
+                        $allFood .= 
+                        "<tr>
+                            <td>" . $food->getProtein() . "</td>
+                            <td>" . $food->getAmountProtein() . "</td>
+                            <td>" . $food->getCarbs() . "</td>
+                            <td>" . $food->getAmountCarbs() . "</td>
+                            <td>" . $food->getFat() . "</td>
+                            <td>" . $food->getAmountFat() . "</td>
+                        </tr>";
+                    }
+                }
+           
+            $allFood .= "</table>";
+            return $allFood;
+        }
+
         public function echoHTML()
         {
             return "
                 <h3>Client Info:</h3>
                 " . $this->createTableOverClient() . "
                 " . $this->createTableOverClientExercises() . "
+                " . $this->createTableOverClientFood() . "
                 ";
         }
 

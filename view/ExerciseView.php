@@ -95,13 +95,13 @@ class ExerciseView implements IView
                 <h3>Exercise info:</h3>
                 <label for="">Exercise:</label>
                     <input type="text" id="' . self::$clientExercise . '" name="' . self::$clientExercise . '" />
-                    <label for="">Weight:</label>
+                    <label for="">Weight(kg):</label>
                     <input type="text" id="' . self::$clientTrainingWeight . '" name="' . self::$clientTrainingWeight . '" />
                     <label for="">Reps:</label>
                     <input type="text" id="' . self::$clientTrainingReps . '" name="' . self::$clientTrainingReps . '" />
                     <label for="">Sets:</label>
                     <input type="text" id="' . self::$clientTrainingSets . '" name="' . self::$clientTrainingSets . '" />
-                    <label for="">RestTime:</label>
+                    <label for="">RestTime(sec):</label>
                     <input type="text" id="' . self::$clientTrainingResttime . '" name="' . self::$clientTrainingResttime . '" />
                 <input type="submit" id="' . self::$send . '" name="' . self::$send . '" value="Save"/>
             ';

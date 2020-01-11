@@ -10,6 +10,7 @@ class ClientStorage {
     private static $dbName;
     private static $dbTableClients;
     private static $dbTableExercises;
+    private static $dbTableFood;
     private static $conn;
     private static $user;
     
@@ -195,11 +196,64 @@ class ClientStorage {
         }
     }
 
-    public function saveNewFoodToDB() {
-
+    public function getFoodFromDB()
+    {
+        $data = array();
+        $query = "SELECT * FROM " . self::$dbTableFood;
+        
+        if ($result = self::$conn->query($query)) 
+        {
+            if(!$result) 
+            {
+                throw new ConnectionException();
+                return false;
+            }
+            while($obj = $result->fetch_object()) {
+                $food = new Food($obj->protein, $obj->amountprotein, $obj->carbs, $obj->amountcarbs, $obj->fat, $obj->amountfat);
+                $food->setId($obj->clientid);
+                array_push($data, $food);
+            }
+            
+            $result->close();
+            return $data;
+            
+        }
     }
 
-    public function getClientFood($id) {
+    public function saveFoodToDB(Food $food, $id) :bool {
+        $this->connect();
+        $sql = "INSERT INTO " . self::$dbTableFood;
+        $sql .= "(";
+        $sql .= "`protein`, `amountprotein`, `carbs`, `amountcarbs`, `fat`, `amountfat`, `clientid`";
+        $sql .= ")";
+        $sql .= "VALUES ";
+        $sql .= "(";
+        $sql .= "'". $food->getProtein() ."', ";
+        $sql .= "'". $food->getAmountProtein() ."', "; 
+        $sql .= "'". $food->getCarbs() ."', "; 
+        $sql .= "'". $food->getAmountCarbs() ."', ";
+        $sql .= "'". $food->getFat() ."', ";
+        $sql .= "'". $food->getAmountFat() ."', ";
+        $sql .= "'". $id ."'";
+        $sql .= ");";
         
+        $results = self::$conn->query($sql);
+
+        if(!$results) {
+            throw new ConnectionException();
+        }
+        return true;
+    }
+
+    public function getClientFood($id) : Food {
+        $query = "SELECT * FROM  " . self::$dbTableFood . " WHERE clientid = '" . $id . "'";
+        
+        if ($result = self::$conn->query($query)) 
+        {
+            $obj = $result->fetch_object();
+            $food = new Food($obj->protein, $obj->amountprotein, $obj->carbs, $obj->amountcarbs, $obj->fat, $obj->amountfat);
+            $food->setID($obj->clientid);
+            return $food;
+        }
     }
 }
