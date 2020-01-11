@@ -4,6 +4,7 @@ namespace controller;
 
 require_once("model/Client.php");
 require_once("model/Exercise.php");
+require_once("model/Food.php");
 
 require_once("controller/States.php");
 require_once("view/ClientView.php");
@@ -23,9 +24,11 @@ class ClientController
     private $client;
     private $exercises;
     private $exerciseView;
-    private $food;
-    private $id;
     private $dataExercises;
+    private $food;
+    private $foodView;
+    private $dataFood;
+    private $id;
 
     public function __construct(\view\LayoutView $layoutView, \view\SearchView $searchView, \model\ClientStorage $storage, \model\SessionModel $session)
         {
@@ -45,6 +48,7 @@ class ClientController
                     // skicka med till clientview
                     $this->id = $this->searchView->getID();
                     $this->dataExercises = $this->storage->getExercisesFromDB();
+                    $this->dataFood = $this->storage->getFoodFromDB();
                     $this->client = $this->storage->getClientInfo($this->id);
                     $this->exercises = $this->storage->getClientExercises($this->id);
                     $this->food = $this->storage->getClientFood($this->id);
@@ -52,6 +56,7 @@ class ClientController
                     $this->clientView->setClient($this->client);
                     $this->clientView->setListExercises($this->dataExercises);
                     $this->clientView->setExercise($this->exercises);
+                    $this->clientView->setListFood($this->dataFood);
                     $this->clientView->setFood($this->food);
                     $this->layoutView->setView($this->clientView->echoHTML());
                     return;
@@ -64,7 +69,7 @@ class ClientController
                 }
             else if($this->foodPageReq())
                 {
-                    $this->foodView  = new \view\FoodView();
+                    $this->addFoodToClient();
                     $this->layoutView->setView($this->foodView->echoHTML());
                     return;
                 } 
@@ -190,6 +195,30 @@ class ClientController
                     if ($this->storage->saveNewExerciseToDB(new \model\Exercise($exercise, $weight, $repetitions, $sets, $rest), $this->id))
                         {
                             $this->exerciseView->message();
+                        }
+                }
+        }
+    }
+
+    private function addFoodToClient() 
+    {
+        $this->foodView  = new \view\FoodView();
+        $this->id = (int)$_SESSION['id'];
+        
+        if ($this->foodView->wantsToAddFood()) 
+        {
+            if ($this->foodView->isAllFieldsFilled()) 
+                {
+                    $protein = $this->foodView->returnProtein();
+                    $amountprotein = $this->foodView->returnAmountProtein();
+                    $carbs = $this->foodView->returnCarbs();
+                    $amountcarbs = $this->foodView->returnAmountCarbs();
+                    $fat = $this->foodView->returnFat();
+                    $amountfat = $this->foodView->returnAmountFat();
+
+                    if ($this->storage->saveFoodToDB(new \model\Food($protein, $amountprotein, $carbs, $amountcarbs, $fat, $amountfat), $this->id))
+                        {
+                            $this->foodView->message();
                         }
                 }
         }

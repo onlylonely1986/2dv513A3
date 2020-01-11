@@ -10,6 +10,7 @@ class ClientStorage {
     private static $dbName;
     private static $dbTableClients;
     private static $dbTableExercises;
+    private static $dbTableFood;
     private static $conn;
     private static $user;
     
@@ -21,6 +22,7 @@ class ClientStorage {
         self::$dbName = $settings->dbName;
         self::$dbTableClients = $settings->dbTableClients;
         self::$dbTableExercises = $settings->dbTableExercises;
+        self::$dbTableFood = $settings->dbTableFood;
     }
 
     public function connect() 
@@ -183,6 +185,7 @@ class ClientStorage {
 
     }
 
+    // denna borde också ge tillbaka en array ?..  men den funkar va?
     public function getClientExercises($id) : Exercise {
         $query = "SELECT * FROM  " . self::$dbTableExercises . " WHERE clientid = '" . $id . "'";
         
@@ -195,11 +198,79 @@ class ClientStorage {
         }
     }
 
-    public function saveNewFoodToDB() {
-
+    public function getFoodFromDB()
+    {
+        $data = array();
+        $query = "SELECT * FROM " . self::$dbTableFood;
+        
+        if ($result = self::$conn->query($query)) 
+        {
+            if(!$result) 
+            {
+                throw new ConnectionException();
+                return false;
+            }
+            while($obj = $result->fetch_object()) {
+                $food = new Food($obj->protein, $obj->amountprotein, $obj->carbs, $obj->amountcarbs, $obj->fat, $obj->amountfat);
+                $food->setId($obj->clientid);
+                array_push($data, $food);
+            }
+            
+            $result->close();
+            return $data;
+            
+        }
     }
 
-    public function getClientFood($id) {
+    public function saveFoodToDB(Food $food, $id) : bool {
+        $this->connect();
+        // kolla denna om det kommer med nåt objekt från viewn
+        var_dump($food);
+        var_dump($_SESSION);
         
+        $sql = "INSERT INTO " . self::$dbTableFood;
+        $sql .= " (";
+        $sql .= "`protein`, `amountprotein`, `carbs`, `amountcarbs`, `fat`, `amountfat`, `clientid`";
+        $sql .= ")";
+        $sql .= " VALUES ";
+        $sql .= "(";
+        $sql .= "'". $food->getProtein() ."', ";
+        $sql .= "'". $food->getAmountProtein() ."', "; 
+        $sql .= "'". $food->getCarbs() ."', "; 
+        $sql .= "'". $food->getAmountCarbs() ."', ";
+        $sql .= "'". $food->getFat() ."', ";
+        $sql .= "'". $food->getAmountFat() ."', ";
+        $sql .= "'". $id ."'";
+        $sql .= ");";
+
+        /* { 
+            ["protein":"model\Food":private]=> string(4) "Meat" 
+            ["amountprotein":"model\Food":private]=> string(3) "120" 
+            ["carbs":"model\Food":private]=> string(7) "Potatoe" 
+            ["amountcarbs":"model\Food":private]=> NULL 
+            ["fat":"model\Food":private]=> string(4) "Nuts" 
+            ["amountfat":"model\Food":private]=> NULL 
+            ["id":"model\Food":private]=> NULL 
+            ["amountCarbs"]=> string(3) "100" 
+            ["amountFat"]=> string(2) "20" } */
+        $results = self::$conn->query($sql);
+
+        if(!$results) {
+            throw new ConnectionException();
+        }
+        return true;
+    }
+
+    public function getClientFood($id) 
+    {
+        $query = "SELECT * FROM  " . self::$dbTableFood . " WHERE clientid = '" . $id . "'";
+        
+        if ($result = self::$conn->query($query)) 
+        {
+            $obj = $result->fetch_object();
+            $food = new Food($obj->protein, $obj->amountprotein, $obj->carbs, $obj->amountcarbs, $obj->fat, $obj->amountfat);
+            $food->setID($obj->clientid);
+            return $food;
+        }
     }
 }
