@@ -26,12 +26,13 @@ class ClientController
     private $food;
     private $id;
 
-    public function __construct(\view\LayoutView $layoutView, \view\SearchView $searchView, \model\ClientStorage $storage, \model\SessionModel $session)
+    public function __construct(\view\LayoutView $layoutView, \view\SearchView $searchView, \model\ClientStorage $storage, \model\SessionModel $session, \view\ClientView $clientView)
         {
             $this->layoutView = $layoutView;
             $this->searchView = $searchView;
             $this->storage = $storage;
             $this->session = $session;
+            $this->clientView = $clientView; 
         }
 
     public function handleClient()
@@ -98,8 +99,45 @@ class ClientController
                         }
                     $this->layoutView->setView($this->searchView->echoHTML());
                     return;
-                }
+           /* if ($this->pickedClientReq()) 
+            {
+                // vald client spara i session?
+                // hämta all info från storage
+                // skicka med till clientview
+                $this->id = $this->searchView->getId();
+                $this->client = $this->storage->getClientInfo($this->id);
+                $this->exercises = $this->storage->getClientExercises($this->id);
+                $this->food = $this->storage->getClientFood($this->id);
+                // $this->clientView  = new \view\ClientView();
+                $this->clientView->setClient($this->client);
+                $this->clientView->setExercise($this->exercises);
+                $this->clientView->setFood($this->food);
+                $this->layoutView->setView($this->clientView->echoHTML());
+                return;
+            } 
+            else if($this->registerNewExercise())
+            {
+                $this->addExerciseToClient();
+                $this->layoutView->setView($this->exerciseView->echoHTML());
+                return;
+            }
+            else if($this->registerNewFood())
+            {
+                $this->foodView  = new \view\FoodView();
+                $this->layoutView->setView($this->foodView->echoHTML());
+                return;
+            } 
+            else if ($this->registerNewClientReq()) 
+            {
+                $this->addNewClient();
+                $this->layoutView->setView($this->addClientView->echoHTML());
+                return;
+            } else if ($this->startPageReq()) {
+                if ($this->searchReq()) {
+                    echo "vill du söka";
+                } */
     }
+}
 
     public function clientPageReq() : bool 
     {
