@@ -68,6 +68,31 @@ class ClientStorage {
         }
     }
 
+    public function searchByName($searchWord)
+    {
+        $data = array();
+        $query = "SELECT * FROM " . self::$dbTableClients; 
+        $query .= "WHERE name LIKE '%" . $searchWord . "%'";
+        $query .= " OR LIKE '" . $searchWord . "'";
+        
+        if ($result = self::$conn->query($query)) 
+        {
+            if(!$result) 
+            {
+                throw new ConnectionException();
+                return false;
+            }
+            while($obj = $result->fetch_object()) {
+                $client = new Client($obj->name, $obj->dateOfBirth, $obj->weight, $obj->goal);
+                $client->setId($obj->id);
+                array_push($data, $client);
+            }
+ 
+            $result->close();
+            return $data;
+        }
+    }
+
     public function saveNewClientToDB(Client $client) : bool {
         $this->connect();
         $sql = "INSERT INTO " . self::$dbTableClients;
