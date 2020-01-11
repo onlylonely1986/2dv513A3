@@ -24,6 +24,7 @@ class ClientController
     private $exercises;
     private $exerciseView;
     private $food;
+    private $id;
 
     public function __construct(\view\LayoutView $layoutView, \view\SearchView $searchView, \model\ClientStorage $storage, \model\SessionModel $session)
         {
@@ -40,10 +41,10 @@ class ClientController
                 // vald client spara i session?
                 // hämta all info från storage
                 // skicka med till clientview
-                $id = $this->searchView->getId();
-                $this->client = $this->storage->getClientInfo($id);
-                $this->exercises = $this->storage->getClientExercises($id);
-                $this->food = $this->storage->getClientFood($id);
+                $this->id = $this->searchView->getId();
+                $this->client = $this->storage->getClientInfo($this->id);
+                $this->exercises = $this->storage->getClientExercises($this->id);
+                $this->food = $this->storage->getClientFood($this->id);
                 $this->clientView  = new \view\ClientView();
                 $this->clientView->setClient($this->client);
                 $this->clientView->setExercise($this->exercises);
@@ -171,6 +172,9 @@ class ClientController
     private function addExerciseToClient() 
     {
         $this->exerciseView = new \view\ExerciseView();
+        $this->id = (int)$_SESSION['id'];
+        // $this->id = $this->clientView->getId();
+        
         if ($this->exerciseView->wantsToAddExercises()) 
         {
             if ($this->exerciseView->isAllFieldsFilled()) 
@@ -181,7 +185,7 @@ class ClientController
                     $sets = $this->exerciseView->returnSets();
                     $rest = $this->exerciseView->returnRest();
 
-                    if ($this->storage->saveNewExerciseToDB(new \model\Exercise($exercise, $weight, $repetitions, $sets, $rest)))
+                    if ($this->storage->saveNewExerciseToDB(new \model\Exercise($exercise, $weight, $repetitions, $sets, $rest), $this->id))
                         {
                             $this->exerciseView->message();
                         }
