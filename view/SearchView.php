@@ -63,11 +63,10 @@ class SearchView implements IView
             $this->clients = $data;
         }
     
-    public function setListOfViewRows($data) 
+    public function setListOfRows($data) 
     {
         $this->viewRows = $data;
     }
-
 
     public function getRequest() : bool
         {

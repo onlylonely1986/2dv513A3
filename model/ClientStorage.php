@@ -285,4 +285,19 @@ class ClientStorage {
         }
         return $data;
     }
+
+    public function getRowsByJoin()
+    {
+        
+    }
+
+    public function getRowsByInnerJoin()
+    {
+        
+    }
+
+    public function getRowsByUnion()
+    {
+        
+    }
 }
