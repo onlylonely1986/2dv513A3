@@ -288,7 +288,27 @@ class ClientStorage {
 
     public function getRowsByJoin()
     {
-        
+        $data = array();
+        $query = "SELECT client.name, COUNT(exercises.clientid) AS countExercises FROM client JOIN exercises ON ";
+        $query .= "client.id = exercises.clientid GROUP BY client.name ORDER BY countExercises DESC;";
+
+
+        if ($result = self::$conn->query($query)) 
+        {
+            if(!$result) 
+            {
+                throw new ConnectionException();
+                return false;
+            }
+            
+            while($obj = $result->fetch_object()) {
+                array_push($data, $obj);
+            }
+            
+            $result->close();
+            return $data;
+        }
+        return $data;
     }
 
     public function getRowsByInnerJoin()

@@ -32,7 +32,7 @@ class SearchView implements IView
                 {
                     return
                     '<h2>Join:</h2>
-                        <p>This query creates a join.</p>
+                        <p>This query  shows how many exercises that has been added to each client using a join.</p>
                         ' . $this->showJoin() . '
                     ';
                 }
@@ -166,6 +166,23 @@ class SearchView implements IView
     private function showJoin()
         {
             $ret = "";
+            $ret .= "<table style='background-color:LightGrey; color:black'>
+                    <tr>
+                        <th><b>Name</b></th>
+                        <th><b>Countexercises</b></th>
+                    </tr>";
+            if ($this->viewRows != NULL)
+            {
+                foreach ($this->viewRows as $row) 
+                {
+                    $ret .= "
+                        <tr>
+                            <td>" . $row->name . "</td>
+                            <td>" . $row->countExercises . "</td>
+                        </tr>";
+                }
+            }
+            $ret .= "</table>";
             return $ret;
         }
 
