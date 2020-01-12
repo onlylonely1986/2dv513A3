@@ -186,6 +186,7 @@ class ClientStorage {
     }
 
     // denna borde också ge tillbaka en array ?..  men den funkar va?
+    //Ja den här funkar
     public function getClientExercises($id) : Exercise {
         $query = "SELECT * FROM  " . self::$dbTableExercises . " WHERE clientid = '" . $id . "'";
         
