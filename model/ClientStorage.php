@@ -74,7 +74,7 @@ class ClientStorage {
     {
         $data = array();
         $query = "SELECT * FROM " . self::$dbTableClients;
-        $query .= " WHERE name LIKE '%". $searchWord ."%'";
+        $query .= " WHERE name LIKE '". $searchWord ."%'";
         $query .= " GROUP BY name";
         
         if ($result = self::$conn->query($query)) 
@@ -256,5 +256,33 @@ class ClientStorage {
                 return $food;
             }
         }
+    }
+
+    public function getRowsByView()
+    {
+        $data = array();
+        // denna funkade att köra direkt ifrån DB istället och då funkade select under
+        // under förutsättning att du har några som har övningen pushups :)
+        /*$query = "CREATE VIEW view_newTable AS SELECT";
+        $query .= " client.name, client.goal, exercises.exercise FROM";
+        $query .= " client, exercises WHERE client.id = exercises.clientid";*/
+        $query = "SELECT * FROM `view_newTable` WHERE exercise='pushups';";
+        
+        if ($result = self::$conn->query($query)) 
+        {
+            if(!$result) 
+            {
+                throw new ConnectionException();
+                return false;
+            }
+            
+            while($obj = $result->fetch_object()) {
+                array_push($data, $obj);
+            }
+            
+            $result->close();
+            return $data;
+        }
+        return $data;
     }
 }

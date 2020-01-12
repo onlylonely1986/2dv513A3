@@ -43,22 +43,7 @@ class ClientController
         {
             if ($this->clientPageReq()) 
                 {
-                    // vald client spara i session?
-                    // hämta all info från storage
-                    // skicka med till clientview
-                    $this->id = $this->searchView->getID();
-                    $this->dataExercises = $this->storage->getExercisesFromDB();
-                    $this->dataFood = $this->storage->getFoodFromDB();
-                    $this->client = $this->storage->getClientInfo($this->id);
-                    $this->exercises = $this->storage->getClientExercises($this->id);
-                    $this->food = $this->storage->getClientFood($this->id);
-                    $this->clientView  = new \view\ClientView();
-                    $this->clientView->setClient($this->client);
-                    $this->clientView->setListExercises($this->dataExercises);
-                    $this->clientView->setExercise($this->exercises);
-                    $this->clientView->setListFood($this->dataFood);
-                    $this->clientView->setFood($this->food);
-                    $this->layoutView->setView($this->clientView->echoHTML());
+                    $this->clientView();
                     return;
                 } 
             else if($this->exercisePageReq())
@@ -77,6 +62,13 @@ class ClientController
                 {
                     $this->addNewClient();
                     $this->layoutView->setView($this->addClientView->echoHTML());
+                    return;
+                } 
+            else if ($this->showViewPageReq()) 
+                {
+                    $data = $this->storage->getRowsByView();
+                    $this->searchView->setListOfViewRows($data);
+                    $this->layoutView->setView($this->searchView->echoHTML());
                     return;
                 } 
             else if ($this->startPageReq()) 
@@ -130,7 +122,6 @@ class ClientController
         {
             if (isset($_GET['food']))
                 {
-
                     return true;
                 }
             return false;
@@ -145,6 +136,14 @@ class ClientController
             }
             return false;
         }
+    
+    private function showViewPageReq() : bool
+        {
+            if (isset($_GET['showview'])) {
+                return true;
+            }
+            return false;
+        }
 
     private function startPageReq() : bool 
         {
@@ -154,7 +153,23 @@ class ClientController
             }
             return false;
         }
-
+    
+    private function clientView()
+        {
+            $this->id = $this->searchView->getID();
+            $this->dataExercises = $this->storage->getExercisesFromDB();
+            $this->dataFood = $this->storage->getFoodFromDB();
+            $this->client = $this->storage->getClientInfo($this->id);
+            $this->exercises = $this->storage->getClientExercises($this->id);
+            $this->food = $this->storage->getClientFood($this->id);
+            $this->clientView  = new \view\ClientView();
+            $this->clientView->setClient($this->client);
+            $this->clientView->setListExercises($this->dataExercises);
+            $this->clientView->setExercise($this->exercises);
+            $this->clientView->setListFood($this->dataFood);
+            $this->clientView->setFood($this->food);
+            $this->layoutView->setView($this->clientView->echoHTML());
+        }    
 
     private function addNewClient() 
         {
