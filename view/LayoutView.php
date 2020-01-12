@@ -54,7 +54,6 @@ class LayoutView
 
     private function nav()
         {
-            // if(isset($_GET['clientInfo']) || isset($_GET['exercises']) || isset($_GET['food']))
             if(isset($_GET['client']) || isset($_GET['clientInfo']) || isset($_GET['exercises']) || isset($_GET['food'])) 
                 {
                     return 
@@ -64,18 +63,19 @@ class LayoutView
                         <a href='?exercises'>New Exercises</a>
                         <a href='?food'>New Food</a>
                     </div>";
-                    /* "<div class='topnav'>
-                        <a class='active' href='?'>Start</a>
-                        <a href='?clientInfo'>ClientInfo</a>
-                        <a href='?exercises&id=" . $_SESSION['id'] . "'>New Exercises</a>
-                        <a href='?food&id=" . $_SESSION['id'] . "'>New Food</a>
-                    </div>"; */
                 } else 
                 {
                     return 
                     "<div class='topnav'>
                         <a class='active' href='?'>Start</a>
                         <a href='?clients'>New Client</a>
+                    </div>
+                    </br>
+                    <div class='topnav2'>
+                        <a href='?showview'>Show View</a>
+                        <a href='?join'>Join</a>
+                        <a href='?innerjoin'>Inner Join</a>
+                        <a href='?union'>Union</a>
                     </div>";
                 }
            

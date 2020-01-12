@@ -74,15 +74,8 @@ class ClientStorage {
     {
         $data = array();
         $query = "SELECT * FROM " . self::$dbTableClients;
-        $query .= " WHERE name LIKE '%". $searchWord ."%'";
-        
-        /*$query = "SELECT * FROM " . self::$dbTableClients;
-        $query .= "WHERE '" . $searchWord . "' LIKE CONCAT('%', " . $searchWord . ", '%')";
-        
-        /*
-        $query = "SELECT * FROM " . self::$dbTableClients; 
-        $query .= "WHERE name LIKE '%" . $searchWord . "%'";
-        $query .= " OR LIKE '" . $searchWord . "'"; */
+        $query .= " WHERE name LIKE '". $searchWord ."%'";
+        $query .= " GROUP BY name";
         
         if ($result = self::$conn->query($query)) 
         {
@@ -185,17 +178,24 @@ class ClientStorage {
 
     }
 
+<<<<<<< HEAD
     // denna borde också ge tillbaka en array ?..  men den funkar va?
     //Ja den här funkar
     public function getClientExercises($id) : Exercise {
+=======
+    public function getClientExercises($id){
+>>>>>>> 309731681e3f96f2f447d6ce47576dbaa1fd0e82
         $query = "SELECT * FROM  " . self::$dbTableExercises . " WHERE clientid = '" . $id . "'";
         
         if ($result = self::$conn->query($query)) 
         {
             $obj = $result->fetch_object();
-            $exercises = new Exercise($obj->exercise, $obj->weight, $obj->repetitions, $obj->sets, $obj->rest);
-            $exercises->setId($obj->clientid);
-            return $exercises;
+            if ($obj)
+            {
+                $exercises = new Exercise($obj->exercise, $obj->weight, $obj->repetitions, $obj->sets, $obj->rest);
+                $exercises->setId($obj->clientid);
+                return $exercises;
+            }
         }
     }
 
@@ -224,11 +224,7 @@ class ClientStorage {
     }
 
     public function saveFoodToDB(Food $food, $id) : bool {
-        $this->connect();
-        // kolla denna om det kommer med nåt objekt från viewn
-        var_dump($food);
-        var_dump($_SESSION);
-        
+        $this->connect();        
         $sql = "INSERT INTO " . self::$dbTableFood;
         $sql .= " (";
         $sql .= "`protein`, `amountprotein`, `carbs`, `amountcarbs`, `fat`, `amountfat`, `clientid`";
@@ -244,16 +240,6 @@ class ClientStorage {
         $sql .= "'". $id ."'";
         $sql .= ");";
 
-        /* { 
-            ["protein":"model\Food":private]=> string(4) "Meat" 
-            ["amountprotein":"model\Food":private]=> string(3) "120" 
-            ["carbs":"model\Food":private]=> string(7) "Potatoe" 
-            ["amountcarbs":"model\Food":private]=> NULL 
-            ["fat":"model\Food":private]=> string(4) "Nuts" 
-            ["amountfat":"model\Food":private]=> NULL 
-            ["id":"model\Food":private]=> NULL 
-            ["amountCarbs"]=> string(3) "100" 
-            ["amountFat"]=> string(2) "20" } */
         $results = self::$conn->query($sql);
 
         if(!$results) {
@@ -269,9 +255,94 @@ class ClientStorage {
         if ($result = self::$conn->query($query)) 
         {
             $obj = $result->fetch_object();
-            $food = new Food($obj->protein, $obj->amountprotein, $obj->carbs, $obj->amountcarbs, $obj->fat, $obj->amountfat);
-            $food->setID($obj->clientid);
-            return $food;
+            if ($obj)
+            {
+                $food = new Food($obj->protein, $obj->amountprotein, $obj->carbs, $obj->amountcarbs, $obj->fat, $obj->amountfat);
+                $food->setID($obj->clientid);
+                return $food;
+            }
         }
+    }
+
+    public function getRowsByView()
+    {
+        $data = array();
+        // denna funkade att köra direkt ifrån DB istället och då funkade select under
+        // under förutsättning att du har några som har övningen pushups :)
+        /*$query = "CREATE VIEW view_newTable AS SELECT";
+        $query .= " client.name, client.goal, exercises.exercise FROM";
+        $query .= " client, exercises WHERE client.id = exercises.clientid";*/
+        $query = "SELECT * FROM `view_newTable` WHERE exercise='pushups';";
+        
+        if ($result = self::$conn->query($query)) 
+        {
+            if(!$result) 
+            {
+                throw new ConnectionException();
+                return false;
+            }
+            
+            while($obj = $result->fetch_object()) {
+                array_push($data, $obj);
+            }
+            
+            $result->close();
+            return $data;
+        }
+        return $data;
+    }
+
+    public function getRowsByJoin()
+    {
+        $data = array();
+        $query = "SELECT client.name, COUNT(exercises.clientid) AS countExercises FROM client JOIN exercises ON ";
+        $query .= "client.id = exercises.clientid GROUP BY client.name ORDER BY countExercises DESC;";
+
+
+        if ($result = self::$conn->query($query)) 
+        {
+            if(!$result) 
+            {
+                throw new ConnectionException();
+                return false;
+            }
+            
+            while($obj = $result->fetch_object()) {
+                array_push($data, $obj);
+            }
+            
+            $result->close();
+            return $data;
+        }
+        return $data;
+    }
+
+    public function getRowsByInnerJoin()
+    {
+        $data = array();
+        $query = "SELECT m.id, m.name client, c.exercise exercises, c.weight, c.repetitions, c.rest, c.sets";
+        $query .= " FROM client m INNER JOIN exercises c ON (c.clientid = m.id);";
+
+        if ($result = self::$conn->query($query)) 
+        {
+            if(!$result) 
+            {
+                throw new ConnectionException();
+                return false;
+            }
+            
+            while($obj = $result->fetch_object()) {
+                array_push($data, $obj);
+            }
+            
+            $result->close();
+            return $data;
+        }
+        return $data;
+    }
+
+    public function getRowsByUnion()
+    {
+        
     }
 }

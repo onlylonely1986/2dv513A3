@@ -11,6 +11,7 @@ class SearchView implements IView
     private static $send = 'SearchView::send';
     private $clients;
     private $dataExercises;
+    private $viewRows;
 
     public function __conctruct ()
         {
@@ -18,26 +19,63 @@ class SearchView implements IView
     
     public function echoHTML() 
         {
-            return
-                '<h2>Search:</h2>
-                    <form href="?" method="POST">
-                        <input type="text" id="' . self::$clientSearch . '" name="' . self::$clientSearch . '" />
-                        <input type="submit" id="' . self::$send . '" name="' . self::$send . '" value="Search"/>
-                    </form>
-                    ' . $this->message . '
-                    ' . $this->iterateOverClients() . '
-                ';
+            if (isset($_GET['showview'])) 
+                {
+                    return
+                    '<h2>Show view:</h2>
+                        <p>This query creates a new table when just showing every client and their goal.</p>
+                        <p>Then we run a new query that select every client that has `pushups` as their exercise.</p>
+                        ' . $this->showView() . '
+                    ';
+                }
+            else if (isset($_GET['join'])) 
+                {
+                    return
+                    '<h2>Join:</h2>
+                        <p>This query  shows how many exercises that has been added to each client using a join.</p>
+                        ' . $this->showJoin() . '
+                    ';
+                }
+            else if (isset($_GET['innerjoin'])) 
+                {
+                    return
+                    '<h2>Inner Join:</h2>
+                        <p>This query uses inner join to make a unified table over all clients and their exercises.</p>
+                        ' . $this->showInnerJoin() . '
+                    ';
+                }
+            else if (isset($_GET['union'])) 
+                {
+                    return
+                    '<h2>Union:</h2>
+                        <p>This query creates an union.</p>
+                        ' . $this->showUnion() . '
+                    ';
+                }
+            else 
+                {
+                    return
+                        '<h2>Search:</h2>
+                            <form href="?" method="POST">
+                                <input type="text" id="' . self::$clientSearch . '" name="' . self::$clientSearch . '" />
+                                <input type="submit" id="' . self::$send . '" name="' . self::$send . '" value="Search"/>
+                            </form>
+                        ' . $this->message . '
+                        ' . $this->iterateOverClients() . '
+                    ';
+                }
+            
         }
 
     public function setList($data) 
         {
             $this->clients = $data;
         }
-
-    // public function setListExercises($dataExercises) 
-    //     {
-    //         $this->exercises = $dataExercises;
-    //     }
+    
+    public function setListOfRows($data) 
+    {
+        $this->viewRows = $data;
+    }
 
     public function getRequest() : bool
         {
@@ -88,7 +126,6 @@ class SearchView implements IView
     private function iterateOverClients() 
         {
             $ret = "";
-            // var_dump($this->clients);
             if ($this->clients != NULL)
             {
                 foreach ($this->clients as $client) 
@@ -101,31 +138,90 @@ class SearchView implements IView
             return $ret;
         }
 
-    //     public function iterateOverExercises() 
-    //     {
-    //     $allExercises = "";
-    //     foreach ($this->exercise as $exercises)
-    //     {
-    //         $allExercises .= "
-    //         </br>
-    //         <table style='background-color:yellow; color:black'>
-    //         <tr>
-    //             <th><b>Exercise:</b></th>
-    //             <th><b>Weight:</b></th>
-    //             <th><b>Repetitions:</b></th>
-    //             <th><b>Sets:</b></th>
-    //             <th><b>Rest:</b></th>
-    //         </tr>
-    //         <tr>
-    //             <td>" . $exercises->getExercise() . "</td>
-    //             <td>" . $exercises->getWeight() . "</td>
-    //             <td>" . $exercises->getRepetitions() . "</td>
-    //             <td>" . $exercises->getSets() . "</td>
-    //             <td>" . $exercises->getRest() . "</td>
-    //         </tr>
-    //         </table>
-    //         ";
-    //     }
-    //     return $allExercises;
-    // }
+    private function showView() 
+        {
+            $ret = "";
+            $ret .= "<table style='background-color:LightGrey; color:black'>
+                    <tr>
+                        <th><b>Name</b></th>
+                        <th><b>Goal</b></th>
+                        <th><b>Exercise</b></th>
+                    </tr>";
+            if ($this->viewRows != NULL)
+            {
+                foreach ($this->viewRows as $row) 
+                {
+                    $ret .= "
+                        <tr>
+                            <td>" . $row->name . "</td>
+                            <td>" . $row->goal . "</td>
+                            <td>" . $row->exercise . "</td>
+                        </tr>";
+                }
+            }
+            $ret .= "</table>";
+            return $ret;
+        }
+
+    private function showJoin()
+        {
+            $ret = "";
+            $ret .= "<table style='background-color:LightGrey; color:black'>
+                    <tr>
+                        <th><b>Name</b></th>
+                        <th><b>Countexercises</b></th>
+                    </tr>";
+            if ($this->viewRows != NULL)
+            {
+                foreach ($this->viewRows as $row) 
+                {
+                    $ret .= "
+                        <tr>
+                            <td>" . $row->name . "</td>
+                            <td>" . $row->countExercises . "</td>
+                        </tr>";
+                }
+            }
+            $ret .= "</table>";
+            return $ret;
+        }
+
+    private function showInnerJoin()
+        {
+            $ret = "";
+            $ret .= "<table style='background-color:LightGrey; color:black'>
+                    <tr>
+                        <th><b>Id</b></th>
+                        <th><b>Name</b></th>
+                        <th><b>Exercise</b></th>
+                        <th><b>Weight</b></th>
+                        <th><b>Reps</b></th>
+                        <th><b>Rest</b></th>
+                        <th><b>Sets</b></th>
+                    </tr>";
+            if ($this->viewRows != NULL)
+            {
+                foreach ($this->viewRows as $row) 
+                {
+                    $ret .= "
+                        <tr>
+                            <td>" . $row->id . "</td>
+                            <td>" . $row->client . "</td>
+                            <td>" . $row->exercises . "</td>
+                            <td>" . $row->weight . "</td>
+                            <td>" . $row->repetitions . "</td>
+                            <td>" . $row->rest . "</td>
+                            <td>" . $row->sets . "</td>
+                        </tr>";
+                }
+            }
+            $ret .= "</table>";
+            return $ret;
+        }
+    
+    private function showUnion()
+        {
+            $ret = "";
+            return $ret;
+        }
 }

@@ -38,7 +38,7 @@ class Food
     }
 
     public function getAmountCarbs() {
-        return $this->amountcarbs;
+        return $this->amountCarbs;
     }
 
     public function getFat() {
@@ -46,7 +46,7 @@ class Food
     }
     public function getAmountFat()
     {
-        return $this->amountfat;
+        return $this->amountFat;
     }
 
     public function getID() {

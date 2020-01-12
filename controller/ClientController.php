@@ -36,29 +36,13 @@ class ClientController
             $this->searchView = $searchView;
             $this->storage = $storage;
             $this->session = $session;
-            // $this->clientView = $clientView; 
         }
 
     public function handleClient()
         {
             if ($this->clientPageReq()) 
                 {
-                    // vald client spara i session?
-                    // hämta all info från storage
-                    // skicka med till clientview
-                    $this->id = $this->searchView->getID();
-                    $this->dataExercises = $this->storage->getExercisesFromDB();
-                    $this->dataFood = $this->storage->getFoodFromDB();
-                    $this->client = $this->storage->getClientInfo($this->id);
-                    $this->exercises = $this->storage->getClientExercises($this->id);
-                    $this->food = $this->storage->getClientFood($this->id);
-                    $this->clientView  = new \view\ClientView();
-                    $this->clientView->setClient($this->client);
-                    $this->clientView->setListExercises($this->dataExercises);
-                    $this->clientView->setExercise($this->exercises);
-                    $this->clientView->setListFood($this->dataFood);
-                    $this->clientView->setFood($this->food);
-                    $this->layoutView->setView($this->clientView->echoHTML());
+                    $this->clientView();
                     return;
                 } 
             else if($this->exercisePageReq())
@@ -79,60 +63,78 @@ class ClientController
                     $this->layoutView->setView($this->addClientView->echoHTML());
                     return;
                 } 
+            else if ($this->showViewPageReq()) 
+                {
+                    $data = $this->storage->getRowsByView();
+                    $this->searchView->setListOfRows($data);
+                    $this->layoutView->setView($this->searchView->echoHTML());
+                    return;
+                } 
+            else if ($this->joinPageReq()) 
+                { // TODO ej klar
+                    $data = $this->storage->getRowsByJoin();
+                    $this->searchView->setListOfRows($data);
+                    $this->layoutView->setView($this->searchView->echoHTML());
+                    return;
+                } 
+            else if ($this->innerJoinPageReq()) 
+                {
+                    $data = $this->storage->getRowsByInnerJoin();
+                    $this->searchView->setListOfRows($data);
+                    $this->layoutView->setView($this->searchView->echoHTML());
+                    return;
+                }
+            else if ($this->unionPageReq()) 
+                { // TODO ej klar
+                    $data = $this->storage->getRowsByUnion();
+                    $this->searchView->setListOfRows($data);
+                    $this->layoutView->setView($this->searchView->echoHTML());
+                    return;
+                } 
             else if ($this->startPageReq()) 
                 {
-                    // TODO lägg metod för sökning här också, samma som i else under, 
-                    // kan ske vid olika tillfällen
-                    
-                    
-                    // hämta info från searchview
-                    // hämta info från storage
-                    // skicka message till searchview
-                    // hämta från storage
-                    // rendera lista med sökförslag
                     $this->layoutView->setView($this->searchView->echoHTML());
                     return;
                 }
             else 
                 {
                     if ($this->searchView->wantsToSearch()) 
+                    {
+                        if ($this->searchView->searchWordGiven()) 
                         {
-                            if ($this->searchView->searchWordGiven()) {
-                                // echo "när körs denna?";
-                                $searchWord = $this->searchView->getSearchWord();
-                                $data = $this->storage->searchByName($searchWord);
-                                // var_dump($data);
-                                $this->searchView->setList($data);
-                            }
+                            $searchWord = $this->searchView->getSearchWord();
+                            $data = $this->storage->searchByName($searchWord);
+                            $this->searchView->setList($data);
                         }
+                    }
                     $this->layoutView->setView($this->searchView->echoHTML());
                     return;
-    }
-}
+                }
+        }
 
     public function clientPageReq() : bool 
-    {
-        if ($this->searchView->getRequest()) 
         {
-            return true;
+            if ($this->searchView->getRequest()) 
+            {
+                return true;
+            }
+            return false;
         }
-        return false;
-    }
 
-    public function exercisePageReq() : bool {
-        if (isset($_GET['exercises']))
+    public function exercisePageReq() : bool 
         {
-            return true;
+            if (isset($_GET['exercises']))
+            {
+                return true;
+            }
+            return false;
         }
-        return false;
-    }
             
 
     public function foodPageReq() : bool
         {
             if (isset($_GET['food']))
                 {
-
                     return true;
                 }
             return false;
@@ -147,6 +149,38 @@ class ClientController
             }
             return false;
         }
+    
+    private function showViewPageReq() : bool
+        {
+            if (isset($_GET['showview'])) {
+                return true;
+            }
+            return false;
+        }
+
+    private function joinPageReq() : bool
+        {
+            if (isset($_GET['join'])) {
+                return true;
+            }
+            return false;
+        }
+
+    private function innerJoinPageReq() : bool
+        {
+            if (isset($_GET['innerjoin'])) {
+                return true;
+            }
+            return false;
+        }
+
+    private function unionPageReq() : bool
+        {
+            if (isset($_GET['union'])) {
+                return true;
+            }
+            return false;
+        }
 
     private function startPageReq() : bool 
         {
@@ -156,7 +190,23 @@ class ClientController
             }
             return false;
         }
-
+    
+    private function clientView()
+        {
+            $this->id = $this->searchView->getID();
+            $this->dataExercises = $this->storage->getExercisesFromDB();
+            $this->dataFood = $this->storage->getFoodFromDB();
+            $this->client = $this->storage->getClientInfo($this->id);
+            $this->exercises = $this->storage->getClientExercises($this->id);
+            $this->food = $this->storage->getClientFood($this->id);
+            $this->clientView  = new \view\ClientView();
+            $this->clientView->setClient($this->client);
+            $this->clientView->setListExercises($this->dataExercises);
+            $this->clientView->setExercise($this->exercises);
+            $this->clientView->setListFood($this->dataFood);
+            $this->clientView->setFood($this->food);
+            $this->layoutView->setView($this->clientView->echoHTML());
+        }    
 
     private function addNewClient() 
         {
@@ -178,49 +228,50 @@ class ClientController
         }
 
     private function addExerciseToClient() 
-    {
-        $this->exerciseView = new \view\ExerciseView();
-        $this->id = (int)$_SESSION['id'];
-        
-        if ($this->exerciseView->wantsToAddExercises()) 
         {
-            if ($this->exerciseView->isAllFieldsFilled()) 
-                {
-                    $exercise = $this->exerciseView->returnExercise();
-                    $weight = $this->exerciseView->returnWeight();
-                    $repetitions = $this->exerciseView->returnReps();
-                    $sets = $this->exerciseView->returnSets();
-                    $rest = $this->exerciseView->returnRest();
+            $this->exerciseView = new \view\ExerciseView();
+            $this->id = (int)$_SESSION['id'];
+            
+            if ($this->exerciseView->wantsToAddExercises()) 
+            {
+                if ($this->exerciseView->isAllFieldsFilled()) 
+                    {
+                        $exercise = $this->exerciseView->returnExercise();
+                        $weight = $this->exerciseView->returnWeight();
+                        $repetitions = $this->exerciseView->returnReps();
+                        $sets = $this->exerciseView->returnSets();
+                        $rest = $this->exerciseView->returnRest();
 
-                    if ($this->storage->saveNewExerciseToDB(new \model\Exercise($exercise, $weight, $repetitions, $sets, $rest), $this->id))
-                        {
-                            $this->exerciseView->message();
-                        }
-                }
+                        if ($this->storage->saveNewExerciseToDB(new \model\Exercise($exercise, $weight, $repetitions, $sets, $rest), $this->id))
+                            {
+                                $this->exerciseView->message();
+                            }
+                    }
+            }
         }
-    }
 
     private function addFoodToClient() 
-    {
-        $this->foodView  = new \view\FoodView();
-        $this->id = (int)$_SESSION['id'];
-        
-        if ($this->foodView->wantsToAddFood()) 
         {
-            if ($this->foodView->isAllFieldsFilled()) 
-                {
-                    $protein = $this->foodView->returnProtein();
-                    $amountprotein = $this->foodView->returnAmountProtein();
-                    $carbs = $this->foodView->returnCarbs();
-                    $amountcarbs = $this->foodView->returnAmountCarbs();
-                    $fat = $this->foodView->returnFat();
-                    $amountfat = $this->foodView->returnAmountFat();
+            $this->foodView  = new \view\FoodView();
+            $this->id = (int)$_SESSION['id'];
+            
+            if ($this->foodView->wantsToAddFood()) 
+            {
+                if ($this->foodView->isAllFieldsFilled()) 
+                    {
+                        $protein = $this->foodView->returnProtein();
+                        $amountprotein = $this->foodView->returnAmountProtein();
+                        $carbs = $this->foodView->returnCarbs();
+                        $amountcarbs = $this->foodView->returnAmountCarbs();
+                        $fat = $this->foodView->returnFat();
+                        $amountfat = $this->foodView->returnAmountFat();
 
-                    if ($this->storage->saveFoodToDB(new \model\Food($protein, $amountprotein, $carbs, $amountcarbs, $fat, $amountfat), $this->id))
-                        {
-                            $this->foodView->message();
-                        }
-                }
+                        $foodAdvice = new \model\Food($protein, $amountprotein, $carbs, $amountcarbs, $fat, $amountfat);
+                        if ($this->storage->saveFoodToDB($foodAdvice, $this->id))
+                            {
+                                $this->foodView->message();
+                            }
+                    }
+            }
         }
-    }
 }
