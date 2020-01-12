@@ -40,7 +40,7 @@ class SearchView implements IView
                 {
                     return
                     '<h2>Inner Join:</h2>
-                        <p>This query creates an inner join.</p>
+                        <p>This query uses inner join to make a unified table over all clients and their exercises.</p>
                         ' . $this->showInnerJoin() . '
                     ';
                 }
@@ -172,6 +172,33 @@ class SearchView implements IView
     private function showInnerJoin()
         {
             $ret = "";
+            $ret .= "<table style='background-color:LightGrey; color:black'>
+                    <tr>
+                        <th><b>Id</b></th>
+                        <th><b>Name</b></th>
+                        <th><b>Exercise</b></th>
+                        <th><b>Weight</b></th>
+                        <th><b>Reps</b></th>
+                        <th><b>Rest</b></th>
+                        <th><b>Sets</b></th>
+                    </tr>";
+            if ($this->viewRows != NULL)
+            {
+                foreach ($this->viewRows as $row) 
+                {
+                    $ret .= "
+                        <tr>
+                            <td>" . $row->id . "</td>
+                            <td>" . $row->client . "</td>
+                            <td>" . $row->exercises . "</td>
+                            <td>" . $row->weight . "</td>
+                            <td>" . $row->repetitions . "</td>
+                            <td>" . $row->rest . "</td>
+                            <td>" . $row->sets . "</td>
+                        </tr>";
+                }
+            }
+            $ret .= "</table>";
             return $ret;
         }
     

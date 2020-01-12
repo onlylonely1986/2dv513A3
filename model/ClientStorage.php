@@ -293,7 +293,26 @@ class ClientStorage {
 
     public function getRowsByInnerJoin()
     {
-        
+        $data = array();
+        $query = "SELECT m.id, m.name client, c.exercise exercises, c.weight, c.repetitions, c.rest, c.sets";
+        $query .= " FROM client m INNER JOIN exercises c ON (c.clientid = m.id);";
+
+        if ($result = self::$conn->query($query)) 
+        {
+            if(!$result) 
+            {
+                throw new ConnectionException();
+                return false;
+            }
+            
+            while($obj = $result->fetch_object()) {
+                array_push($data, $obj);
+            }
+            
+            $result->close();
+            return $data;
+        }
+        return $data;
     }
 
     public function getRowsByUnion()

@@ -71,7 +71,7 @@ class ClientController
                     return;
                 } 
             else if ($this->joinPageReq()) 
-                {
+                { // TODO ej klar
                     $data = $this->storage->getRowsByJoin();
                     $this->searchView->setListOfRows($data);
                     $this->layoutView->setView($this->searchView->echoHTML());
@@ -85,7 +85,7 @@ class ClientController
                     return;
                 }
             else if ($this->unionPageReq()) 
-                {
+                { // TODO ej klar
                     $data = $this->storage->getRowsByUnion();
                     $this->searchView->setListOfRows($data);
                     $this->layoutView->setView($this->searchView->echoHTML());
