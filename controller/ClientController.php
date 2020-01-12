@@ -71,7 +71,7 @@ class ClientController
                     return;
                 } 
             else if ($this->joinPageReq()) 
-                { // TODO ej klar
+                {
                     $data = $this->storage->getRowsByJoin();
                     $this->searchView->setListOfRows($data);
                     $this->layoutView->setView($this->searchView->echoHTML());
@@ -84,9 +84,9 @@ class ClientController
                     $this->layoutView->setView($this->searchView->echoHTML());
                     return;
                 }
-            else if ($this->unionPageReq()) 
+            else if ($this->includePTPageReq()) 
                 { // TODO ej klar
-                    $data = $this->storage->getRowsByUnion();
+                    $data = $this->storage->getRowsByIncludePT();
                     $this->searchView->setListOfRows($data);
                     $this->layoutView->setView($this->searchView->echoHTML());
                     return;
@@ -174,9 +174,9 @@ class ClientController
             return false;
         }
 
-    private function unionPageReq() : bool
+    private function includePTPageReq() : bool
         {
-            if (isset($_GET['union'])) {
+            if (isset($_GET['includept'])) {
                 return true;
             }
             return false;

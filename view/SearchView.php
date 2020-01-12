@@ -44,12 +44,12 @@ class SearchView implements IView
                         ' . $this->showInnerJoin() . '
                     ';
                 }
-            else if (isset($_GET['union'])) 
+            else if (isset($_GET['includept'])) 
                 {
                     return
-                    '<h2>Union:</h2>
-                        <p>This query creates an union.</p>
-                        ' . $this->showUnion() . '
+                    '<h2>Include PT:</h2>
+                        <p>This query creates a new table when including PT-name and separate clients.</p>
+                        ' . $this->showIncludePT() . '
                     ';
                 }
             else 
@@ -219,7 +219,7 @@ class SearchView implements IView
             return $ret;
         }
     
-    private function showUnion()
+    private function showIncludePT()
         {
             $ret = "";
             return $ret;
