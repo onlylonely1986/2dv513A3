@@ -23,34 +23,43 @@ class SearchView implements IView
                 {
                     return
                     '<h2>Show view:</h2>
-                    <p>This query creates a new table when just showing every client and their goal.</p>
-                    <p>Then we run a new query that select every client that has `pushups` as their exercise.</p>
-                    ' . $this->showView() . '
+                        <p>This query creates a new table when just showing every client and their goal.</p>
+                        <p>Then we run a new query that select every client that has `pushups` as their exercise.</p>
+                        ' . $this->showView() . '
                     ';
                 }
             else if (isset($_GET['join'])) 
                 {
                     return
-                    '<h2>Join:</h2>';
+                    '<h2>Join:</h2>
+                        <p>This query creates a join.</p>
+                        ' . $this->showJoin() . '
+                    ';
                 }
             else if (isset($_GET['innerjoin'])) 
                 {
                     return
-                    '<h2>Inner Join:</h2>';
+                    '<h2>Inner Join:</h2>
+                        <p>This query creates an inner join.</p>
+                        ' . $this->showInnerJoin() . '
+                    ';
                 }
             else if (isset($_GET['union'])) 
                 {
                     return
-                    '<h2>Union:</h2>';
+                    '<h2>Union:</h2>
+                        <p>This query creates an union.</p>
+                        ' . $this->showUnion() . '
+                    ';
                 }
             else 
                 {
                     return
-                    '<h2>Search:</h2>
-                        <form href="?" method="POST">
-                            <input type="text" id="' . self::$clientSearch . '" name="' . self::$clientSearch . '" />
-                            <input type="submit" id="' . self::$send . '" name="' . self::$send . '" value="Search"/>
-                        </form>
+                        '<h2>Search:</h2>
+                            <form href="?" method="POST">
+                                <input type="text" id="' . self::$clientSearch . '" name="' . self::$clientSearch . '" />
+                                <input type="submit" id="' . self::$send . '" name="' . self::$send . '" value="Search"/>
+                            </form>
                         ' . $this->message . '
                         ' . $this->iterateOverClients() . '
                     ';
@@ -117,7 +126,6 @@ class SearchView implements IView
     private function iterateOverClients() 
         {
             $ret = "";
-            // var_dump($this->clients);
             if ($this->clients != NULL)
             {
                 foreach ($this->clients as $client) 
@@ -130,7 +138,7 @@ class SearchView implements IView
             return $ret;
         }
 
-        private function showView() 
+    private function showView() 
         {
             $ret = "";
             $ret .= "<table style='background-color:LightGrey; color:black'>
@@ -152,6 +160,24 @@ class SearchView implements IView
                 }
             }
             $ret .= "</table>";
+            return $ret;
+        }
+
+    private function showJoin()
+        {
+            $ret = "";
+            return $ret;
+        }
+
+    private function showInnerJoin()
+        {
+            $ret = "";
+            return $ret;
+        }
+    
+    private function showUnion()
+        {
+            $ret = "";
             return $ret;
         }
 }
