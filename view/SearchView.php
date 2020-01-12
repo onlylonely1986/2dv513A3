@@ -24,7 +24,7 @@ class SearchView implements IView
                     return
                     '<h2>Show view:</h2>
                         <p>This query creates a new table when just showing every client and their goal.</p>
-                        <p>Then we run a new query that select every client that has `pushups` as their exercise.</p>
+                        <p>Then we run a new query that select every client that has `strong` as their goal.</p>
                         ' . $this->showView() . '
                     ';
                 }

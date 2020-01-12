@@ -178,13 +178,10 @@ class ClientStorage {
 
     }
 
-<<<<<<< HEAD
     // denna borde också ge tillbaka en array ?..  men den funkar va?
     //Ja den här funkar
-    public function getClientExercises($id) : Exercise {
-=======
+    // public function getClientExercises($id) : Exercise {
     public function getClientExercises($id){
->>>>>>> 309731681e3f96f2f447d6ce47576dbaa1fd0e82
         $query = "SELECT * FROM  " . self::$dbTableExercises . " WHERE clientid = '" . $id . "'";
         
         if ($result = self::$conn->query($query)) 
@@ -267,12 +264,10 @@ class ClientStorage {
     public function getRowsByView()
     {
         $data = array();
-        // denna funkade att köra direkt ifrån DB istället och då funkade select under
-        // under förutsättning att du har några som har övningen pushups :)
-        /*$query = "CREATE VIEW view_newTable AS SELECT";
+        $query = "CREATE VIEW view_newTable AS SELECT";
         $query .= " client.name, client.goal, exercises.exercise FROM";
-        $query .= " client, exercises WHERE client.id = exercises.clientid";*/
-        $query = "SELECT * FROM `view_newTable` WHERE exercise='pushups';";
+        $query .= " client, exercises WHERE client.id = exercises.clientid";
+        $query = "SELECT * FROM `view_newTable` WHERE goal LIKE '%strong%';";
         
         if ($result = self::$conn->query($query)) 
         {
