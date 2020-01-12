@@ -36,7 +36,7 @@ class ClientStorage {
 
         if (!self::$conn->connect_errno) 
         {
-            echo "connect med db funkade bra";
+            // echo "connect med db funkade bra";
             return true;
         } else {
             throw new ConnectionException();
@@ -178,9 +178,6 @@ class ClientStorage {
 
     }
 
-    // denna borde också ge tillbaka en array ?..  men den funkar va?
-    //Ja den här funkar
-    // public function getClientExercises($id) : Exercise {
     public function getClientExercises($id){
         $query = "SELECT * FROM  " . self::$dbTableExercises . " WHERE clientid = '" . $id . "'";
         
@@ -336,8 +333,27 @@ class ClientStorage {
         return $data;
     }
 
-    public function getRowsByIncludePT()
+    public function getRowsByIncludePT(string $name, int $int)
     {
+        $data = array();
         
+        $query = "SELECT name, trainerid AS PT". $name . " FROM `" . self::$dbTableClients . "` WHERE " . self::$dbTableClients . ".trainerid = " . $int . " ORDER BY name ASC;";
+
+        if ($result = self::$conn->query($query)) 
+        {
+            if(!$result) 
+            {
+                throw new ConnectionException();
+                return false;
+            }
+            
+            while($obj = $result->fetch_object()) {
+                array_push($data, $obj);
+            }
+            
+            $result->close();
+            return $data;
+        }
+        return $data;
     }
 }
