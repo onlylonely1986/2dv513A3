@@ -7,6 +7,7 @@ require_once("model/Exercise.php");
 require_once("model/Food.php");
 
 require_once("controller/States.php");
+require_once("controller/StringConstants.php");
 require_once("view/ClientView.php");
 require_once("view/AddClientView.php");
 require_once("view/ExerciseView.php");
@@ -71,7 +72,7 @@ class ClientController
                     return;
                 } 
             else if ($this->joinPageReq()) 
-                { // TODO ej klar
+                {
                     $data = $this->storage->getRowsByJoin();
                     $this->searchView->setListOfRows($data);
                     $this->layoutView->setView($this->searchView->echoHTML());
@@ -84,10 +85,14 @@ class ClientController
                     $this->layoutView->setView($this->searchView->echoHTML());
                     return;
                 }
-            else if ($this->unionPageReq()) 
-                { // TODO ej klar
-                    $data = $this->storage->getRowsByUnion();
+            else if ($this->includePTPageReq()) 
+                {
+                    $data = $this->storage->getRowsByIncludePT(StringConstants::$ptName1, 1);
                     $this->searchView->setListOfRows($data);
+                    $data = $this->storage->getRowsByIncludePT(StringConstants::$ptName2, 3);
+                    $this->searchView->setListOfRows2($data);
+                    $data = $this->storage->getRowsByIncludePT(StringConstants::$ptName3, 5);
+                    $this->searchView->setListOfRows3($data);
                     $this->layoutView->setView($this->searchView->echoHTML());
                     return;
                 } 
@@ -174,9 +179,9 @@ class ClientController
             return false;
         }
 
-    private function unionPageReq() : bool
+    private function includePTPageReq() : bool
         {
-            if (isset($_GET['union'])) {
+            if (isset($_GET['includept'])) {
                 return true;
             }
             return false;

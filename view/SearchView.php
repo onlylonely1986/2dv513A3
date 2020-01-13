@@ -12,6 +12,8 @@ class SearchView implements IView
     private $clients;
     private $dataExercises;
     private $viewRows;
+    private $viewRows2;
+    private $viewRows3;
 
     public function __conctruct ()
         {
@@ -24,7 +26,7 @@ class SearchView implements IView
                     return
                     '<h2>Show view:</h2>
                         <p>This query creates a new table when just showing every client and their goal.</p>
-                        <p>Then we run a new query that select every client that has `pushups` as their exercise.</p>
+                        <p>Then we run a new query that select every client that has `strong` as their goal.</p>
                         ' . $this->showView() . '
                     ';
                 }
@@ -44,12 +46,12 @@ class SearchView implements IView
                         ' . $this->showInnerJoin() . '
                     ';
                 }
-            else if (isset($_GET['union'])) 
+            else if (isset($_GET['includept'])) 
                 {
                     return
-                    '<h2>Union:</h2>
-                        <p>This query creates an union.</p>
-                        ' . $this->showUnion() . '
+                    '<h2>Include PT:</h2>
+                        <p>This query adds a new tuple to table client and than show three different PT and their clients.</p>
+                        ' . $this->showIncludePT() . '
                     ';
                 }
             else 
@@ -75,6 +77,16 @@ class SearchView implements IView
     public function setListOfRows($data) 
     {
         $this->viewRows = $data;
+    }
+
+    public function setListOfRows2($data) 
+    {
+        $this->viewRows2 = $data;
+    }
+
+    public function setListOfRows3($data) 
+    {
+        $this->viewRows3 = $data;
     }
 
     public function getRequest() : bool
@@ -219,9 +231,60 @@ class SearchView implements IView
             return $ret;
         }
     
-    private function showUnion()
+    private function showIncludePT()
         {
             $ret = "";
+            $ret .= "<table style='background-color:LightGrey; color:black'>
+            <tr>
+                <th><b>Name</b></th>
+                <th><b>PT-Sanna</b></th>
+            </tr>";
+            if ($this->viewRows != NULL)
+            {
+                foreach ($this->viewRows as $row) 
+                {
+                    $ret .= "
+                        <tr>
+                            <td>" . $row->name . "</td>
+                            <td>" . $row->PTSanna . "</td>
+                        </tr>";
+                }
+            }
+            $ret .= "</table></br></br>";
+            $ret .= "<table style='background-color:LightGrey; color:black'>
+            <tr>
+                <th><b>Name</b></th>
+                <th><b>PT-Stina</b></th>
+            </tr>";
+            if ($this->viewRows2 != NULL)
+            {
+                foreach ($this->viewRows2 as $row) 
+                {
+                    $ret .= "
+                        <tr>
+                            <td>" . $row->name . "</td>
+                            <td>" . $row->PTStina . "</td>
+                        </tr>";
+                }
+            }
+            $ret .= "</table></br></br>";
+            $ret .= "<table style='background-color:LightGrey; color:black'>
+            <tr>
+                <th><b>Name</b></th>
+                <th><b>PT-Sebbe</b></th>
+            </tr>";
+            if ($this->viewRows3 != NULL)
+            {
+                foreach ($this->viewRows3 as $row) 
+                {
+                    $ret .= "
+                        <tr>
+                            <td>" . $row->name . "</td>
+                            <td>" . $row->PTSebbe . "</td>
+                        </tr>";
+                }
+            }
+            $ret .= "</table>";
             return $ret;
         }
 }

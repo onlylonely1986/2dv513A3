@@ -36,7 +36,7 @@ class ClientStorage {
 
         if (!self::$conn->connect_errno) 
         {
-            echo "connect med db funkade bra";
+            // echo "connect med db funkade bra";
             return true;
         } else {
             throw new ConnectionException();
@@ -262,12 +262,10 @@ class ClientStorage {
     public function getRowsByView()
     {
         $data = array();
-        // denna funkade att köra direkt ifrån DB istället och då funkade select under
-        // under förutsättning att du har några som har övningen pushups :)
-        /*$query = "CREATE VIEW view_newTable AS SELECT";
+        $query = "CREATE VIEW view_newTable AS SELECT";
         $query .= " client.name, client.goal, exercises.exercise FROM";
-        $query .= " client, exercises WHERE client.id = exercises.clientid";*/
-        $query = "SELECT * FROM `view_newTable` WHERE exercise='pushups';";
+        $query .= " client, exercises WHERE client.id = exercises.clientid";
+        $query = "SELECT * FROM `view_newTable` WHERE goal LIKE '%strong%';";
         
         if ($result = self::$conn->query($query)) 
         {
@@ -336,8 +334,27 @@ class ClientStorage {
         return $data;
     }
 
-    public function getRowsByUnion()
+    public function getRowsByIncludePT(string $name, int $int)
     {
+        $data = array();
         
+        $query = "SELECT name, trainerid AS PT". $name . " FROM `" . self::$dbTableClients . "` WHERE " . self::$dbTableClients . ".trainerid = " . $int . " ORDER BY name ASC;";
+
+        if ($result = self::$conn->query($query)) 
+        {
+            if(!$result) 
+            {
+                throw new ConnectionException();
+                return false;
+            }
+            
+            while($obj = $result->fetch_object()) {
+                array_push($data, $obj);
+            }
+            
+            $result->close();
+            return $data;
+        }
+        return $data;
     }
 }
