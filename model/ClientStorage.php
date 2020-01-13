@@ -178,13 +178,7 @@ class ClientStorage {
 
     }
 
-<<<<<<< HEAD
-    // denna borde också ge tillbaka en array ?..  men den funkar va?
-    //Ja den här funkar
-    public function getClientExercises($id) : Exercise {
-=======
     public function getClientExercises($id){
->>>>>>> 309731681e3f96f2f447d6ce47576dbaa1fd0e82
         $query = "SELECT * FROM  " . self::$dbTableExercises . " WHERE clientid = '" . $id . "'";
         
         if ($result = self::$conn->query($query)) 
@@ -248,6 +242,7 @@ class ClientStorage {
         return true;
     }
 
+    
     public function getClientFood($id) 
     {
         $query = "SELECT * FROM  " . self::$dbTableFood . " WHERE clientid = '" . $id . "'";
