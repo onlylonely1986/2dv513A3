@@ -242,6 +242,7 @@ class ClientStorage {
         return true;
     }
 
+    
     public function getClientFood($id) 
     {
         $query = "SELECT * FROM  " . self::$dbTableFood . " WHERE clientid = '" . $id . "'";
