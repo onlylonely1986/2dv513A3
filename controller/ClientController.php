@@ -108,6 +108,8 @@ class ClientController
                         if ($this->searchView->searchWordGiven()) 
                         {
                             $searchWord = $this->searchView->getSearchWord();
+                            // TODO
+                            echo $searchWord;
                             $data = $this->storage->searchByName($searchWord);
                             $this->searchView->setList($data);
                         }

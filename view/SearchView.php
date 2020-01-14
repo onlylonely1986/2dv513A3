@@ -120,6 +120,8 @@ class SearchView implements IView
     
     public function searchWordGiven() : bool 
         {
+            // TODO 
+            echo "searchword given körs</br>";
             if (isset($_POST[self::$send]))
             {
                 if (empty($_POST[self::$clientSearch]))
